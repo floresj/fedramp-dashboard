@@ -9,7 +9,7 @@
 	.fr-grid-layout {
 		display:table;
 		width:100%;
-		font-size:1.6rem;
+		font-size:1.4rem;
 		background-color:$color-white;
 
 		.fr-grid-layout-row {
@@ -39,9 +39,11 @@
 	}
 	// background handling for the filtering header
 	.fr-grid-layout.fr-grid-header {
-		white-space:nowrap;
-		height:8.4rem;
+		height:6.8rem;
+		margin-top:1.6rem;
 		background:$color-gray-lightest;
+		color:$color-gray;
+		white-space:nowrap;
 	}
 	// padding for text based columns
 	// exxempt icon & metric cols
@@ -77,79 +79,10 @@
 	}
 	.fr-grid-cell-icon {
 		width:10%;
+		font-size:1.2rem;
 	}
 	.fr-grid-cell-metric {
 		width:8%;
 		text-align:center;
 	}
-}
-grid-filter {
-    display:inline-block;
-    background-color:$color-gray-lighter;
-    padding:0 1rem 0 2rem;
-	color:$color-base;
-
-    span.option {
-        font-size: 0.8em;
-        .fa-check-circle {
-            color: #0070ba;
-        }
-    }
-    span.option.selected {
-        font-weight:600;
-    }
-}
-
-.grid-filter-expanded {
-    display:block;
-    margin-top:12px;
-    margin-bottom:12px;
-    span.icons {
-        float:right;
-        font-size: 0.8em;
-    }
-    span.filter-header {
-        font-weight: 600;
-        font-size: 0.8em;
-    }
-    div.options {
-        padding-left: 16px;
-    }
-}
-.grid-filter {
-    cursor: pointer;
-}
-.grid-filter.grid-filter-selected {
-	background-color:$color-primary;
-	span, i {
-		color:$color-white;
-	}
-	.filter-dropdown-panel {
-		span {
-			color:$color-black;
-		}
-		i {
-			color:$color-primary;
-		}
-	}
-}
-.filter-header {
-    font-size: 14px !important;
-    font-weight:600;
-}
-
-.filter-dropdown {
-    position:relative;
-}
-.filter-dropdown-panel {
-	z-index:2000;
-	position:absolute;
-	width: 20rem;
-	padding:1rem;
-	height:20rem;
-	overflow:auto;
-	line-height: 2.2rem;
-	background-color:white;
-	border:1px solid black;
-	left:-2rem;
 }
