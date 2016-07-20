@@ -239,7 +239,7 @@ if(self.selectedOptionValues.length===0){return obj;}return self.selectedOptionV
          * Clears filter and resets dataset
          * @public
          * @memberof Components.GridFilter
-         */function clear(){self.selectedOptionValues=[];self.options.forEach(function(x){return x.selected=false;});applyFilter();}/**
+         */function clear(){self.selectedOptionValues=[];self.options.forEach(function(x){return x.selected=false;});delete self.gridController.state[self.id];applyFilter();}/**
          * Wraps a custom filter func with some additonal pre-processing logic to ensure
          * that a filter without any selected options is returned. We also ensure to pass an additonal
          * parameter selectedOptionValues to the callers.
@@ -316,7 +316,7 @@ placeholder:'@',id:'@',filterFunc:'<'}});GridSearch.$inject=['Searcher'];/**
      * @constructor
      * @memberof Components
      * @example <grid-sort property="provider" header="Provider"></grid-sort>
-     */function GridSort($log,$parse,$element){var self=this;self.activated=null;self.asc=true;self.$onInit=$onInit;self.sort=sort;self.highlight=highlight;self.toggleSort=toggleSort;self.clear=clear;function $onInit(){if(!self.name){throw'Name must be specified for sort filter';}if(self.property){self.sortFunc=sortFunc;}restoreState();self.gridController.addSort(self);}/**
+     */function GridSort($log,$parse,$element){var self=this;self.activated=null;self.asc=true;self.$onInit=$onInit;self.sort=sort;self.highlight=highlight;self.toggleSort=toggleSort;self.clear=clear;function $onInit(){if(!self.name){throw'Name must be specified for sort filter';}if(self.property){self.sortFunc=sortFunc;}restoreState();self.gridController.addSort(self);self.gridController.stateUpdate();}/**
          * Stores the sort information to the grid state.
          *
          * @public
@@ -357,7 +357,7 @@ self.gridController.updateSort();saveState();}/**
          * @memberof Components.GridSort
          */function sortFunc(_a,_b){// Enables to sort on multiple properties for a specific grid sort.
 var props=self.property.split(',');for(var x=0;x<props.length;x++){var a=$parse(props[x])(_a);var b=$parse(props[x])(_b);// If we're dealing with numbers, delegate to number sort func
-if(angular.isNumber(a)){return numberSortFunc(a,b);}// Normalize everything and make it all lowercase for fair comparison
+if(angular.isNumber(a)){return numberSortFunc(a,b);}if(angular.isArray(a)){a=a.join(',');b=b.join(',');}// Normalize everything and make it all lowercase for fair comparison
 a=a.toLowerCase();b=b.toLowerCase();if(a<b){return self.asc?-1:1;}if(a>b){return self.asc?1:-1;}}return 0;}/**
          * Handles generic numerical sort.
          */function numberSortFunc(a,b){if(self.asc){return a-b;}return b-a;}/**
@@ -1267,95 +1267,7 @@ self.storageContainer='default';/**
              *
              * @returns
              *  The item
-             */self.transform=function(raw){return new Settings(raw);};return self.init(options);}StorageSettings.prototype=Object.create(StorageManager.prototype);StorageSettings.prototype.constructor=StorageSettings;return StorageSettings;}})();(function(){'use strict';angular.module('fedramp').controller('SearchController',SearchController);SearchController.$inject=['$log','$sce','$http','$stateParams','fedrampData','helperService'];/**
-     * @constructor
-     * @memberof Controllers
-     */function SearchController($log,$sce,$http,$stateParams,fedrampData,helperService){var self=this;/**
-         * Flag if there was an error receiving a response
-         *
-         * @member {boolean}
-         * @memberof Controllers.SearchController
-         */self.error=false;/**
-         * The search query
-         *
-         * @member {string}
-         * @memberof Controllers.SearchController
-         */self.query=$stateParams.query;/**
-         * The search results.
-         *
-         * @member {array}
-         * @memberof Controllers.SearchController
-         */self.results=[];/**
-         * The external search link.
-         *
-         * @member {string}
-         * @memberof Controllers.SearchController
-         */self.externalLink='https://search.usa.gov/search?utf8=✓&affiliate=fedramp&format=html&output=embed&commit=Search&query='+self.query;/**
-         * Get the absolute URL of an internal link
-         *
-         * @public
-         * @memberof Controllers.SearchController
-         *
-         * @param {string} path
-         * @param {string} name
-         *
-         * @returns
-         *  The absolute URL
-         */self.internalLink=function(path,name){var loc=window.location;return loc.protocol+'//'+loc.host+loc.pathname+'#/'+path+'/'+helperService.slugify(name);};/**
-         * Determines what extension (if any) the URI is referencing
-         *
-         * @public
-         * @memberof Controllers.SearchController
-         *
-         * @param {string} url
-         *  The URL
-         *
-         * @returns
-         *  The extesion abbreviation
-         */self.extension=function(url){if(url){var m=url.match(/(.*)[\/\\]([^\/\\]+)\.(\w+)$/);if(m&&m.length>=3){return'['+m[3].toUpperCase()+']';}}return'';};/**
-         * Parses possible markdown, or other encoded text, as HTML
-         *
-         * @public
-         * @memberof Controllers.SearchController
-         *
-         * @param {string} text
-         *  The text to parse
-         *
-         * @returns
-         *  The text in HTML format
-         */self.markdown=function(text){text=text.replace('','**').replace('','**');text=text.replace('–','-');return $sce.trustAsHtml(new showdown.Converter().makeHtml(text));};/**
-         * Filters arrays of objects by their name
-         *
-         * @private
-         * @memberof Controllers.SearchController
-         *
-         * @param {array} items
-         *  The array of items to iterate
-         * @param {string} query
-         *  The filter query
-         *
-         * @returns
-         *  An array of matching items
-         */function filterByName(items,query){return items.filter(function(x){return x.name.toLowerCase().indexOf(query.toLowerCase())!==-1;});}(function(){filterByName(fedrampData.providers(),self.query).forEach(function(x){self.results.push({title:x.name,content:'',unescapedUrl:self.internalLink('provider',x.name),publishedAt:null,siteLinks:[]});});filterByName(fedrampData.products(),self.query).forEach(function(x){self.results.push({title:x.name,content:'',unescapedUrl:self.internalLink('product',x.name),publishedAt:null,siteLinks:[]});});filterByName(fedrampData.agencies(),self.query).forEach(function(x){self.results.push({title:x.name,content:'',unescapedUrl:self.internalLink('agency',x.name),publishedAt:null,siteLinks:[]});});filterByName(fedrampData.assessors(),self.query).forEach(function(x){self.results.push({title:x.name,content:'',unescapedUrl:self.internalLink('assessor',x.name),publishedAt:null,siteLinks:[]});});// Attempt to query using the form parameters but returning as JSON.
-// This will have issues in development due to CORS.
-$http.get('https://search.usa.gov/search',{params:{utf8:'✓',affiliate:'fedramp',format:'json',commit:'Search',query:self.query}}).then(function(response){// Sample response:
-//
-// {
-//     "total": 35,
-//     "startrecord": 1,
-//     "endrecord": 20,
-//     "results": [
-//         {
-//             "title": "www.\ue000fedramp.gov\ue001",
-//             "content": "\ue000Test\ue001 Cases \u2013 If the system is a PaaS or SaaS that is leveraging another system, the Control Summary Worksheet should indicate which controls will be tested and ...",
-//             "unescapedUrl": "https://www.fedramp.gov/files/2015/08/FedRAMP-SAP-Detailed-Review-Checklist-Template-v2-0.xlsx",
-//             "publishedAt": null,
-//             "sitelinks": []
-//         }
-//     ],
-//     "related": []
-// }
-if(response&&response.data){if(response.data.results){self.results=response.data.results;}}},function(response){self.error=true;});})();}})();(function(){'use strict';angular.module('fedramp').controller('AgenciesController',AgenciesController);AgenciesController.$inject=['$log','agencies'];/**
+             */self.transform=function(raw){return new Settings(raw);};return self.init(options);}StorageSettings.prototype=Object.create(StorageManager.prototype);StorageSettings.prototype.constructor=StorageSettings;return StorageSettings;}})();(function(){'use strict';angular.module('fedramp').controller('AgenciesController',AgenciesController);AgenciesController.$inject=['$log','agencies'];/**
      * @constructor
      * @memberof Controllers
      */function AgenciesController($log,agencies){var self=this;/**
@@ -1962,7 +1874,95 @@ if(!searchTerm){return product;}searchTerm=searchTerm.toLowerCase();var productN
          *
          * @returns
          *  The matched item or null
-         */self.reuseRangeFilter=function(provider,index,arr,selectedOptions){return selectedOptions.find(function(option){if(provider.reuses>=option.value.min&&provider.reuses<=option.value.max){return provider;}});};}})();(function(){'use strict';angular.module('fedramp').controller('SitemapController',SitemapController);SitemapController.$inject=['$log','fedrampData','helperService'];/**
+         */self.reuseRangeFilter=function(provider,index,arr,selectedOptions){return selectedOptions.find(function(option){if(provider.reuses>=option.value.min&&provider.reuses<=option.value.max){return provider;}});};}})();(function(){'use strict';angular.module('fedramp').controller('SearchController',SearchController);SearchController.$inject=['$log','$sce','$http','$stateParams','fedrampData','helperService'];/**
+     * @constructor
+     * @memberof Controllers
+     */function SearchController($log,$sce,$http,$stateParams,fedrampData,helperService){var self=this;/**
+         * Flag if there was an error receiving a response
+         *
+         * @member {boolean}
+         * @memberof Controllers.SearchController
+         */self.error=false;/**
+         * The search query
+         *
+         * @member {string}
+         * @memberof Controllers.SearchController
+         */self.query=$stateParams.query;/**
+         * The search results.
+         *
+         * @member {array}
+         * @memberof Controllers.SearchController
+         */self.results=[];/**
+         * The external search link.
+         *
+         * @member {string}
+         * @memberof Controllers.SearchController
+         */self.externalLink='https://search.usa.gov/search?utf8=✓&affiliate=fedramp&format=html&output=embed&commit=Search&query='+self.query;/**
+         * Get the absolute URL of an internal link
+         *
+         * @public
+         * @memberof Controllers.SearchController
+         *
+         * @param {string} path
+         * @param {string} name
+         *
+         * @returns
+         *  The absolute URL
+         */self.internalLink=function(path,name){var loc=window.location;return loc.protocol+'//'+loc.host+loc.pathname+'#/'+path+'/'+helperService.slugify(name);};/**
+         * Determines what extension (if any) the URI is referencing
+         *
+         * @public
+         * @memberof Controllers.SearchController
+         *
+         * @param {string} url
+         *  The URL
+         *
+         * @returns
+         *  The extesion abbreviation
+         */self.extension=function(url){if(url){var m=url.match(/(.*)[\/\\]([^\/\\]+)\.(\w+)$/);if(m&&m.length>=3){return'['+m[3].toUpperCase()+']';}}return'';};/**
+         * Parses possible markdown, or other encoded text, as HTML
+         *
+         * @public
+         * @memberof Controllers.SearchController
+         *
+         * @param {string} text
+         *  The text to parse
+         *
+         * @returns
+         *  The text in HTML format
+         */self.markdown=function(text){text=text.replace('','**').replace('','**');text=text.replace('–','-');return $sce.trustAsHtml(new showdown.Converter().makeHtml(text));};/**
+         * Filters arrays of objects by their name
+         *
+         * @private
+         * @memberof Controllers.SearchController
+         *
+         * @param {array} items
+         *  The array of items to iterate
+         * @param {string} query
+         *  The filter query
+         *
+         * @returns
+         *  An array of matching items
+         */function filterByName(items,query){return items.filter(function(x){return x.name.toLowerCase().indexOf(query.toLowerCase())!==-1;});}(function(){filterByName(fedrampData.providers(),self.query).forEach(function(x){self.results.push({title:x.name,content:'',unescapedUrl:self.internalLink('provider',x.name),publishedAt:null,siteLinks:[]});});filterByName(fedrampData.products(),self.query).forEach(function(x){self.results.push({title:x.name,content:'',unescapedUrl:self.internalLink('product',x.name),publishedAt:null,siteLinks:[]});});filterByName(fedrampData.agencies(),self.query).forEach(function(x){self.results.push({title:x.name,content:'',unescapedUrl:self.internalLink('agency',x.name),publishedAt:null,siteLinks:[]});});filterByName(fedrampData.assessors(),self.query).forEach(function(x){self.results.push({title:x.name,content:'',unescapedUrl:self.internalLink('assessor',x.name),publishedAt:null,siteLinks:[]});});// Attempt to query using the form parameters but returning as JSON.
+// This will have issues in development due to CORS.
+$http.get('https://search.usa.gov/search',{params:{utf8:'✓',affiliate:'fedramp',format:'json',commit:'Search',query:self.query}}).then(function(response){// Sample response:
+//
+// {
+//     "total": 35,
+//     "startrecord": 1,
+//     "endrecord": 20,
+//     "results": [
+//         {
+//             "title": "www.\ue000fedramp.gov\ue001",
+//             "content": "\ue000Test\ue001 Cases \u2013 If the system is a PaaS or SaaS that is leveraging another system, the Control Summary Worksheet should indicate which controls will be tested and ...",
+//             "unescapedUrl": "https://www.fedramp.gov/files/2015/08/FedRAMP-SAP-Detailed-Review-Checklist-Template-v2-0.xlsx",
+//             "publishedAt": null,
+//             "sitelinks": []
+//         }
+//     ],
+//     "related": []
+// }
+if(response&&response.data){if(response.data.results){self.results=response.data.results;}}},function(response){self.error=true;});})();}})();(function(){'use strict';angular.module('fedramp').controller('SitemapController',SitemapController);SitemapController.$inject=['$log','fedrampData','helperService'];/**
      * @constructor
      * @memberof Controllers
      */function SitemapController($log,fedrampData,helperService){var self=this;/**
