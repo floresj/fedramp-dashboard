@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: fedramp.components/agency.component.js</title>
+    <title>JSDoc: Source: fedramp.components/comparison.component.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: fedramp.components/agency.component.js</h1>
+    <h1 class="page-title">Source: fedramp.components/comparison.component.js</h1>
 
     
 
@@ -31,55 +31,27 @@
 
     angular
         .module('fedramp.components')
-        .component('agency', {
-            templateUrl: 'src/templates/components/agency.html',
-            controller: Agency,
+        .component('comparison', {
+            transclude: {
+                'first': 'first',
+                'second': 'second'
+            },
+            templateUrl: 'src/templates/components/comparison.html',
+            controller: Comparison,
             controllerAs: 'controller',
             bindings: {
-                model: '&lt;',
-                onClose: '&lt;'
+                onCloseBoth: '@'
             }
         });
 
-    Agency.$inject = ['$log', '$state', 'helperService'];
+    Comparison.$inject = [];
 
     /**
      * @constructor
      * @memberof Components
      */
-    function Agency ($log, $state, helperService) {
+    function Comparison () {
         var self = this;
-
-        /**
-         * Close the informational panel
-         * @public
-         * @memberof Components.Agency
-         */
-        self.close = function () {
-            if (self.onClose) {
-                self.onClose();
-                return;
-            }
-            
-            $state.go('fedramp.app.home', {}, { reload: true });
-        };
-
-        /**
-         * Build a link from the given item
-         * @public
-         * @memberof Components.Product
-         *
-         * @param {string} modelType
-         *  The item model type
-         * @param {string} name
-         *  The item name to be slugified
-         *
-         * @returns
-         *  The pach for a hyperlink
-         */
-        self.linkify = function (modelType, name) {
-            return '#/' + modelType + '/' + helperService.slugify(name) + helperService.queryString();
-        };
     }
 })();
 </code></pre>
