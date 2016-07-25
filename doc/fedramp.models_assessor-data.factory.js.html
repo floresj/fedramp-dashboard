@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: Controllers</title>
+    <title>JSDoc: Source: fedramp.models/assessor-data.factory.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,144 +17,104 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: Controllers</h1>
+    <h1 class="page-title">Source: fedramp.models/assessor-data.factory.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>Controllers</h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function () {
+    'use strict';
 
-<article>
-    <div class="container-overview">
-    
-        
+    angular
+        .module('fedramp.models')
+        .factory('AssessorData', AssessorDataFactory);
 
-        
+    AssessorDataFactory.$inject = [];
 
+    function AssessorDataFactory () {
+        return AssessorData;
 
-<dl class="details">
+        /**
+         * The raw assessors data model with opinionated transformations
+         * @constructor
+         * @memberof Models
+         */
+        function AssessorData (options) {
+            // Scope `this` to self
+            var self = this;
 
-    
+            var mapping = {
+                'name': 'name',
+                'Accreditation_Date' : 'accreditationDate'
+            };
 
-    
+            /**
+             * Assessor name
+             * @member {string}
+             * @memberof Models.AssessorData
+             */
+            self.name = '';
 
-    
+            /**
+             * Assessor accreditation date
+             * @member {Date}
+             * @memberof Models.AssessorData
+             */
+            self.accreditationDate = '';
 
-    
+            /**
+             * Initialize the assessor data object.
+             *
+             * @param {object} options
+             *  A dictionary of options to configure the assessor
+             *
+             * @returns
+             *  The provider
+             */
+            self.init = function (options) {
+                if (!options) {
+                    return;
+                }
 
-    
+                for (var x in options) {
+                    if (!options.hasOwnProperty(x)) {
+                        continue;
+                    }
+                    var key = mapping[x];
+                    self[key] = options[x];
+                }
 
-    
+                return self;
+            };
 
-    
+            /**
+             * Get a unique hash or identifier for the provider.
+             * @public
+             * @memberof Models.Data
+             *
+             * @returns
+             *  The hash
+             */
+            self.hash = function () {
+                var id = '' + self.name + self.accreditationDate;
+                if (id.length === 0) {
+                    return null;
+                }
+                return id;
+            };
 
-    
+            return self.init(options);
+        }
 
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp_fedramp.module.js.html">fedramp/fedramp.module.js</a>, <a href="fedramp_fedramp.module.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="Controllers.AgenciesController.html">AgenciesController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.AssessorsController.html">AssessorsController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.HomeController.html">HomeController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.ProductInformationController.html">ProductInformationController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.ProductsController.html">ProductsController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.ProviderComparisonController.html">ProviderComparisonController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.ProviderInformationController.html">ProviderInformationController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.ProvidersController.html">ProvidersController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.SearchController.html">SearchController</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Controllers.SitemapController.html">SitemapController</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    }
+})();
+</code></pre>
+        </article>
+    </section>
 
 
 
