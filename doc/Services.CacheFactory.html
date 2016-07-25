@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: fedramp/home/agency.information.controller.js</title>
+    <title>JSDoc: Class: CacheFactory</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,120 +17,126 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: fedramp/home/agency.information.controller.js</h1>
+    <h1 class="page-title">Class: CacheFactory</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>(function () {
-    'use strict';
+        <h2>
+            <span class="ancestors"><a href="Services.html">Services</a>.</span>CacheFactory</h2>
+        
+    
+</header>
 
-    angular
-        .module('fedramp')
-        .controller('AgencyInformationController', AgencyInformationController);
+<article>
+    <div class="container-overview">
+    
+        
 
-    AgencyInformationController.$inject = ['$log', '$state', '$stateParams', 'fedrampData', 'helperService'];
+    
 
-    /**
-     * @constructor
-     * @memberof Controllers
-     */
-    function AgencyInformationController ($log, $state, $stateParams, fedrampData, helperService) {
-        var self = this;
-        var agencies = fedrampData.agencies();
+    <h4 class="name" id="CacheFactory"><span class="type-signature"></span>new CacheFactory<span class="signature">()</span><span class="type-signature"></span></h4>
 
-        /**
-         * The related items for this type of item
-         * @member {array}
-         * @memberof Controllers.AgencyInformationController
-         */
-        self.items = agencies.filter(x => helperService.slugify(x.name) !== $stateParams.name);
+    
 
-        /**
-         * The item
-         * @member {object}
-         * @memberof Controllers.AgencyInformationController
-         */
-        self.item = agencies.find(x => helperService.slugify(x.name) === $stateParams.name);
 
-        /**
-         * Close the information and return to the home view
-         * @public
-         * @member {object}
-         * @memberof Controllers.AgencyInformationController
-         */
-        self.close = function () {
-            helperService.navigateTo('/agencies' + helperService.queryString());
-        };
 
-        /**
-         * Event reciever for when the grid is updated.
-         * @public
-         * @member {object}
-         * @memberof Controllers.AgencyInformationController
-         *
-         * @param {array} items
-         *  Array of items with filtering and sorting applied.
-         */
-        self.onUpdate = function(items){
-            self.filteredData = items;
-        };
 
-        /**
-         * Determine the options available for filtering the reuse metric
-         * @public
-         * @member {object}
-         * @memberof Controllers.AgencyInformationController
-         *
-         * @param {array} agencies
-         *  Array of items available
-         *
-         * @returns
-         *  An array of option values for filtering
-         */
-        self.reuseRangeOptions = function (agencies) {
-            return [
-                {value: {min: 0, max: 5}, label: '0 - 5', selected: false}, 
-                {value: {min: 6, max: 10}, label: '5 - 10', selected: false},
-                {value: {min: 11, max: 1000}, label: '> 10', selected: false}];
-        };
 
-        /**
-         * Filter the data set by the reuse metric
-         * @public
-         * @member {object}
-         * @memberof Controllers.AgencyInformationController
-         *
-         * @param {object} agency
-         *  The agency to compare
-         * @param {integer} index
-         *  The current index within the array of items
-         * @param {array} arr
-         *  Array of items
-         * @param {array} selectedOptions
-         *  Array of selected options
-         *
-         * @returns
-         *  The matched item or null
-         */
-        self.reuseRangeFilter = function (agency, index, arr, selectedOptions) {
-            return selectedOptions.find(function (option) {
-                if (agency.products.length >= option.value.min &amp;&amp; agency.products.length &lt;= option.value.max) {
-                    return option;
-                }
-            });
-        };
 
-        helperService.scrollTo('scrollToContent');
-    }
-})();
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fedramp.services_cache.factory.js.html">fedramp.services/cache.factory.js</a>, <a href="fedramp.services_cache.factory.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

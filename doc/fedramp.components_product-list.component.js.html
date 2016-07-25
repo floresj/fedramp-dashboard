@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: fedramp/home/agency.information.controller.js</title>
+    <title>JSDoc: Source: fedramp.components/product-list.component.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: fedramp/home/agency.information.controller.js</h1>
+    <h1 class="page-title">Source: fedramp.components/product-list.component.js</h1>
 
     
 
@@ -30,102 +30,61 @@
     'use strict';
 
     angular
-        .module('fedramp')
-        .controller('AgencyInformationController', AgencyInformationController);
+        .module('fedramp.components')
+        .component('productList', {
+            templateUrl: 'src/templates/components/product-list.html',
+            controller: ProductList,
+            controllerAs: 'controller',
+            bindings: {
+                products: '&lt;'
+            }
+        });
 
-    AgencyInformationController.$inject = ['$log', '$state', '$stateParams', 'fedrampData', 'helperService'];
+    ProductList.$inject = ['fedrampData', 'helperService'];
 
     /**
+     * Renders a list of products with corresponding provider names. A link is generated for both provider and product.
+     *
      * @constructor
-     * @memberof Controllers
+     * @memberof Components
      */
-    function AgencyInformationController ($log, $state, $stateParams, fedrampData, helperService) {
+    function ProductList (fedrampData, helperService) {
         var self = this;
-        var agencies = fedrampData.agencies();
+        self.productList = [];
 
-        /**
-         * The related items for this type of item
-         * @member {array}
-         * @memberof Controllers.AgencyInformationController
-         */
-        self.items = agencies.filter(x => helperService.slugify(x.name) !== $stateParams.name);
+        self.$onInit = $onInit;
+        self.createList = createList;
+        self.slugify = slugify;
 
-        /**
-         * The item
-         * @member {object}
-         * @memberof Controllers.AgencyInformationController
-         */
-        self.item = agencies.find(x => helperService.slugify(x.name) === $stateParams.name);
+        function $onInit(){
+            createList();
+        }
 
-        /**
-         * Close the information and return to the home view
-         * @public
-         * @member {object}
-         * @memberof Controllers.AgencyInformationController
-         */
-        self.close = function () {
-            helperService.navigateTo('/agencies' + helperService.queryString());
-        };
+        function createList(){
+            var providers = fedrampData.providers();
 
-        /**
-         * Event reciever for when the grid is updated.
-         * @public
-         * @member {object}
-         * @memberof Controllers.AgencyInformationController
-         *
-         * @param {array} items
-         *  Array of items with filtering and sorting applied.
-         */
-        self.onUpdate = function(items){
-            self.filteredData = items;
-        };
-
-        /**
-         * Determine the options available for filtering the reuse metric
-         * @public
-         * @member {object}
-         * @memberof Controllers.AgencyInformationController
-         *
-         * @param {array} agencies
-         *  Array of items available
-         *
-         * @returns
-         *  An array of option values for filtering
-         */
-        self.reuseRangeOptions = function (agencies) {
-            return [
-                {value: {min: 0, max: 5}, label: '0 - 5', selected: false}, 
-                {value: {min: 6, max: 10}, label: '5 - 10', selected: false},
-                {value: {min: 11, max: 1000}, label: '> 10', selected: false}];
-        };
-
-        /**
-         * Filter the data set by the reuse metric
-         * @public
-         * @member {object}
-         * @memberof Controllers.AgencyInformationController
-         *
-         * @param {object} agency
-         *  The agency to compare
-         * @param {integer} index
-         *  The current index within the array of items
-         * @param {array} arr
-         *  Array of items
-         * @param {array} selectedOptions
-         *  Array of selected options
-         *
-         * @returns
-         *  The matched item or null
-         */
-        self.reuseRangeFilter = function (agency, index, arr, selectedOptions) {
-            return selectedOptions.find(function (option) {
-                if (agency.products.length >= option.value.min &amp;&amp; agency.products.length &lt;= option.value.max) {
-                    return option;
+            self.products.reduce(function(arr, product){
+                for(let x = 0; x &lt; providers.length; x++){
+                    let provider = providers[x];
+                    for(let y = 0; y &lt; provider.products.length; y++){
+                        var curProduct = provider.products[y];
+                        if(curProduct.name === product){
+                            arr.push({
+                                name: product,
+                                provider: provider.name,
+                            });
+                            break;
+                        }
+                    }
                 }
-            });
-        };
+                return arr;
+            }, self.productList);
 
-        helperService.scrollTo('scrollToContent');
+        }
+
+        function slugify(slugme){
+            return helperService.slugify(slugme);
+        }
     }
 })();
 </code></pre>

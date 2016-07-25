@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: fedramp/fedramp.routes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: fedramp/fedramp.routes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function () {
+    'use strict';
+
+    angular
+        .module('fedramp')
+        .config(routeConfig);
+
+    // Add items to inject for safe minification
+    routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+    /**
+     * Configures the routes and views for the FedRAMP application
+     */
+    function routeConfig ($stateProvider, $urlRouterProvider) {
+        // Go to root if something goes wrong
+        $urlRouterProvider.otherwise('/products');
+
+        // Routes
+        $stateProvider
+            .state('fedramp', {
+                abstract: true,
+                templateUrl: 'src/templates/base.html',
+                resolve: {
+                    /**
+                     * JF - Note a few changes. 
+                     *
+                     * tl;dr
+                     * fedrampData can now be injected anywhere. It's not only limited to state controllers now.
+                     *
+                     * Long version:
+                     *
+                     * The key 'fedrampData' within the resolve property
+                     *
+                     * resolve : {
+                     *     fedrampData: [function{}]
+                     * }
+                     *
+                     * is different than the injected provider 'fedrampData' being passed into the function below.
+                     *
+                     * ['..', 'fedrampData', function(..., fedrampData) {
+                     *
+                     * }
+                     *
+                     * UI-router resolves can only be injected into controllers bound to a particular state. So this 
+                     * prevents you from injecting state based resolves into components, directives or service/factories. 
+                     * For instance, previously, if you wanted to inject the result of fedrampData 
+                     * into a component, you would get an error. 
+                     *
+                     * However, to mitigate this, we can take advantage of the fact that services in angular are singletons. 
+                     * So we inject an actual service called fedrampData and call load() on it. This will then take the 
+                     * properties/methods of storage and merge them into fedrampData (as well as wrap caching behavior. 
+                     * See {@link Services.FedrampDataProvider} for details). 
+                     *
+                     * So now, we end up with a single fedrampData that contains all our storage information that can be injected anywhere.
+                     *
+                     * You'll notice that in the DataService.pull() promise, we load the fedrampData object and then return that 
+                     * object. So here, we're telling ui-router that for STATE BASED controllers that inject the fedrampData 
+                     * resolve (not the service), to simply point it to our service. 
+                     *                    
+                     *
+                     */
+                    fedrampData: ['DataService', 'fedrampData', function (DataService, fedrampData) {
+                        return DataService.pull().then(function (storage) {
+
+                            // Store it in service so that it is accessible by any one who injects fedrampData.
+                            fedrampData.load(storage);
+                            return fedrampData;
+                        });
+                    }]
+                }
+            })
+            .state('fedramp.sitemap', {
+                url: '/sitemap.xml',
+                templateUrl: 'src/templates/sitemap/sitemap.html',
+                controller: 'SitemapController as controller',
+            })
+            .state('fedramp.app', {
+                abstract: true,
+                templateUrl: 'src/templates/fedramp.html',
+            })
+            .state('fedramp.app.search', {
+                url: '/search/:query',
+                templateUrl: 'src/templates/search/search.html',
+                controller: 'SearchController as controller'
+            })
+            .state('fedramp.app.home', {
+                templateUrl: 'src/templates/home/home.html',
+                controller: 'HomeController as homeController'
+            })
+
+            // Provider States
+            .state('fedramp.app.home.providers', {
+                url: '/providers',
+                templateUrl: 'src/templates/home/providers.html',
+                controller: 'ProvidersController as controller',
+                resolve: {
+                    providers: ['fedrampData', function (fedrampData) {
+                        return fedrampData.providers();
+                    }]
+                }
+            })
+            .state('fedramp.app.provider', {
+                url: '/provider',
+                templateUrl: 'src/templates/home/provider.html'
+            })
+            .state('fedramp.app.provider.information', {
+                url: '/:name',
+                templateUrl: 'src/templates/home/provider-information.html',
+                controller: 'ProviderInformationController as controller'
+            })
+            .state('fedramp.app.provider.comparison', {
+                url: '/:first/versus/:second',
+                templateUrl: 'src/templates/home/provider-comparison.html',
+                controller: 'ProviderComparisonController as controller'
+            })
+
+            // Product States
+            .state('fedramp.app.home.products', {
+                url: '/products',
+                templateUrl: 'src/templates/home/products.html',
+                controller: 'ProductsController as controller',
+                resolve: {
+                    products: ['fedrampData', function (fedrampData) {
+                        return fedrampData.products();
+                    }]
+                }
+            })
+            .state('fedramp.app.product', {
+                url: '/product',
+                templateUrl: 'src/templates/home/product.html'
+            })
+            .state('fedramp.app.product.information', {
+                url: '/:name',
+                templateUrl: 'src/templates/home/product-information.html',
+                controller: 'ProductInformationController as controller'
+            })
+            .state('fedramp.app.product.comparison', {
+                url: '/:first/versus/:second',
+                templateUrl: 'src/templates/home/product-comparison.html',
+                controller: 'ProductComparisonController as controller'
+            })
+
+
+            // Agency States
+            .state('fedramp.app.home.agencies', {
+                url: '/agencies',
+                templateUrl: 'src/templates/home/agencies.html',
+                controller: 'AgenciesController as controller',
+                resolve: {
+                    agencies: ['fedrampData', function (fedrampData) {
+                        return fedrampData.agencies();
+                    }]
+                }
+            })
+            .state('fedramp.app.agency', {
+                url: '/agency',
+                templateUrl: 'src/templates/home/agency.html',
+            })
+            .state('fedramp.app.agency.information', {
+                url: '/:name',
+                templateUrl: 'src/templates/home/agency-information.html',
+                controller: 'AgencyInformationController as controller'
+            })
+            .state('fedramp.app.agency.comparison', {
+                url: '/:first/versus/:second',
+                templateUrl: 'src/templates/home/agency-comparison.html',
+                controller: 'AgencyComparisonController as controller'
+            })
+
+            // Assessor States
+            .state('fedramp.app.home.assessors', {
+                url: '/assessors',
+                templateUrl: 'src/templates/home/assessors.html',
+                controller: 'AssessorsController as controller',
+                resolve: {
+                    assessors: ['fedrampData', function (fedrampData) {
+                        return fedrampData.assessors();
+                    }]
+                }
+            })
+            .state('fedramp.app.assessor', {
+                url: '/assessor',
+                templateUrl: 'src/templates/home/assessor.html'
+            })
+            .state('fedramp.app.assessor.information', {
+                url: '/:name',
+                templateUrl: 'src/templates/home/assessor-information.html',
+                controller: 'AssessorInformationController as controller'
+            })
+            .state('fedramp.app.assessor.comparison', {
+                url: '/:first/versus/:second',
+                templateUrl: 'src/templates/home/assessor-comparison.html',
+                controller: 'AssessorComparisonController as controller'
+            });
+    }
+})();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Components.Agency.html">Agency</a></li><li><a href="Components.Assessor.html">Assessor</a></li><li><a href="Components.Comparison.html">Comparison</a></li><li><a href="Components.DownloadCsv.html">DownloadCsv</a></li><li><a href="Components.Grid.html">Grid</a></li><li><a href="Components.GridFilter.html">GridFilter</a></li><li><a href="Components.GridFilterClear.html">GridFilterClear</a></li><li><a href="Components.GridSearch.html">GridSearch</a></li><li><a href="Components.GridSort.html">GridSort</a></li><li><a href="Components.Product.html">Product</a></li><li><a href="Components.ProductList.html">ProductList</a></li><li><a href="Components.ProductStatus.html">ProductStatus</a></li><li><a href="Components.Provider.html">Provider</a></li><li><a href="Components.Search.html">Search</a></li><li><a href="Components.Tile.html">Tile</a></li><li><a href="Controllers.AgenciesController.html">AgenciesController</a></li><li><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></li><li><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></li><li><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></li><li><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></li><li><a href="Controllers.AssessorsController.html">AssessorsController</a></li><li><a href="Controllers.HomeController.html">HomeController</a></li><li><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></li><li><a href="Controllers.ProductInformationController.html">ProductInformationController</a></li><li><a href="Controllers.ProductsController.html">ProductsController</a></li><li><a href="Controllers.ProviderComparisonController.html">ProviderComparisonController</a></li><li><a href="Controllers.ProviderInformationController.html">ProviderInformationController</a></li><li><a href="Controllers.ProvidersController.html">ProvidersController</a></li><li><a href="Controllers.SearchController.html">SearchController</a></li><li><a href="Controllers.SitemapController.html">SitemapController</a></li><li><a href="Models.Agency.html">Agency</a></li><li><a href="Models.Assessor.html">Assessor</a></li><li><a href="Models.AtoLetter.html">AtoLetter</a></li><li><a href="Models.Data.html">Data</a></li><li><a href="Models.Product.html">Product</a></li><li><a href="Models.Provider.html">Provider</a></li><li><a href="Models.Settings.html">Settings</a></li><li><a href="Services.CacheFactory.html">CacheFactory</a></li><li><a href="Services.CsvService.html">CsvService</a></li><li><a href="Services.DataService.html">DataService</a></li><li><a href="Services.DatasourceService.html">DatasourceService</a></li><li><a href="Services.FedrampDataProvider.html">FedrampDataProvider</a></li><li><a href="Services.HelperService.html">HelperService</a></li><li><a href="Services.Searcher.html">Searcher</a></li><li><a href="Services.StorageData.html">StorageData</a></li><li><a href="Services.StorageManager.html">StorageManager</a></li><li><a href="Services.StorageSettings.html">StorageSettings</a></li></ul><h3>Namespaces</h3><ul><li><a href="Components.html">Components</a></li><li><a href="Controllers.html">Controllers</a></li><li><a href="Models.html">Models</a></li><li><a href="Services.html">Services</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Jul 25 2016 06:43:53 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
