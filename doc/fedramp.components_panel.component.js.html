@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: fedramp.models/product.factory.js</title>
+    <title>JSDoc: Source: fedramp.components/panel.component.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: fedramp.models/product.factory.js</h1>
+    <h1 class="page-title">Source: fedramp.components/panel.component.js</h1>
 
     
 
@@ -28,144 +28,38 @@
         <article>
             <pre class="prettyprint source linenums"><code>(function () {
     'use strict';
-
     angular
-        .module('fedramp.models')
-        .factory('Product', ProductFactory);
+        .module('fedramp.components')
+        .component('panel', {
+            transclude: true,
+            templateUrl: 'src/templates/components/panel.html',
+            controller: Panel,
+            controllerAs: 'controller',
+            bindings: {
+                header: '@',
+                iconClass: '@',
+                expand: '&lt;'
+            }
+        });
 
-    ProductFactory.$inject = [];
+    Panel.$inject = [];
 
-    function ProductFactory () {
-        /**
-         * The product (CSO)
-         * @constructor
-         * @memberof Models
-         */
-        function Product () {
-            // Scope `this` to self
-            var self = this;
+    /**
+     * @constructor
+     * @memberof Components
+     */
+    function Panel () {
+        var self = this;
+        self.header = self.header || '';
+        self.expand = angular.isDefined(self.expand) || true;
 
-            /**
-             * The model type
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.type = 'product';
+        // funcs
+        self.$onInit = $onInit;
 
-            /**
-             * The product name
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.name = '';
 
-            /**
-             * The package identifier
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.pkgId = '';
+        function $onInit(){
 
-            /**
-             * The number of times the product was used
-             * @member {integer}
-             * @memberof Models.Product
-             */
-            self.reuses = 0;
-
-            /**
-             * The provider name
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.provider = '';
-
-            /**
-             * Agencies associated to the product
-             * @member {array}
-             * @memberof Models.Product
-             */
-            self.agencies = [];
-
-            /**
-             * The deployment model
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.deploymentModel = '';
-
-            /**
-             * The designation or status
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.designation = '';
-
-            /**
-             * Service models
-             * @member {array}
-             * @memberof Models.Product
-             */
-            self.serviceModels = [];
-
-            /**
-             * The impact level
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.impactLevel = '';
-
-            /**
-             * The logo URL
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.logo = '';
-
-            /**
-             * The authorization date
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.authorizationDate = '';
-
-            /**
-             * The expected compliance date
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.expectedCompliance = '';
-
-            /**
-             * The expiration date
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.expirationDate = '';
-
-            /**
-             * The independent assessor name
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.independentAssessor = '';
-
-            /**
-             * The authorization type
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.authorizationType = '';
-
-            /**
-             * The sponsoring agency name
-             * @member {string}
-             * @memberof Models.Product
-             */
-            self.sponsoringAgency = '';
         }
-
-        return Product;
     }
 })();
 </code></pre>
