@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: fedramp.components/search.component.js</title>
+    <title>JSDoc: Source: fedramp.components/products-grid.component.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: fedramp.components/search.component.js</h1>
+    <h1 class="page-title">Source: fedramp.components/products-grid.component.js</h1>
 
     
 
@@ -31,60 +31,141 @@
 
     angular
         .module('fedramp.components')
-        .component('search', {
-            templateUrl: 'src/templates/components/search.html',
-            controller: Search,
-            controllerAs: 'controller'
+        .component('productsGrid', {
+            templateUrl: 'src/templates/components/products-grid.html',
+            controller: ProductsGrid,
+            controllerAs: 'controller',
+            bindings: {
+                expandTiles: '&lt;',
+                rawItems: '&lt;?',
+                onUpdate: '&amp;?'
+            }
         });
 
-    Search.$inject = ['$log', '$state'];
+    ProductsGrid.$inject = ['$log', 'fedrampData', '$attrs'];
 
     /**
      * @constructor
      * @memberof Components
      */
-    function Search ($log, $state) {
+    function ProductsGrid($log, fedrampData, $attrs){
         var self = this;
-
         /**
-         * The format to be used when rendering results in Bing.
-         * For browsers where AngularJS does not work we would want
-         * normal functionality.
-         *
-         * @member {string}
-         * @memberof Components.Search
+         * The filtered data
+         * @member {array}
+         * @memberof Components.ProductsGrid
          */
-        self.format = 'html';
+        self.filteredData = [];
 
         /**
-         * The search query.
-         *
-         * @member {string}
-         * @memberof Components.Search
+         * The products
+         * @member {array}
+         * @memberof Components.ProductsGrid
          */
-        self.query = '';
+        self.products = self.rawItems || fedrampData.products();
 
         /**
-         * Redirect to the search view to handle rendering of results
-         *
+         * Event reciever for when the grid is updated.
          * @public
-         * @memberof Components.Search
+         * @member {object}
+         * @memberof Components.ProductsGrid
+         *
+         * @param {array} items
+         *  Array of items with filtering and sorting applied.
          */
-        self.search = function (e) {
-            if (e) {
-                e.preventDefault();
+        self.onUpdate = function(func){            
+            return function(items, state){
+                self.filteredData = items;
+                if(func){
+                    func({items: items});
+                }
+            };
+        }(self.onUpdate);
+
+
+        /**
+         * Flag to hide filters
+         */
+        self.hideFilters = angular.isDefined($attrs.hideFilters) ? $attrs.hideFilters : false; 
+
+        /**
+         * Determine the options available for filtering the reuse metric
+         * @public
+         * @member {object}
+         * @memberof Components.ProductsGrid
+         *
+         * @param {array} products
+         *  Array of items available
+         *
+         * @returns
+         *  An array of option values for filtering
+         */
+        self.reuseRangeOptions = function (products) {
+            return [
+                {value: {min: 0, max:5}, label: '0 - 5', selected: false}, 
+                {value: {min: 6, max:10}, label: '5 - 10', selected:false},
+                {value: {min: 11, max:1000}, label: '> 10', selected:false}];
+        };
+
+        /**
+         * Filter the data set by the reuse metric
+         * @public
+         * @member {object}
+         * @memberof Components.ProductsGrid
+         *
+         * @param {object} product
+         *  The product to compare
+         * @param {integer} index
+         *  The current index within the array of items
+         * @param {array} arr
+         *  Array of items
+         * @param {array} selectedOptions
+         *  Array of selected options
+         *
+         * @returns
+         *  The matched item or null
+         */
+        self.reuseRangeFilter = function (product, index, arr, selectedOptions) {
+            return selectedOptions.find(function (option) {
+                if (product.reuses >= option.value.min &amp;&amp; product.reuses &lt;= option.value.max) {
+                    return product;
+                }
+            });
+        };
+        
+        /**
+         * Custom search function used in filtering the grid.
+         * @public
+         * @member {object}
+         * @memberof Components.ProductsGrid
+         *
+         * @param {object} product
+         *  The product to be compared
+         * @param {integer} i
+         *  The current index within the array of items
+         * @param {array} arr
+         *  The array of items
+         * @param {string} searchTerm
+         *  The search context
+         *
+         * @returns
+         *  An matched item or null
+         */
+        self.productNameSearchFilterFunc = function (product, i, arr, searchTerm) {
+            // If no search term, we display result since this is the same as having nothing selected
+            if (!searchTerm) {
+                return product;
             }
 
-            if (self.query) {
-                $state.go(
-                    'fedramp.app.search',
-                    {
-                        query: self.query,
-                    },
-                    {
-                        reload: true
-                    });
+            searchTerm = searchTerm.toLowerCase();
+            var productName = product.name.toLowerCase();
+            var providerName = product.provider.toLowerCase();
+
+            if (productName.indexOf(searchTerm) !== -1 || providerName.indexOf(searchTerm) !== -1) {
+                return product;
             }
+
+            return null;
         };
     }
 })();

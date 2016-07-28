@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: fedramp.components/search.component.js</title>
+    <title>JSDoc: Class: AssessorGrid</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,80 +17,126 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: fedramp.components/search.component.js</h1>
+    <h1 class="page-title">Class: AssessorGrid</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>(function () {
-    'use strict';
+        <h2>
+            <span class="ancestors"><a href="Components.html">Components</a>.</span>AssessorGrid</h2>
+        
+    
+</header>
 
-    angular
-        .module('fedramp.components')
-        .component('search', {
-            templateUrl: 'src/templates/components/search.html',
-            controller: Search,
-            controllerAs: 'controller'
-        });
+<article>
+    <div class="container-overview">
+    
+        
 
-    Search.$inject = ['$log', '$state'];
+    
 
-    /**
-     * @constructor
-     * @memberof Components
-     */
-    function Search ($log, $state) {
-        var self = this;
+    <h4 class="name" id="AssessorGrid"><span class="type-signature"></span>new AssessorGrid<span class="signature">()</span><span class="type-signature"></span></h4>
 
-        /**
-         * The format to be used when rendering results in Bing.
-         * For browsers where AngularJS does not work we would want
-         * normal functionality.
-         *
-         * @member {string}
-         * @memberof Components.Search
-         */
-        self.format = 'html';
+    
 
-        /**
-         * The search query.
-         *
-         * @member {string}
-         * @memberof Components.Search
-         */
-        self.query = '';
 
-        /**
-         * Redirect to the search view to handle rendering of results
-         *
-         * @public
-         * @memberof Components.Search
-         */
-        self.search = function (e) {
-            if (e) {
-                e.preventDefault();
-            }
 
-            if (self.query) {
-                $state.go(
-                    'fedramp.app.search',
-                    {
-                        query: self.query,
-                    },
-                    {
-                        reload: true
-                    });
-            }
-        };
-    }
-})();
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fedramp.components_assessors-grid.component.js.html">fedramp.components/assessors-grid.component.js</a>, <a href="fedramp.components_assessors-grid.component.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

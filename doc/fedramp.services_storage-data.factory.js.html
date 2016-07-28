@@ -89,7 +89,6 @@
                     item.logo = d.cspUrl;
                     items.push(item);
                 }
-
                 
                 items.forEach(item => {
                     item.products = self.products().filter(x => x.provider === item.name);
@@ -117,12 +116,12 @@
                                 item.designations.push(prod.designation.trim());
                             }
 
-                            if (include(prod.sponsoringAgency, item.agencies)) {
+                            if (validAgency(prod.sponsoringAgency) &amp;&amp; include(prod.sponsoringAgency, item.agencies)) {
                                 item.agencies.push(prod.sponsoringAgency.trim());
                             }
 
                             prod.agencies.forEach(a => {
-                                if (include(a, item.agencies)) {
+                                if (validAgency(a) &amp;&amp; include(a, item.agencies)) {
                                     item.agencies.push(a);
                                 }
                             });
@@ -190,17 +189,17 @@
 
                 items.forEach(item => {
                     data.forEach(d => {
-                        if (d.pkg === item.name) {
-                            if (include(d.sponsoringAgency, item.agencies)) {
+                        if (d.pkg.trim() === item.name) {
+                            if (validAgency(d.sponsoringAgency) &amp;&amp; include(d.sponsoringAgency, item.agencies)) {
                                 item.agencies.push(d.sponsoringAgency.trim());
                             }
 
                             d.atoLetters.forEach(a => {
-                                if (include(a.authorizingAgency, item.agencies)) {
+                                if (validAgency(a.authorizingAgency) &amp;&amp; include(a.authorizingAgency, item.agencies)) {
                                     item.agencies.push(a.authorizingAgency.trim());
                                 }
 
-                                if (include(a.authorizingSubagency, item.agencies)) {
+                                if (validAgency(a.authorizingSubagency) &amp;&amp; include(a.authorizingSubagency, item.agencies)) {
                                     item.agencies.push(a.authorizingSubagency.trim());
                                 }
                             });
@@ -228,7 +227,7 @@
                 for (let i = 0; i &lt; data.length; i++) {
                     let d = data[i];
 
-                    if (include(d.sponsoringAgency, names)) {
+                    if (validAgency(d.sponsoringAgency) &amp;&amp; include(d.sponsoringAgency, names)) {
                         names.push(d.sponsoringAgency.trim());
                         let item = new Agency();
                         item.name = d.sponsoringAgency.trim();
@@ -242,14 +241,14 @@
                     for (let j = 0; j &lt; d.atoLetters.length; j++) {
                         let l = d.atoLetters[j];
 
-                        if (include(l.authorizingAgency, names)) {
+                        if (validAgency(l.authorizingAgency) &amp;&amp; include(l.authorizingAgency, names)) {
                             names.push(l.authorizingAgency.trim());
                             let item = new Agency();
                             item.name = l.authorizingAgency.trim();
                             items.push(item);
                         }
 
-                        if (include(l.authorizingSubagency, names)) {
+                        if (validAgency(l.authorizingSubagency) &amp;&amp; include(l.authorizingSubagency, names)) {
                             names.push(l.authorizingSubagency.trim());
                             let item = new Agency();
                             item.name = l.authorizingSubagency.trim();
@@ -358,7 +357,7 @@
                                 item.providers.push(d.name.trim());
                             }
 
-                            if (include(d.sponsoringAgency, item.agencies)) {
+                            if (validAgency(d.sponsoringAgency) &amp;&amp; include(d.sponsoringAgency, item.agencies)) {
                                 item.agencies.push(d.sponsoringAgency.trim());
                             }
                         }
@@ -373,11 +372,11 @@
                                     item.providers.push(d.name.trim());
                                 }
 
-                                if (include(a.authorizingAgency, item.agencies)) {
+                                if (validAgency(a.authorizingAgency) &amp;&amp; include(a.authorizingAgency, item.agencies)) {
                                     item.agencies.push(a.authorizingAgency.trim());
                                 }
 
-                                if (include(a.authorizingSubagency, item.agencies)) {
+                                if (validAgency(a.authorizingSubagency) &amp;&amp; include(a.authorizingSubagency, item.agencies)) {
                                     item.agencies.push(a.authorizingSubagency.trim());
                                 }
                             }
@@ -405,6 +404,10 @@
                 return false;
             }
 
+            function validAgency(agency) {
+                return include(agency, ['JAB Authorization', 'CSP Supplied']);
+            }
+
             /**
              * Finds the assessor using a name from the list of raw assessors.
              *
@@ -412,13 +415,13 @@
              * Assessor being populated.
              */
             function fillFromRawAssessor(assessor){
-                for (let x = 0; x &lt; rawAssessors.length; x++){
+                for (let x = 0; x &lt; rawAssessors.length; x++) {
                     // Empty {} seem to be returned sometimes
-                    if(Object.keys(rawAssessors[x]).length === 0){
+                    if (Object.keys(rawAssessors[x]).length === 0) {
                         continue;
                     }
                     var assessorData = new AssessorData(rawAssessors[x]);
-                    if(safeTrim(assessorData.name) === safeTrim(assessor.name)){
+                    if (safeTrim(assessorData.name) === safeTrim(assessor.name)) {
                         assessor.accreditationDate = helperService.toDate(assessorData.accreditationDate);
                         break;
                     }
@@ -445,13 +448,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Components.Agency.html">Agency</a></li><li><a href="Components.Assessor.html">Assessor</a></li><li><a href="Components.Comparison.html">Comparison</a></li><li><a href="Components.DownloadCsv.html">DownloadCsv</a></li><li><a href="Components.Grid.html">Grid</a></li><li><a href="Components.GridFilter.html">GridFilter</a></li><li><a href="Components.GridFilterClear.html">GridFilterClear</a></li><li><a href="Components.GridSearch.html">GridSearch</a></li><li><a href="Components.GridSort.html">GridSort</a></li><li><a href="Components.Panel.html">Panel</a></li><li><a href="Components.Product.html">Product</a></li><li><a href="Components.ProductList.html">ProductList</a></li><li><a href="Components.ProductStatus.html">ProductStatus</a></li><li><a href="Components.Provider.html">Provider</a></li><li><a href="Components.Search.html">Search</a></li><li><a href="Components.Tile.html">Tile</a></li><li><a href="Controllers.AgenciesController.html">AgenciesController</a></li><li><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></li><li><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></li><li><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></li><li><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></li><li><a href="Controllers.AssessorsController.html">AssessorsController</a></li><li><a href="Controllers.HomeController.html">HomeController</a></li><li><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></li><li><a href="Controllers.ProductInformationController.html">ProductInformationController</a></li><li><a href="Controllers.ProductsController.html">ProductsController</a></li><li><a href="Controllers.ProviderComparisonController.html">ProviderComparisonController</a></li><li><a href="Controllers.ProviderInformationController.html">ProviderInformationController</a></li><li><a href="Controllers.ProvidersController.html">ProvidersController</a></li><li><a href="Controllers.SearchController.html">SearchController</a></li><li><a href="Controllers.SitemapController.html">SitemapController</a></li><li><a href="Models.Agency.html">Agency</a></li><li><a href="Models.Assessor.html">Assessor</a></li><li><a href="Models.AssessorData.html">AssessorData</a></li><li><a href="Models.AtoLetter.html">AtoLetter</a></li><li><a href="Models.Data.html">Data</a></li><li><a href="Models.Product.html">Product</a></li><li><a href="Models.Provider.html">Provider</a></li><li><a href="Models.Settings.html">Settings</a></li><li><a href="Services.CacheFactory.html">CacheFactory</a></li><li><a href="Services.CsvService.html">CsvService</a></li><li><a href="Services.DataService.html">DataService</a></li><li><a href="Services.DatasourceService.html">DatasourceService</a></li><li><a href="Services.FedrampDataProvider.html">FedrampDataProvider</a></li><li><a href="Services.HelperService.html">HelperService</a></li><li><a href="Services.Searcher.html">Searcher</a></li><li><a href="Services.StorageAssessorData.html">StorageAssessorData</a></li><li><a href="Services.StorageData.html">StorageData</a></li><li><a href="Services.StorageManager.html">StorageManager</a></li><li><a href="Services.StorageSettings.html">StorageSettings</a></li></ul><h3>Namespaces</h3><ul><li><a href="Components.html">Components</a></li><li><a href="Controllers.html">Controllers</a></li><li><a href="Models.html">Models</a></li><li><a href="Services.html">Services</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Components.AgenciesGrid.html">AgenciesGrid</a></li><li><a href="Components.Agency.html">Agency</a></li><li><a href="Components.Assessor.html">Assessor</a></li><li><a href="Components.AssessorGrid.html">AssessorGrid</a></li><li><a href="Components.Comparison.html">Comparison</a></li><li><a href="Components.DownloadCsv.html">DownloadCsv</a></li><li><a href="Components.Grid.html">Grid</a></li><li><a href="Components.GridFilter.html">GridFilter</a></li><li><a href="Components.GridFilterClear.html">GridFilterClear</a></li><li><a href="Components.GridSearch.html">GridSearch</a></li><li><a href="Components.GridSort.html">GridSort</a></li><li><a href="Components.Panel.html">Panel</a></li><li><a href="Components.Product.html">Product</a></li><li><a href="Components.ProductList.html">ProductList</a></li><li><a href="Components.ProductsGrid.html">ProductsGrid</a></li><li><a href="Components.ProductStatus.html">ProductStatus</a></li><li><a href="Components.Provider.html">Provider</a></li><li><a href="Components.Search.html">Search</a></li><li><a href="Components.Tile.html">Tile</a></li><li><a href="Controllers.AgenciesController.html">AgenciesController</a></li><li><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></li><li><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></li><li><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></li><li><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></li><li><a href="Controllers.AssessorsController.html">AssessorsController</a></li><li><a href="Controllers.HomeController.html">HomeController</a></li><li><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></li><li><a href="Controllers.ProductInformationController.html">ProductInformationController</a></li><li><a href="Controllers.ProductsController.html">ProductsController</a></li><li><a href="Controllers.ProviderComparisonController.html">ProviderComparisonController</a></li><li><a href="Controllers.ProviderInformationController.html">ProviderInformationController</a></li><li><a href="Controllers.ProvidersController.html">ProvidersController</a></li><li><a href="Controllers.SearchController.html">SearchController</a></li><li><a href="Controllers.SitemapController.html">SitemapController</a></li><li><a href="Models.Agency.html">Agency</a></li><li><a href="Models.Assessor.html">Assessor</a></li><li><a href="Models.AssessorData.html">AssessorData</a></li><li><a href="Models.AtoLetter.html">AtoLetter</a></li><li><a href="Models.Data.html">Data</a></li><li><a href="Models.Product.html">Product</a></li><li><a href="Models.Provider.html">Provider</a></li><li><a href="Models.Settings.html">Settings</a></li><li><a href="Services.CacheFactory.html">CacheFactory</a></li><li><a href="Services.CsvService.html">CsvService</a></li><li><a href="Services.DataService.html">DataService</a></li><li><a href="Services.DatasourceService.html">DatasourceService</a></li><li><a href="Services.FedrampDataProvider.html">FedrampDataProvider</a></li><li><a href="Services.HelperService.html">HelperService</a></li><li><a href="Services.Searcher.html">Searcher</a></li><li><a href="Services.StorageAssessorData.html">StorageAssessorData</a></li><li><a href="Services.StorageData.html">StorageData</a></li><li><a href="Services.StorageManager.html">StorageManager</a></li><li><a href="Services.StorageSettings.html">StorageSettings</a></li></ul><h3>Namespaces</h3><ul><li><a href="Components.html">Components</a></li><li><a href="Controllers.html">Controllers</a></li><li><a href="Models.html">Models</a></li><li><a href="Services.html">Services</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Jul 27 2016 16:41:07 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Jul 28 2016 13:26:44 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

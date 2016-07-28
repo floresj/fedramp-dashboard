@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: DataService</title>
+    <title>JSDoc: Class: ProductsGrid</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: DataService</h1>
+    <h1 class="page-title">Class: ProductsGrid</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="Services.html">Services</a>.</span>DataService</h2>
+            <span class="ancestors"><a href="Components.html">Components</a>.</span>ProductsGrid</h2>
         
     
 </header>
@@ -41,7 +41,7 @@
 
     
 
-    <h4 class="name" id="DataService"><span class="type-signature"></span>new DataService<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ProductsGrid"><span class="type-signature"></span>new ProductsGrid<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -88,7 +88,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_data.service.js.html">fedramp.services/data.service.js</a>, <a href="fedramp.services_data.service.js.html#line14">line 14</a>
+        <a href="fedramp.components_products-grid.component.js.html">fedramp.components/products-grid.component.js</a>, <a href="fedramp.components_products-grid.component.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -128,32 +128,30 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<h4 class="name" id=".self.filteredData"><span class="type-signature">(static) </span>self.filteredData<span class="type-signature"> :array</span></h4>
 
-    
-
-    <h4 class="name" id=".self.pull"><span class="type-signature">(static) </span>self.pull<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    Issue a GET request for the given URL.
+    The filtered data
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">array</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -188,7 +186,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_data.service.js.html">fedramp.services/data.service.js</a>, <a href="fedramp.services_data.service.js.html#line25">line 25</a>
+        <a href="fedramp.components_products-grid.component.js.html">fedramp.components/products-grid.component.js</a>, <a href="fedramp.components_products-grid.component.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -204,48 +202,28 @@
 
 
 
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    The response as a promise
-</div>
-
-
-
-    
-
-
-
         
             
+<h4 class="name" id=".self.onUpdate"><span class="type-signature">(static) </span>self.onUpdate<span class="type-signature"> :object</span></h4>
 
-    
-
-    <h4 class="name" id="~saveAssessors"><span class="type-signature">(inner) </span>saveAssessors<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    Stores assessor information into local storage
+    Event reciever for when the grid is updated.
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -280,7 +258,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_data.service.js.html">fedramp.services/data.service.js</a>, <a href="fedramp.services_data.service.js.html#line59">line 59</a>
+        <a href="fedramp.components_products-grid.component.js.html">fedramp.components/products-grid.component.js</a>, <a href="fedramp.components_products-grid.component.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -296,38 +274,28 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id=".self.productNameSearchFilterFunc"><span class="type-signature">(static) </span>self.productNameSearchFilterFunc<span class="type-signature"> :object</span></h4>
 
-    
-
-    <h4 class="name" id="~saveProviders"><span class="type-signature">(inner) </span>saveProviders<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    Stores provider information into local storage
+    Custom search function used in filtering the grid.
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -362,7 +330,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_data.service.js.html">fedramp.services/data.service.js</a>, <a href="fedramp.services_data.service.js.html#line46">line 46</a>
+        <a href="fedramp.components_products-grid.component.js.html">fedramp.components/products-grid.component.js</a>, <a href="fedramp.components_products-grid.component.js.html#line126">line 126</a>
     </li></ul></dd>
     
 
@@ -378,38 +346,28 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id=".self.products"><span class="type-signature">(static) </span>self.products<span class="type-signature"> :array</span></h4>
 
-    
-
-    <h4 class="name" id="~saveSettings"><span class="type-signature">(inner) </span>saveSettings<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    Stores setting information into local storage
+    The products
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">array</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -444,7 +402,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_data.service.js.html">fedramp.services/data.service.js</a>, <a href="fedramp.services_data.service.js.html#line71">line 71</a>
+        <a href="fedramp.components_products-grid.component.js.html">fedramp.components/products-grid.component.js</a>, <a href="fedramp.components_products-grid.component.js.html#line37">line 37</a>
     </li></ul></dd>
     
 
@@ -460,10 +418,72 @@
 
 
 
+        
+            
+<h4 class="name" id=".self.reuseRangeFilter"><span class="type-signature">(static) </span>self.reuseRangeFilter<span class="type-signature"> :object</span></h4>
 
 
 
 
+<div class="description">
+    Filter the data set by the reuse metric
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fedramp.components_products-grid.component.js.html">fedramp.components/products-grid.component.js</a>, <a href="fedramp.components_products-grid.component.js.html#line100">line 100</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
 
@@ -471,6 +491,80 @@
 
 
         
+            
+<h4 class="name" id=".self.reuseRangeOptions"><span class="type-signature">(static) </span>self.reuseRangeOptions<span class="type-signature"> :object</span></h4>
+
+
+
+
+<div class="description">
+    Determine the options available for filtering the reuse metric
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fedramp.components_products-grid.component.js.html">fedramp.components/products-grid.component.js</a>, <a href="fedramp.components_products-grid.component.js.html#line75">line 75</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
     
 
     
