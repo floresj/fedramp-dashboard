@@ -9,9 +9,9 @@ describe('StorageData manager', function () {
     var Provider;
     var AssessorData;
 
-    beforeEach(function(){
+    beforeEach(function () {
         module('fedramp.services');
-        inject(function($injector){
+        inject(function ($injector) {
             StorageData = $injector.get('StorageData');
             Data = $injector.get('Data');
             Agency = $injector.get('Agency');
@@ -180,7 +180,7 @@ describe('StorageData manager', function () {
         var storage = new StorageData();
         storage.clear();
         storage.update(data.hash(), data);
-        expect(storage.agencies().length).toBe(3);
+        expect(storage.agencies().length).toBe(2);
     });
 
     it('can return assessors', function () {

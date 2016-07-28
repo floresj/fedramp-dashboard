@@ -1,5 +1,5 @@
-function TestDataFactory(inject){
-    "use strict";
+function TestDataFactory (inject) {
+    'use strict';
     var self = this;
 
     self.gridComponent = gridComponent;
@@ -8,8 +8,11 @@ function TestDataFactory(inject){
     self.gridClearComponent = gridClearComponent;
     self.gridSortComponent = gridSortComponent;
     self.storageFactory = storageFactory;
+    self.productsGridComponent = productsGridComponent;
+    self.agenciesGridComponent = agenciesGridComponent;
+    self.assessorsGridComponent = assessorsGridComponent;
 
-    function gridComponent(properties){
+    function gridComponent (properties) {
         properties = properties || {};
         var gridComponent;
 
@@ -42,7 +45,7 @@ function TestDataFactory(inject){
         return gridComponent;
     }
 
-    function gridFilterComponent(properties, dependencies){
+    function gridFilterComponent (properties, dependencies) {
         var gridFilter;
 
         properties = properties || {};
@@ -70,7 +73,7 @@ function TestDataFactory(inject){
         return gridFilter;
     }
 
-    function gridSearchComponent(properties){
+    function gridSearchComponent (properties) {
         var filter;
 
         properties = properties || {};
@@ -95,7 +98,7 @@ function TestDataFactory(inject){
         return filter;
     }
 
-    function gridClearComponent(properties){
+    function gridClearComponent (properties) {
         var filter;
 
         inject(function (_$componentController_, $injector, $rootScope) {
@@ -112,7 +115,7 @@ function TestDataFactory(inject){
         return filter;
     }
 
-    function gridSortComponent(properties){
+    function gridSortComponent (properties) {
         var filter;
         var config = angular.extend({
             name: 'someSort'
@@ -133,9 +136,9 @@ function TestDataFactory(inject){
         return filter;
     }
 
-    function storageFactory(){
+    function storageFactory () {
         var s = null;
-        inject(function($injector){
+        inject(function ($injector) {
             var Data = $injector.get('Data');
             var StorageData = $injector.get('StorageData');
 
@@ -165,5 +168,65 @@ function TestDataFactory(inject){
         });
 
         return s;
+    }
+
+    function productsGridComponent(properties, dependencies){
+        var gridFilter;
+        properties = properties || {};
+            var config = angular.extend({
+            }, properties);
+            dependencies = dependencies || {};
+
+        inject(function (_$componentController_, $injector, $rootScope) {
+            var $componentController = _$componentController_;
+            var $log = $injector.get('$log');
+
+            gridFilter = $componentController('productsGrid', 
+                angular.extend({
+                $log: $log
+            }, dependencies), config);
+        });
+
+        return gridFilter;
+    }
+
+    function agenciesGridComponent(properties, dependencies){
+        var gridFilter;
+        properties = properties || {};
+            var config = angular.extend({
+            }, properties);
+            dependencies = dependencies || {};
+
+        inject(function (_$componentController_, $injector, $rootScope) {
+            var $componentController = _$componentController_;
+            var $log = $injector.get('$log');
+
+            gridFilter = $componentController('agenciesGrid', 
+                angular.extend({
+                $log: $log
+            }, dependencies), config);
+        });
+
+        return gridFilter;
+    }
+
+    function assessorsGridComponent(properties, dependencies){
+        var gridFilter;
+        properties = properties || {};
+            var config = angular.extend({
+            }, properties);
+            dependencies = dependencies || {};
+
+        inject(function (_$componentController_, $injector, $rootScope) {
+            var $componentController = _$componentController_;
+            var $log = $injector.get('$log');
+
+            gridFilter = $componentController('assessorsGrid', 
+                angular.extend({
+                $log: $log
+            }, dependencies), config);
+        });
+
+        return gridFilter;
     }
 }
