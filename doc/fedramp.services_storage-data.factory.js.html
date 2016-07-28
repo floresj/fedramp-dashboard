@@ -116,12 +116,12 @@
                                 item.designations.push(prod.designation.trim());
                             }
 
-                            if (include(prod.sponsoringAgency, item.agencies)) {
+                            if (validAgency(prod.sponsoringAgency) &amp;&amp; include(prod.sponsoringAgency, item.agencies)) {
                                 item.agencies.push(prod.sponsoringAgency.trim());
                             }
 
                             prod.agencies.forEach(a => {
-                                if (include(a, item.agencies)) {
+                                if (validAgency(a) &amp;&amp; include(a, item.agencies)) {
                                     item.agencies.push(a);
                                 }
                             });
@@ -190,16 +190,16 @@
                 items.forEach(item => {
                     data.forEach(d => {
                         if (d.pkg.trim() === item.name) {
-                            if (include(d.sponsoringAgency, item.agencies)) {
+                            if (validAgency(d.sponsoringAgency) &amp;&amp; include(d.sponsoringAgency, item.agencies)) {
                                 item.agencies.push(d.sponsoringAgency.trim());
                             }
 
                             d.atoLetters.forEach(a => {
-                                if (include(a.authorizingAgency, item.agencies)) {
+                                if (validAgency(a.authorizingAgency) &amp;&amp; include(a.authorizingAgency, item.agencies)) {
                                     item.agencies.push(a.authorizingAgency.trim());
                                 }
 
-                                if (include(a.authorizingSubagency, item.agencies)) {
+                                if (validAgency(a.authorizingSubagency) &amp;&amp; include(a.authorizingSubagency, item.agencies)) {
                                     item.agencies.push(a.authorizingSubagency.trim());
                                 }
                             });
@@ -227,7 +227,7 @@
                 for (let i = 0; i &lt; data.length; i++) {
                     let d = data[i];
 
-                    if (include(d.sponsoringAgency, names)) {
+                    if (validAgency(d.sponsoringAgency) &amp;&amp; include(d.sponsoringAgency, names)) {
                         names.push(d.sponsoringAgency.trim());
                         let item = new Agency();
                         item.name = d.sponsoringAgency.trim();
@@ -241,14 +241,14 @@
                     for (let j = 0; j &lt; d.atoLetters.length; j++) {
                         let l = d.atoLetters[j];
 
-                        if (include(l.authorizingAgency, names)) {
+                        if (validAgency(l.authorizingAgency) &amp;&amp; include(l.authorizingAgency, names)) {
                             names.push(l.authorizingAgency.trim());
                             let item = new Agency();
                             item.name = l.authorizingAgency.trim();
                             items.push(item);
                         }
 
-                        if (include(l.authorizingSubagency, names)) {
+                        if (validAgency(l.authorizingSubagency) &amp;&amp; include(l.authorizingSubagency, names)) {
                             names.push(l.authorizingSubagency.trim());
                             let item = new Agency();
                             item.name = l.authorizingSubagency.trim();
@@ -357,7 +357,7 @@
                                 item.providers.push(d.name.trim());
                             }
 
-                            if (include(d.sponsoringAgency, item.agencies)) {
+                            if (validAgency(d.sponsoringAgency) &amp;&amp; include(d.sponsoringAgency, item.agencies)) {
                                 item.agencies.push(d.sponsoringAgency.trim());
                             }
                         }
@@ -372,11 +372,11 @@
                                     item.providers.push(d.name.trim());
                                 }
 
-                                if (include(a.authorizingAgency, item.agencies)) {
+                                if (validAgency(a.authorizingAgency) &amp;&amp; include(a.authorizingAgency, item.agencies)) {
                                     item.agencies.push(a.authorizingAgency.trim());
                                 }
 
-                                if (include(a.authorizingSubagency, item.agencies)) {
+                                if (validAgency(a.authorizingSubagency) &amp;&amp; include(a.authorizingSubagency, item.agencies)) {
                                     item.agencies.push(a.authorizingSubagency.trim());
                                 }
                             }
@@ -402,6 +402,10 @@
                     return !a.includes(st);
                 }
                 return false;
+            }
+
+            function validAgency(agency) {
+                return include(agency, ['JAB Authorization', 'CSP Supplied']);
             }
 
             /**
@@ -450,7 +454,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Jul 28 2016 12:47:53 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Jul 28 2016 13:17:53 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
