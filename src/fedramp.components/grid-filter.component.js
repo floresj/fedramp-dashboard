@@ -108,9 +108,6 @@
         var selectedCss = 'grid-filter-selected';
         var OBJECT_PARAM_REGEX = /\:\((.+?)\),{0,}/;
 
-        // Default template used to render option values
-        self.gridFilterOptionsTemplatePath = "src/templates/components/grid-filter-options.html";
-        
         // Options available to filter based on property
         self.options = [];
 
@@ -130,6 +127,7 @@
         self.clear = clear;
         self.loadOptions = loadOptions;
         self.restoreState = restoreState;
+        self.toggleExpand = toggleExpand;
 
 
         function $onInit(){
@@ -151,7 +149,8 @@
             self.gridController.addFilter(self);
 
             // If no options have been loaded, we load default ones
-            if(self.options.length === 0){
+            // Also, if tab is not expanded, then don't load anything
+            if(self.opened && self.options.length === 0){
                 self.loadOptions(self.gridController.rawItems);
             }
 
@@ -179,7 +178,8 @@
             }
             var values = params[self.id];
             var selected = [];
-
+            self.opened = true;
+            self.loadOptions(self.gridController.rawItems);
             // Check if loading non-primitive object
             var m = values.match(OBJECT_PARAM_REGEX);
             if(m){
@@ -203,7 +203,7 @@
                 // Handle basic primitive options
                 values.split(',').forEach(function(val){
                     selected.push({
-                        value: val,
+                        value: decodeURIComponent(val),
                         selected: true
                     });
                     self.options.forEach(function(option){
@@ -251,9 +251,8 @@
                     if(angular.isObject(option.value)){
                         return ':(' + angular.toJson(option.value) + ')';
                     }
-
                     // Handle basic primitive value
-                    return option.value;
+                    return encodeURIComponent(option.value);
                 }).join(',');
                 self.gridController.state[self.id] = options;
             } else {
@@ -359,6 +358,16 @@
                     return value;
                 }
             });
+
+            options.sort(function(o1, o2){
+                if(o1.label < o2.label){
+                    return -1;
+                }
+                if(o1.label > o2.label){
+                    return 1;
+                }
+                return 0;
+            });
             return options;
         }
 
@@ -372,6 +381,7 @@
         function clear(){
             self.selectedOptionValues = [];
             self.options.forEach(x=> x.selected = false);
+            delete self.gridController.state[self.id];
             applyFilter();
         }
 
@@ -404,6 +414,17 @@
             } else {
                 $element.removeClass(selectedCss);
             }
+        }
+
+        /**
+         * Toggles the opening and closing of filter options. If a filter was initially closed,
+         * the options are then generated.
+         */
+        function toggleExpand(){
+            if(!self.opened && self.options.length === 0){
+                self.loadOptions(self.gridController.rawItems);
+            }
+            self.opened = !self.opened;
         }
     }
 })();

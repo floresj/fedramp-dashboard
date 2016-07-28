@@ -5,15 +5,14 @@
         .module('fedramp.services')
         .service('DataService', DataService);
 
-    DataService.$inject = ['$log', 'StorageManager', 'StorageData', 'Data', 'DatasourceService'];
+    DataService.$inject = ['$log', 'StorageData', 'StorageAssessorData', 'StorageSettings', 'Settings', 'Data', 'AssessorData', 'DatasourceService', 'dataUrl'];
 
     /**
      * @constructor
      * @memberof Services
      */
-    function DataService ($log, StorageManager, StorageData, Data, DatasourceService) {
+    function DataService ($log, StorageData, StorageAssessorData, StorageSettings, Settings, Data, AssessorData, DatasourceService, dataUrl) {
         var self = this;
-        var dataUrl = 'https://raw.githubusercontent.com/18F/fedramp-micropurchase/master/data/data.json';
 
         /**
          * Issue a GET request for the given URL.
@@ -27,16 +26,53 @@
             return DatasourceService.pull(dataUrl).then(function (response) {
                 let meta = response.meta;
                 let data = response.data;
-                let storage = new StorageData();
-                storage.clear();
 
-                for (let i = 0; i < data.length; i++) {
-                    let d = new Data(data[i]);
-                    storage.update(d.hash(), d);
-                }
+                // Add Assessors
+                let assessorStorage = saveAssessors(data.Assessors);
+
+                // Add Providers
+                let storage = saveProviders(data.Providers, assessorStorage.all());
+
+                // Add Settings
+                saveSettings(meta);
 
                 return storage;
             });
         };
+
+        /**
+         * Stores provider information into local storage
+         */
+        function saveProviders (data, assessors) {
+            var storage = new StorageData({Assessors: assessors});
+            // Fill up Provider data
+            for (let i = 0; i < data.length; i++) {
+                let d = new Data(data[i]);
+                storage.update(d.hash(), d);
+            }
+            return storage;
+        }
+
+        /**
+         * Stores assessor information into local storage
+         */
+        function saveAssessors (assessors) {
+            let assessorStorage = new StorageAssessorData();
+            for (let i = 0; i < assessors.length; i++) {
+                let d = new AssessorData(assessors[i]);
+                assessorStorage.update(d.hash(), d);
+            }
+            return assessorStorage;
+        }
+
+        /**
+         * Stores setting information into local storage
+         */
+        function saveSettings (meta) {
+            let settingStorage = new StorageSettings();
+            var setting = new Settings(meta);
+            setting.refresh();
+            settingStorage.update(setting.hash(), setting);
+        }
     }
 })();

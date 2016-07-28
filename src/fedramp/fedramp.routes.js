@@ -21,9 +21,50 @@
                 abstract: true,
                 templateUrl: 'src/templates/base.html',
                 resolve: {
-                    fedrampData: ['DataService', function (DataService) {
+                    /**
+                     * JF - Note a few changes. 
+                     *
+                     * tl;dr
+                     * fedrampData can now be injected anywhere. It's not only limited to state controllers now.
+                     *
+                     * Long version:
+                     *
+                     * The key 'fedrampData' within the resolve property
+                     *
+                     * resolve : {
+                     *     fedrampData: [function{}]
+                     * }
+                     *
+                     * is different than the injected provider 'fedrampData' being passed into the function below.
+                     *
+                     * ['..', 'fedrampData', function(..., fedrampData) {
+                     *
+                     * }
+                     *
+                     * UI-router resolves can only be injected into controllers bound to a particular state. So this 
+                     * prevents you from injecting state based resolves into components, directives or service/factories. 
+                     * For instance, previously, if you wanted to inject the result of fedrampData 
+                     * into a component, you would get an error. 
+                     *
+                     * However, to mitigate this, we can take advantage of the fact that services in angular are singletons. 
+                     * So we inject an actual service called fedrampData and call load() on it. This will then take the 
+                     * properties/methods of storage and merge them into fedrampData (as well as wrap caching behavior. 
+                     * See {@link Services.FedrampDataProvider} for details). 
+                     *
+                     * So now, we end up with a single fedrampData that contains all our storage information that can be injected anywhere.
+                     *
+                     * You'll notice that in the DataService.pull() promise, we load the fedrampData object and then return that 
+                     * object. So here, we're telling ui-router that for STATE BASED controllers that inject the fedrampData 
+                     * resolve (not the service), to simply point it to our service. 
+                     *                    
+                     *
+                     */
+                    fedrampData: ['DataService', 'fedrampData', function (DataService, fedrampData) {
                         return DataService.pull().then(function (storage) {
-                            return storage;
+
+                            // Store it in service so that it is accessible by any one who injects fedrampData.
+                            fedrampData.load(storage);
+                            return fedrampData;
                         });
                     }]
                 }
@@ -46,6 +87,8 @@
                 templateUrl: 'src/templates/home/home.html',
                 controller: 'HomeController as homeController'
             })
+
+            // Provider States
             .state('fedramp.app.home.providers', {
                 url: '/providers',
                 templateUrl: 'src/templates/home/providers.html',
@@ -70,6 +113,8 @@
                 templateUrl: 'src/templates/home/provider-comparison.html',
                 controller: 'ProviderComparisonController as controller'
             })
+
+            // Product States
             .state('fedramp.app.home.products', {
                 url: '/products',
                 templateUrl: 'src/templates/home/products.html',
@@ -94,6 +139,9 @@
                 templateUrl: 'src/templates/home/product-comparison.html',
                 controller: 'ProductComparisonController as controller'
             })
+
+
+            // Agency States
             .state('fedramp.app.home.agencies', {
                 url: '/agencies',
                 templateUrl: 'src/templates/home/agencies.html',
@@ -118,6 +166,8 @@
                 templateUrl: 'src/templates/home/agency-comparison.html',
                 controller: 'AgencyComparisonController as controller'
             })
+
+            // Assessor States
             .state('fedramp.app.home.assessors', {
                 url: '/assessors',
                 templateUrl: 'src/templates/home/assessors.html',

@@ -1,41 +1,28 @@
 <div class="usa-content">
     <div class="fr-dash-header usa-color-primary-darkest">
-        <div class="usa-grid-full text-center fr-large-metrics">
-            <div class="usa-width-one-half">
-                <p class="fr-large-number">
-                    <span class="fr-metric-icon icon-reuse"></span>
-                    <strong>{{homeController.leveragedAtos()}}</strong>
-                    <span class="fr-metric-label">Total reuses</span>
-                </p>
-            </div>
-            <div class="usa-width-one-half">
-                <p class="fr-large-number">
-                    <span class="fr-metric-icon icon-compliant"></span>
-                    <strong>{{homeController.totalAuthorized()}}</strong>
-                    <span class="fr-metric-label">Total Authorized</span>
-                </p>
-            </div>
+        <div class="usa-grid-full text-center fr-dash-label">
+            <div class="usa-width-one-whole text-center">Products at a glance</div>
         </div>
-        <div class="usa-grid-full text-center fr-small-metrics">
+        <div class="usa-grid-full text-center fr-large-metrics">
             <div class="usa-width-one-third">
                 <p class="fr-large-number">
-                    <span class="fr-metric-icon icon-cloud"></span>
-                    <strong>67<span class="fr-light-font">%</span></strong>
-                    <span class="fr-metric-label">TBD</span>
+                    <span class="fr-metric-icon icon-ready-light"></span>
+                    <strong>{{homeController.totalReady()}}</strong>
+                    <span class="fr-metric-label">Ready</span>
                 </p>
             </div>
             <div class="usa-width-one-third">
                 <p class="fr-large-number">
-                    <span class="fr-metric-icon icon-compliant"></span>
-                    <strong><span class="fr-light-font">$</span>{{homeController.totalCostSavings()}}</strong>
-                    <span class="fr-metric-label">Cost Savings</span>
+                    <span class="fr-metric-icon icon-in-process-light"></span>
+                    <strong>{{homeController.totalInProcess()}}</strong>
+                    <span class="fr-metric-label">In Process</span>
                 </p>
             </div>
             <div class="usa-width-one-third">
                 <p class="fr-large-number">
-                    <span class="fr-metric-icon icon-reuse"></span>
-                    <strong>3,297</strong>
-                    <span class="fr-metric-label">TBD</span>
+                    <span class="fr-metric-icon icon-compliant-light"></span>
+                    <strong>{{homeController.totalAuthorized()}}</strong>
+                    <span class="fr-metric-label">Authorized</span>
                 </p>
             </div>
         </div>
@@ -50,25 +37,36 @@
                 <button id="filterByCSO"
                         type="radio"
                         ui-sref-active="selected"
-                        ui-sref="fedramp.app.home.products">
-                    <span>Cloud Service Products</span>
+                        ui-sref="fedramp.app.home.products"  title="Show Cloud Offerings (CSOs)">
+                    <span>Products</span>
                 </button>
             </div>
             <div class="usa-width-one-third">
                 <button id="filterByAgency"
                         ui-sref-active="selected"
-                        ui-sref="fedramp.app.home.agencies">
+                        ui-sref="fedramp.app.home.agencies" title="Show Government Agencies">
                     <span>Agencies</span>
                 </button>
             </div>
             <div class="usa-width-one-third">
                 <button id="filterBy3PAO"
                         ui-sref-active="selected"
-                        ui-sref="fedramp.app.home.assessors">
-                    <span>3rd Party Assessors</span>
+                        ui-sref="fedramp.app.home.assessors" title="Show Assessment Organizations (3PAOs)">
+                    <span>Assessors</span>
                 </button>
             </div>
-        </div>
+            <div class="controls" title="Switch View">
+                <label>
+                    <input type="checkbox" ng-model="homeController.expandTiles" />
+                    <div class="list-view">
+                        <span><i class="fa fa-th-list fa-1" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="grid-view">
+                        <span><i class="fa fa-th fa-1" aria-hidden="true"></i></span>
+                    </div>
+                </label>
+            </div>
+         </div>
     </div>
 </div>
 <ui-view/>

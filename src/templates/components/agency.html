@@ -10,6 +10,10 @@
     </div>
     <div class="row header">
         <div class="col">
+            <div class="logo">
+                <img ng-if="controller.model.logo" ng-src="{{controller.model.logo}}" alt="Logo for {{controller.model.logo}}" />
+                <div ng-if="!controller.model.logo" class="no-image"></div>
+            </div>
             <div class="title">
                 <strong>{{ controller.model.name }}</strong>
             </div>
@@ -19,7 +23,7 @@
             <div class="text">Reuses</div>
         </div>
     </div>
-    <div class="row system-profile">
+    <div class="row system-profile clear">
         <div class="col contact-information">
             <h5>Contact Information</h5>
             <div><strong>POC:</strong></div>
@@ -36,49 +40,16 @@
             <p></p>
         </div>
     </div>
-    <div class="row providers">
-        <div class="col">
-            <h4>Providers</h4>
-            <ul ng-if="controller.model.providers.length > 0">
-                <li ng-repeat="provider in controller.model.providers | orderBy:'+' track by $index">
-                    <a title="{{provider}}" ng-href="{{controller.linkify('provider', provider)}}">
-                        {{provider}}
-                    </a>
-                </li>
-            </ul>
-            <p ng-if="controller.model.providers.length === 0">
-                None
-            </p>
+
+    <panel header="Agency Description" class="clear">
+        <div class="row products">
+            <div class="col">
+                <h4>Products</h4>
+                <product-list products="controller.model.products"></product-list>
+                <p ng-if="controller.model.products.length === 0">
+                    None
+                </p>
+            </div>
         </div>
-    </div>
-    <div class="row products">
-        <div class="col">
-            <h4>Products</h4>
-            <ul ng-if="controller.model.products.length > 0">
-                <li ng-repeat="product in controller.model.products | orderBy:'+' track by $index">
-                    <a title="{{product}}" ng-href="{{controller.linkify('product', product)}}">
-                        {{product}}
-                    </a>
-                </li>
-            </ul>
-            <p ng-if="controller.model.products.length === 0">
-                None
-            </p>
-        </div>
-    </div>
-    <div class="row assessors">
-        <div class="col">
-            <h4>Independent Assessors</h4>
-            <ul ng-if="controller.model.assessors.length > 0">
-                <li ng-repeat="assessor in controller.model.assessors | orderBy:'+' track by $index">
-                    <a title="{{assessor}}" ng-href="{{controller.linkify('assessor', assessor)}}">
-                        {{assessor}}
-                    </a>
-                </li>
-            </ul>
-            <p ng-if="controller.model.assessors.length === 0">
-                None
-            </p>
-        </div>
-    </div>
+    </panel>
 </div>

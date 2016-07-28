@@ -7,16 +7,18 @@ describe('StorageData manager', function () {
     var Assessor;
     var Product;
     var Provider;
+    var AssessorData;
 
-    beforeEach(function(){
+    beforeEach(function () {
         module('fedramp.services');
-        inject(function($injector){
+        inject(function ($injector) {
             StorageData = $injector.get('StorageData');
             Data = $injector.get('Data');
             Agency = $injector.get('Agency');
             Assessor = $injector.get('Assessor');
             Product = $injector.get('Product');
             Provider = $injector.get('Provider');
+            AssessorData = $injector.get('AssessorData');
         });
     });
 
@@ -183,7 +185,7 @@ describe('StorageData manager', function () {
 
     it('can return assessors', function () {
         var data = new Data(TestData.Letters[0]);
-        var storage = new StorageData();
+        var storage = new StorageData({Assessors: TestData.AssessorData});
         storage.clear();
         storage.update(data.hash(), data);
         expect(storage.assessors().length).toBe(2);

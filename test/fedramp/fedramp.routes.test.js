@@ -5,21 +5,19 @@ describe('Fedramp routing', function(){
     var $state;
     var $rootScope;
     var $location;
-    var githubUrl = 'https://raw.githubusercontent.com/18F/fedramp-micropurchase/master/data/data.json';
+    var githubUrl;
 
     beforeEach(function () {
         module('fedramp');
-        inject(function($injector, _$state_, _$rootScope_){
+        inject(function ($injector, _$state_, _$rootScope_) {
             $state = _$state_;
             $rootScope = _$rootScope_;
             $httpBackend = $injector.get('$httpBackend');
             $location = $injector.get('$location');
+            githubUrl = $injector.get('dataUrl');
         });
 
-        $httpBackend.whenGET(githubUrl).respond({
-            meta: '',
-            data: []
-        });
+        $httpBackend.whenGET(githubUrl).respond(TestData.DataJsonHttpResponse);
     });
 
 	afterEach(function () { 

@@ -84,5 +84,25 @@ var TestData = {
                 'html': 'https://github.com/18F/fedramp-micropurchase/blob/master/data/data-2016-06-17.json'
             }
         }
-    ]
+        ],
+        DataJsonHttpResponse: {
+            'meta': {
+                'Created_At': '2016-06-23T18:30:37.926Z',
+                'Produced_By': 'General Services Administration'
+            },
+            'data': {
+                'Providers': [],
+                'Assessors': []
+            }
+        },
+        AssessorData: [{},
+            {
+                'name': 'Allred & Flores Enterprises',
+                'Accreditation_Date': ''
+            },
+            {
+                'name': 'ABC',
+                'Accreditation_Date': '2014-12-22T05:00:00.000Z'
+            }
+        ]
 };

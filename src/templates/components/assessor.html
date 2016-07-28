@@ -10,6 +10,10 @@
     </div>
     <div class="row header">
         <div class="col">
+            <div class="logo">
+                <img ng-if="controller.model.logo" ng-src="{{controller.model.logo}}" alt="Logo for {{controller.model.logo}}" />
+                <div ng-if="!controller.model.logo" class="no-image"></div>
+            </div>
             <div class="title">
                 <strong>{{ controller.model.name }}</strong>
             </div>
@@ -19,8 +23,18 @@
             <div class="text">Reuses</div>
         </div>
     </div>
-    <div class="row system-profile">
-        <div class="col">
+    <div class="row text-center" ng-if="controller.model.accreditationDate">
+        <div class="divider"></div>
+        <div class="accredited">Accredited Since {{controller.model.accreditationDate}}</div>
+    </div>
+
+    <div class="row text-center" ng-if="!controller.model.accreditationDate">
+        <div class="divider not-accredited"></div>
+        <div>Accreditation Date not available</div>
+    </div>
+
+    <div class="row">
+        <div class="contact-information">
             <h4>Contact Information</h4>
 
             <h5>POC</h5>
@@ -33,49 +47,12 @@
             <p>{{controller.model.url}}</p>
         </div>
     </div>
-    <div class="row providers">
-        <div class="col">
-            <h4>Providers</h4>
-            <ul ng-if="controller.model.providers.length > 0">
-                <li ng-repeat="provider in controller.model.providers | orderBy:'+' track by $index">
-                    <a title="{{provider}}" ng-href="{{controller.linkify('provider', provider)}}">
-                        {{provider}}
-                    </a>
-                </li>
-            </ul>
-            <p ng-if="controller.model.providers.length === 0">
-                None
-            </p>
+    <panel header="Assessor Description">
+        <div class="row products">
+            <div class="col">
+                <h4>Products</h4>
+                <product-list products="controller.model.products"></product-list>
+            </div>
         </div>
-    </div>
-    <div class="row products">
-        <div class="col">
-            <h4>Products</h4>
-            <ul ng-if="controller.model.products.length > 0">
-                <li ng-repeat="product in controller.model.products | orderBy:'+' track by $index">
-                    <a title="{{product}}" ng-href="{{controller.linkify('product', product)}}">
-                        {{product}}
-                    </a>
-                </li>
-            </ul>
-            <p ng-if="controller.model.products.length === 0">
-                None
-            </p>
-        </div>
-    </div>
-    <div class="row agencies">
-        <div class="col">
-            <h4>Agencies</h4>
-            <ul ng-if="controller.model.agencies.length > 0">
-                <li ng-repeat="agency in controller.model.agencies | orderBy:'+' track by $index">
-                    <a title="{{agency}}" ng-href="{{controller.linkify('agency', agency)}}">
-                        {{agency}}
-                    </a>
-                </li>
-            </ul>
-            <p ng-if="controller.model.agencies.length === 0">
-                None
-            </p>
-        </div>
-    </div>
+    </panel>
 </div>

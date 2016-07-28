@@ -1,5 +1,5 @@
-function TestDataFactory(inject){
-    "use strict";
+function TestDataFactory (inject) {
+    'use strict';
     var self = this;
 
     self.gridComponent = gridComponent;
@@ -7,8 +7,9 @@ function TestDataFactory(inject){
     self.gridSearchComponent = gridSearchComponent;
     self.gridClearComponent = gridClearComponent;
     self.gridSortComponent = gridSortComponent;
+    self.storageFactory = storageFactory;
 
-    function gridComponent(properties){
+    function gridComponent (properties) {
         properties = properties || {};
         var gridComponent;
 
@@ -41,7 +42,7 @@ function TestDataFactory(inject){
         return gridComponent;
     }
 
-    function gridFilterComponent(properties, dependencies){
+    function gridFilterComponent (properties, dependencies) {
         var gridFilter;
 
         properties = properties || {};
@@ -69,7 +70,7 @@ function TestDataFactory(inject){
         return gridFilter;
     }
 
-    function gridSearchComponent(properties){
+    function gridSearchComponent (properties) {
         var filter;
 
         properties = properties || {};
@@ -94,7 +95,7 @@ function TestDataFactory(inject){
         return filter;
     }
 
-    function gridClearComponent(properties){
+    function gridClearComponent (properties) {
         var filter;
 
         inject(function (_$componentController_, $injector, $rootScope) {
@@ -111,7 +112,7 @@ function TestDataFactory(inject){
         return filter;
     }
 
-    function gridSortComponent(properties){
+    function gridSortComponent (properties) {
         var filter;
         var config = angular.extend({
             name: 'someSort'
@@ -130,5 +131,39 @@ function TestDataFactory(inject){
         });
 
         return filter;
+    }
+
+    function storageFactory () {
+        var s = null;
+        inject(function ($injector) {
+            var Data = $injector.get('Data');
+            var StorageData = $injector.get('StorageData');
+
+            s = new StorageData();
+            var data = new Data({
+                'Cloud_Service_Provider_Name': 'test',
+                'Designation': 'Compliant',
+                'Service_Model': [
+                    'IaaS'
+                ],
+                'Deployment_Model': 'Community Cloud',
+                'Impact_Level': 'Moderate',
+                'Sponsoring_Agency': 'Department of Health and Human Services',
+                'Leveraged_ATO_Letters': [
+                    {
+                        'Letter_Date': '2014-02-24T05:00:00.000Z',
+                        'Letter_Expiration_Date': '2017-02-24T05:00:00.000Z',
+                        'Authorizing_Letter_Last_Sign_Date': '2017-02-24T05:00:00.000Z',
+                        'Authorizing_Agency': 'Department of Health and Human Services',
+                        'Authorizing_Subagency': 'Department of Health and Human Services',
+                        'Active': 'Active'
+                    }
+                ]
+            });
+            s.clear();
+            s.update(data.hash(), data);
+        });
+
+        return s;
     }
 }

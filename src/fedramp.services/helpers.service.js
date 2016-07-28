@@ -66,7 +66,7 @@
          *  Today's date formatting as mm/dd/YYYY
          */
         self.toDate = function (str) {
-            if (!str) {
+            if (!str || str === 'N/A') {
                 return '';
             }
             
@@ -144,7 +144,7 @@
                 if (query.length > 0) {
                     query += '&';
                 }
-                query += n + '=' + search[n];
+                query += n + '=' + encodeURIComponent(search[n]);
             }
 
             if (query.length > 0) {

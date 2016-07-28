@@ -2299,6 +2299,23 @@ input {
   clear: both;
   float: none; }
 
+a,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: #0071bc; }
+
+.no-select {
+  -webkit-user-select: none;
+  -webkit-user-select: none;
+  /* webkit (safari, chrome) browsers */
+  -moz-user-select: none;
+  /* mozilla browsers */
+  -khtml-user-select: none;
+  /* webkit (konqueror) browsers */
+  -ms-user-select: none;
+  /* IE10+ */ }
+
 /*
 	provide condensed version of web standards variables for use
 
@@ -2307,53 +2324,34 @@ input {
 */
 .fr-dash-header {
   background-color: #112e51; }
+  .fr-dash-header .fr-dash-label {
+    color: #ffffff;
+    line-height: 4.4rem;
+    font-size: 1.8rem;
+    background-color: #0d2747;
+    max-width: none; }
   .fr-dash-header .fr-large-metrics {
-    height: 37.6rem;
+    height: 29.4rem;
     color: #02bfe7;
     text-align: center; }
     .fr-dash-header .fr-large-metrics > div {
       border-right: 2px solid #0d2747;
       height: 100%;
-      width: 49.95%;
+      width: 33.33%;
       margin-right: 0; }
     .fr-dash-header .fr-large-metrics > div:last-child {
       border-right: none; }
     .fr-dash-header .fr-large-metrics .fr-large-number {
       font-size: 2.8rem;
-      margin-top: 17rem; }
+      margin-top: 12rem; }
       .fr-dash-header .fr-large-metrics .fr-large-number strong {
-        font-size: 10rem; }
+        font-size: 9.5rem; }
     .fr-dash-header .fr-large-metrics .fr-metric-icon {
       position: absolute;
-      top: -9rem;
+      top: -8rem;
       left: 0;
       width: 100%;
-      height: 10rem;
-      background-size: contain;
-      background-position: center center; }
-  .fr-dash-header .fr-small-metrics {
-    border-top: 2px solid #0d2747;
-    height: 8rem;
-    color: #02bfe7; }
-    .fr-dash-header .fr-small-metrics > div {
-      border-right: 2px solid #0d2747;
-      height: 100%;
-      width: 33.3%;
-      margin-right: 0; }
-    .fr-dash-header .fr-small-metrics > div:last-child {
-      border-right: none; }
-    .fr-dash-header .fr-small-metrics .fr-large-number {
-      font-size: 1.6rem;
-      margin-top: 1.8rem;
-      display: inline-block; }
-      .fr-dash-header .fr-small-metrics .fr-large-number strong {
-        font-size: 2.8rem; }
-    .fr-dash-header .fr-small-metrics .fr-metric-icon {
-      display: inline-block;
-      width: 3.7rem;
-      height: 3.7rem;
-      float: left;
-      margin-right: 1rem;
+      height: 8rem;
       background-size: contain;
       background-position: center center; }
   .fr-dash-header .fr-large-number {
@@ -2366,7 +2364,25 @@ input {
     font-weight: 400; }
   .fr-dash-header .fr-metric-label {
     display: block;
-    font-size: 1.8rem; }
+    font-size: 1.8rem;
+    padding-top: 0.4rem; }
+
+/*
+	provide condensed version of web standards variables for use
+
+	@date		2016-07-12
+	@version	0.9.5	web standards version extracted from
+*/
+.export {
+  margin-top: 2rem;
+  text-align: center;
+  clear: both; }
+  .export download-csv {
+    margin: 0 auto;
+    display: table; }
+
+download-csv .fa-download {
+  margin-left: 1rem; }
 
 /*
 	provide condensed version of web standards variables for use
@@ -2375,7 +2391,7 @@ input {
 	@version	0.9.5	web standards version extracted from
 */
 .fr-filter-label {
-  height: 118px;
+  height: 6.8rem;
   position: relative; }
   .fr-filter-label .fr-filter-label-rule {
     position: absolute;
@@ -2388,19 +2404,20 @@ input {
     position: relative;
     display: inline-block;
     font-size: 18px;
-    line-height: 118px;
+    line-height: 6.8rem;
     color: #5b616b;
     background-color: #f1f1f1;
     padding: 0 12px;
     font-weight: 700; }
 
 .fr-filters {
+  position: relative;
   display: table;
-  width: 100%;
+  width: 96%;
   max-width: none;
   height: 8.5rem;
   line-height: 8.5rem;
-  margin-bottom: 1.8rem; }
+  margin-left: 0; }
   .fr-filters .fr-filters-row {
     display: table-row; }
     .fr-filters .fr-filters-row .usa-width-one-third {
@@ -2413,7 +2430,14 @@ input {
       border-right: none; }
     .fr-filters .fr-filters-row .selected {
       background-color: #0071bc;
-      color: #ffffff; }
+      color: #ffffff;
+      outline: none !important;
+      box-shadow: none !important; }
+    .fr-filters .fr-filters-row button:focus {
+      background-color: #0071bc;
+      color: #ffffff;
+      outline: none !important;
+      box-shadow: none !important; }
   .fr-filters button {
     width: 100%;
     height: 8.5rem;
@@ -2431,84 +2455,114 @@ input {
   .fr-filters button.active, .fr-filters button:hover {
     background-color: #0071bc;
     color: #fff; }
-
-.fr-post-filter-metrics {
-  max-width: none;
-  height: 7.6rem;
-  background-color: #112e51;
-  position: relative;
-  color: #ffffff; }
-  .fr-post-filter-metrics > div {
-    position: relative; }
-  .fr-post-filter-metrics .col {
-    width: 45%;
-    text-align: center;
-    float: left;
-    margin-top: 1rem; }
-    .fr-post-filter-metrics .col .fr-large-number {
-      font-size: 1.6rem;
-      margin-top: 1.8rem;
-      display: inline-block; }
-      .fr-post-filter-metrics .col .fr-large-number strong {
-        font-size: 2.8rem; }
-    .fr-post-filter-metrics .col .fr-metric-icon {
-      display: inline-block;
-      width: 3.7rem;
-      height: 3.7rem;
-      float: left;
-      margin-right: 1rem;
-      background-size: contain;
-      background-position: center center; }
-    .fr-post-filter-metrics .col .fr-large-number {
-      position: relative;
-      margin: 0;
-      line-height: 1; }
-    .fr-post-filter-metrics .col .fr-large-number strong {
-      color: #ffffff; }
-    .fr-post-filter-metrics .col .fr-light-font {
-      font-weight: 400; }
-    .fr-post-filter-metrics .col .fr-metric-label {
-      display: block;
-      font-size: 1.6rem;
-      color: #02bfe7; }
-  .fr-post-filter-metrics .controls {
+  .fr-filters .controls {
+    display: block;
     position: absolute;
     top: 0;
-    right: 0;
-    height: 7.6rem;
-    width: 3.8rem;
+    left: 100%;
+    width: 4%;
+    min-width: 3.8rem;
+    line-height: 4rem;
+    height: 8.5rem;
     border-left: 3px solid #ffffff;
-    background-color: #d6d7d9; }
-    .fr-post-filter-metrics .controls label {
+    background-color: #d6d7d9;
+    cursor: pointer; }
+    .fr-filters .controls label {
       height: 100%;
       width: 100%;
       margin-top: 0;
-      cursor: pointer; }
-    .fr-post-filter-metrics .controls div {
+      cursor: pointer;
+      float: right; }
+    .fr-filters .controls div {
       height: 50%;
       text-align: center;
       font-size: 2.2rem;
       padding-top: 0.4rem; }
-    .fr-post-filter-metrics .controls .list-view, .fr-post-filter-metrics .controls .grid-view {
+    .fr-filters .controls .list-view, .fr-filters .controls .grid-view {
       transition: background-color 0.3s, color 0.3s; }
-    .fr-post-filter-metrics .controls .ng-empty ~ .list-view, .fr-post-filter-metrics .controls .ng-not-empty:hover ~ .list-view {
+    .fr-filters .controls .ng-empty ~ .list-view, .fr-filters .controls .ng-not-empty:hover ~ .list-view {
       color: #5b616b;
       background-color: #d6d7d9; }
-    .fr-post-filter-metrics .controls .ng-empty ~ .grid-view, .fr-post-filter-metrics .controls .ng-not-empty:hover ~ .grid-view {
+    .fr-filters .controls .ng-empty ~ .grid-view, .fr-filters .controls .ng-not-empty:hover ~ .grid-view {
       color: #ffffff;
       background-color: #0071bc; }
-    .fr-post-filter-metrics .controls .ng-not-empty ~ .list-view, .fr-post-filter-metrics .controls .ng-empty:hover ~ .list-view {
+    .fr-filters .controls .ng-not-empty ~ .list-view, .fr-filters .controls .ng-empty:hover ~ .list-view {
       color: #ffffff;
       background-color: #0071bc; }
-    .fr-post-filter-metrics .controls .ng-not-empty ~ .grid-view, .fr-post-filter-metrics .controls .ng-empty:hover ~ .grid-view {
+    .fr-filters .controls .ng-not-empty ~ .grid-view, .fr-filters .controls .ng-empty:hover ~ .grid-view {
       color: #5b616b;
       background-color: #d6d7d9; }
+
+@font-face {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 300;
+  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-light-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
+
+@font-face {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-regular-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
+
+@font-face {
+  font-family: "Source Sans Pro";
+  font-style: italic;
+  font-weight: 400;
+  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-italic-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
+
+@font-face {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 700;
+  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-bold-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
+
+@font-face {
+  font-family: "Merriweather";
+  font-style: normal;
+  font-weight: 300;
+  src: font-source-declaration("Merriweather", "../fonts/merriweather-light-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
+
+@font-face {
+  font-family: "Merriweather";
+  font-style: normal;
+  font-weight: 400;
+  src: font-source-declaration("Merriweather", "../fonts/merriweather-regular-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
+
+@font-face {
+  font-family: "Merriweather";
+  font-style: italic;
+  font-weight: 400;
+  src: font-source-declaration("Merriweather", "../fonts/merriweather-italic-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
+
+@font-face {
+  font-family: "Merriweather";
+  font-style: normal;
+  font-weight: 700;
+  src: font-source-declaration("Merriweather", "../fonts/merriweather-bold-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
+
+html {
+  box-sizing: border-box; }
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit; }
+
+body {
+  background-color: #ffffff; }
+
+.lt-ie9 * {
+  filter: none !important; }
 
 @font-face {
   font-family: "Font Awesome";
   font-style: normal;
   font-weight: 400;
   src: font-source-declaration("Font Awesome", "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/fonts/fontawesome-webfont", false, eot svg woff2 woff ttf, font-url-prefixer(false)); }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif; }
 
 /*
 	provide condensed version of web standards variables for use
@@ -2521,7 +2575,11 @@ input {
   font-weight: 700;
   color: #5b616b;
   font-size: 1.5rem;
-  cursor: pointer; }
+  cursor: pointer;
+  margin-bottom: 1.2rem; }
+
+.clear-filters:hover {
+  color: #0071bc; }
 
 /*
 	provide condensed version of web standards variables for use
@@ -2538,7 +2596,10 @@ input {
     display: table;
     width: 100%;
     font-size: 1.4rem;
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    transition: background-color 0.3s; }
+    .grid .fr-grid-layout:hover {
+      background-color: #dce4ef; }
     .grid .fr-grid-layout .fr-grid-layout-row {
       display: table-row; }
       .grid .fr-grid-layout .fr-grid-layout-row > div {
@@ -2584,6 +2645,15 @@ input {
   .grid .fr-grid-cell-metric {
     width: 8%;
     text-align: center; }
+  .grid .fr-grid-cell-contact {
+    width: 33%; }
+  .grid .agency .fr-grid-cell-metric,
+  .grid .assessor .fr-grid-cell-metric {
+    width: 7%; }
+  .grid .options .option:hover {
+    color: #0071bc; }
+  .grid .filter-header:hover {
+    color: #0071bc; }
 
 /*
 	provide condensed version of web standards variables for use
@@ -2598,12 +2668,16 @@ grid-sort {
   background-color: #d6d7d9;
   transition: background-color 0.3s; }
 
+grid-sort:hover {
+  color: #0071bc; }
+
 .sort-selected {
   color: #0071bc; }
 
 .grid-sort-header {
   font-size: 1.4rem !important;
-  font-weight: 400; }
+  font-weight: 400;
+  cursor: pointer; }
 
 .grid-sort-arrows {
   position: relative;
@@ -2623,15 +2697,34 @@ grid-sort {
 	@date		2016-07-12
 	@version	0.9.5	web standards version extracted from
 */
-.grid .grid-with-sidebar {
-  float: right;
-  width: 77.4%; }
-  .grid .grid-with-sidebar .grid-sort-arrows .fa-caret-up, .grid .grid-with-sidebar .grid-sort-arrows .fa-caret-down {
-    color: #0071bc; }
+grid-total {
+  color: #5b616b;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #d6d7d9;
+  margin-top: 1.4rem;
+  margin-bottom: 1.3rem;
+  display: block; }
+  grid-total .count {
+    font-weight: 700; }
 
-.grid tile.expanded {
-  display: inline-block;
-  width: 100%; }
+/*
+	provide condensed version of web standards variables for use
+
+	@date		2016-07-12
+	@version	0.9.5	web standards version extracted from
+*/
+.grid {
+  min-height: 100rem; }
+  .grid .detail {
+    display: none; }
+  .grid .grid-with-sidebar {
+    float: right;
+    width: 77.4%; }
+    .grid .grid-with-sidebar .grid-sort-arrows .fa-caret-up, .grid .grid-with-sidebar .grid-sort-arrows .fa-caret-down {
+      color: #0071bc; }
+  .grid tile.expanded {
+    display: inline-block;
+    width: 100%; }
 
 .grid-with-sidebar grid-sort {
   background: none; }
@@ -2681,7 +2774,7 @@ grid-sort {
     #header #catnav .select-menu-catnav {
       display: none; }
 
-.icon, .icon-cloud-compliant, .icon-cloud-in-process, .icon-compliant, .icon-compliant.active, .icon-in-process, .icon-in-process.active, .icon-ready, .icon-ready.active, .icon-cloud, .icon-cloud.active, .icon-reuse, .icon-reuse.active {
+.icon, .icon-cloud-compliant, .icon-cloud-in-process, .icon-compliant, .icon-compliant.active, .icon-in-process, .icon-in-process.active, .icon-ready, .icon-ready.active, .icon-cloud, .icon-cloud.active, .icon-reuse, .icon-reuse.active, .icon-ready-light, .icon-in-process-light, .icon-compliant-light {
   width: 50px;
   height: auto; }
 
@@ -2755,81 +2848,36 @@ grid-sort {
   background-image: url("../img/fedramp-metric-reuse-icon.svg");
   background-repeat: no-repeat; }
 
+.icon-ready-light {
+  background-image: url("../img/fedramp-process-ready-light-blue.png");
+  background-image: url("../img/fedramp-process-ready-light-blue.svg");
+  background-repeat: no-repeat; }
+
+.icon-in-process-light {
+  background-image: url("../img/fedramp-process-in-process-light-blue.png");
+  background-image: url("../img/fedramp-process-in-process-light-blue.svg");
+  background-repeat: no-repeat; }
+
+.icon-compliant-light {
+  background-image: url("../img/fedramp-process-compliant-light-blue.png");
+  background-image: url("../img/fedramp-process-compliant-light-blue.svg");
+  background-repeat: no-repeat; }
+
 /*
 	provide condensed version of web standards variables for use
 
 	@date		2016-07-12
 	@version	0.9.5	web standards version extracted from
 */
-@font-face {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  font-weight: 300;
-  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-light-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  font-weight: 400;
-  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-regular-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Source Sans Pro";
-  font-style: italic;
-  font-weight: 400;
-  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-italic-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  font-weight: 700;
-  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-bold-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Merriweather";
-  font-style: normal;
-  font-weight: 300;
-  src: font-source-declaration("Merriweather", "../fonts/merriweather-light-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Merriweather";
-  font-style: normal;
-  font-weight: 400;
-  src: font-source-declaration("Merriweather", "../fonts/merriweather-regular-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Merriweather";
-  font-style: italic;
-  font-weight: 400;
-  src: font-source-declaration("Merriweather", "../fonts/merriweather-italic-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Merriweather";
-  font-style: normal;
-  font-weight: 700;
-  src: font-source-declaration("Merriweather", "../fonts/merriweather-bold-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-html {
-  box-sizing: border-box; }
-
-*,
-*::before,
-*::after {
-  box-sizing: inherit; }
-
-body {
-  background-color: #ffffff; }
-
-.lt-ie9 * {
-  filter: none !important; }
-
 .comparison {
   display: inline-block;
   width: 100%; }
   .comparison .first, .comparison .second {
     display: inline-block;
     width: 48.925%;
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    position: relative;
+    z-index: 100; }
   .comparison .first {
     float: left;
     margin-right: 2%; }
@@ -2837,6 +2885,24 @@ body {
     background-color: #ffffff; }
   .comparison .second.comparison-list {
     background: none; }
+  .comparison .close-both {
+    position: absolute;
+    width: 99.8%;
+    top: 0; }
+    .comparison .close-both .row {
+      position: relative;
+      z-index: 110;
+      margin: 0 auto;
+      width: 12%; }
+    .comparison .close-both .close {
+      background-color: #323a45; }
+
+.comparison-list .title {
+  font-size: 1.8rem; }
+
+.comparison-list .detail {
+  display: block;
+  float: none !important; }
 
 .comparison-list .usa-grid {
   padding-right: 0; }
@@ -2862,6 +2928,12 @@ body {
     font-size: smaller;
     font-weight: bolder;
     color: #323a45; }
+
+.comparison-list .tile {
+  border-bottom: 1px solid #f1f1f1;
+  background-color: #fff; }
+  .comparison-list .tile .row.fr-grid-layout-row {
+    border: none; }
 
 .comparison-list tile .fr-grid-layout {
   display: block;
@@ -2912,14 +2984,14 @@ body {
       .comparison-list tile .fr-grid-layout .fr-grid-layout-row .fr-grid-cell-metric .number {
         font-size: 2.6rem;
         margin-bottom: -0.8rem; }
+    .comparison-list tile .fr-grid-layout .fr-grid-layout-row .fr-grid-cell-contact, .comparison-list tile .fr-grid-layout .fr-grid-layout-row .fr-grid-cell-service {
+      padding-left: 0px; }
 
 .information {
   font-size: 1.6rem; }
   .information .row {
     display: block;
-    padding: 1em 0; }
-    .information .row h1, .information .row h2, .information .row h3, .information .row h4, .information .row h5, .information .row h6 {
-      font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif; }
+    padding: 0.3em 0; }
     .information .row h4 {
       margin-top: 0;
       font-size: 2rem; }
@@ -2933,7 +3005,7 @@ body {
   .information .col {
     display: inline-block; }
   .information .close {
-    background-color: #323a45;
+    background-color: #5b616b;
     cursor: pointer; }
     .information .close .col {
       width: 100%; }
@@ -2944,6 +3016,8 @@ body {
       text-decoration: none; }
       .information .close a i {
         font-size: 2em; }
+  .information .close:hover {
+    background-color: #323a45; }
   .information .header {
     border-top: none;
     padding-top: 0;
@@ -2955,7 +3029,7 @@ body {
         max-height: 5.3rem; }
     .information .header .title {
       font-weight: 700;
-      font-size: 1.8rem; }
+      font-size: 1.9rem; }
     .information .header .reuse, .information .header .comparison-list tile .reuses {
       float: right;
       text-align: center;
@@ -3005,6 +3079,7 @@ body {
   .information .system-profile {
     margin-top: 4rem;
     padding-top: 0;
+    margin-bottom: 4rem;
     border-bottom: 1px solid #f1f1f1; }
     .information .system-profile .contact-information {
       width: 50%;
@@ -3048,7 +3123,8 @@ body {
     .information .products ul,
     .information .agencies ul,
     .information .assessors ul {
-      margin-left: -5px; }
+      margin-left: -5px;
+      margin-top: 0px; }
       .information .providers ul li,
       .information .products ul li,
       .information .agencies ul li,
@@ -3059,6 +3135,77 @@ body {
       .information .agencies ul li::before,
       .information .assessors ul li::before {
         content: ''; }
+  .information .accredited {
+    color: #205493;
+    font-weight: bold; }
+  .information .divider {
+    background-color: #205493;
+    width: 100%;
+    height: 6px;
+    margin-top: 6rem;
+    padding: 0; }
+  .information .no-image {
+    border: 1px solid #aeb0b5;
+    height: 90px;
+    width: 90px;
+    display: inline-block;
+    color: #aeb0b5; }
+
+.information.assessor .row {
+  clear: both; }
+  .information.assessor .row .contact-information {
+    background-color: #dce4ef;
+    color: #000000;
+    padding: 2rem;
+    margin-bottom: 4rem; }
+  .information.assessor .row h5 {
+    margin-top: 0; }
+
+.information.assessor .not-accredited {
+  background-color: #aeb0b5; }
+
+.agency .system-profile {
+  margin-top: 10rem;
+  border-bottom: none; }
+
+.agency .service-description {
+  margin-top: 4em; }
+
+/*
+	provide condensed version of web standards variables for use
+
+	@date		2016-07-12
+	@version	0.9.5	web standards version extracted from
+*/
+panel {
+  display: block; }
+  panel .panel {
+    border-top: none;
+    background-color: #f1f1f1;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-left: 2.8rem;
+    margin-right: 2.8rem;
+    margin-bottom: 1rem; }
+    panel .panel .header {
+      display: table;
+      width: 100%;
+      margin: 0;
+      padding-left: 2rem;
+      cursor: pointer; }
+    panel .panel h4 {
+      display: table-cell;
+      width: 96%;
+      margin: 0 !important; }
+    panel .panel i {
+      display: table-cell;
+      padding-right: 1.6rem; }
+
+product-list .provider {
+  font-weight: 600; }
+
+product-list .product {
+  padding-left: 2rem; }
 
 #topnav .limit {
   clear: both;
@@ -3080,7 +3227,8 @@ body {
       box-shadow: inset 0 1px 4px #ECECEC;
       -moz-box-shadow: inset 0 1px 4px #ECECEC;
       -webkit-box-shadow: inset 0 1px 4px #ECECEC;
-      border-radius: 0; }
+      border-radius: 0;
+      display: inline; }
     #topnav .limit form input[type="text"] {
       border: 1px solid #eeeeee;
       background: #fafafa;
@@ -3090,7 +3238,7 @@ body {
       padding: 2%;
       margin: 16px 0 20px;
       width: 70%;
-      display: block; }
+      display: inline; }
     #topnav .limit form input[type="submit"] {
       font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
       width: 65px;
@@ -3105,7 +3253,9 @@ body {
       border-bottom: 2px solid #2475ab;
       cursor: pointer;
       -webkit-box-shadow: inset 0 -2px #2475ab;
-      box-shadow: inset 0 -2px #2475ab; }
+      box-shadow: inset 0 -2px #2475ab;
+      position: relative;
+      top: -0.3rem; }
   #topnav .limit .nav {
     float: right;
     list-style: none;
@@ -3184,11 +3334,10 @@ body {
 .sidebar {
   float: left;
   width: 21%;
-  max-width: 32rem;
-  padding: 11.2rem 0 3rem 2.4rem; }
+  padding: 5.2rem 0 3rem 2.4rem; }
   .sidebar .grid-filter {
     background: none;
-    margin: 1.7rem 0;
+    margin: 2.3rem 0;
     padding: 0;
     display: block;
     cursor: pointer;
@@ -3201,6 +3350,8 @@ body {
       .sidebar .grid-filter .option .fa-check-circle {
         color: #0070ba;
         margin-left: 0.5rem; }
+    .sidebar .grid-filter .selected {
+      font-weight: 700; }
     .sidebar .grid-filter .options {
       padding-left: 1.3rem;
       color: #5b616b; }
@@ -3219,68 +3370,6 @@ body {
   .sidebar .icons {
     float: right;
     font-size: 0.8em; }
-
-@font-face {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  font-weight: 300;
-  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-light-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  font-weight: 400;
-  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-regular-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Source Sans Pro";
-  font-style: italic;
-  font-weight: 400;
-  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-italic-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  font-weight: 700;
-  src: font-source-declaration("Source Sans Pro", "../fonts/sourcesanspro-bold-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Merriweather";
-  font-style: normal;
-  font-weight: 300;
-  src: font-source-declaration("Merriweather", "../fonts/merriweather-light-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Merriweather";
-  font-style: normal;
-  font-weight: 400;
-  src: font-source-declaration("Merriweather", "../fonts/merriweather-regular-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Merriweather";
-  font-style: italic;
-  font-weight: 400;
-  src: font-source-declaration("Merriweather", "../fonts/merriweather-italic-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-@font-face {
-  font-family: "Merriweather";
-  font-style: normal;
-  font-weight: 700;
-  src: font-source-declaration("Merriweather", "../fonts/merriweather-bold-webfont", false, eot woff2 woff ttf, font-url-prefixer(false)); }
-
-html {
-  box-sizing: border-box; }
-
-*,
-*::before,
-*::after {
-  box-sizing: inherit; }
-
-body {
-  background-color: #ffffff; }
-
-.lt-ie9 * {
-  filter: none !important; }
 
 /*
 	provide condensed version of web standards variables for use
@@ -3311,6 +3400,11 @@ tile:nth-child(2n) .card {
   margin-right: 2%;
   float: left;
   background-color: #ffffff; }
+
+.tile .no-logo {
+  border: 1px solid #f1f1f1;
+  height: 50px;
+  width: 60px; }
 
 .tile a,
 .tile a:hover,
@@ -3409,6 +3503,8 @@ tile:nth-child(2n) .card {
     color: #ffffff;
     text-align: center;
     padding-top: 2.7rem; }
+    .card .header .reuses a {
+      color: #ffffff; }
     .card .header .reuses .text {
       font-size: 1.3rem;
       font-weight: 400; }
@@ -3442,7 +3538,9 @@ tile:nth-child(2n) .card {
       float: left;
       margin-left: 1em; }
 
-.product.expanded .name .logo {
+.product.expanded .name .logo,
+.agency.expanded .name .logo,
+.assessor.expanded .name .logo {
   height: 4.2rem;
   width: 15rem;
   background-size: contain;
@@ -3450,53 +3548,67 @@ tile:nth-child(2n) .card {
   background-repeat: no-repeat;
   margin: 0 0 0.5rem; }
 
-.product.expanded .name .title {
+.product.expanded .name .title,
+.agency.expanded .name .title,
+.assessor.expanded .name .title {
   text-overflow: ellipsis; }
 
-.product.expanded .status {
+.product.expanded .status,
+.agency.expanded .status,
+.assessor.expanded .status {
   text-align: center; }
-  .product.expanded .status img {
+  .product.expanded .status img,
+  .agency.expanded .status img,
+  .assessor.expanded .status img {
     max-width: 4.5rem;
     max-height: auto; }
-  .product.expanded .status span {
+  .product.expanded .status span,
+  .agency.expanded .status span,
+  .assessor.expanded .status span {
     display: block; }
 
-.product.expanded .reuses {
+.product.expanded .reuses,
+.agency.expanded .reuses,
+.assessor.expanded .reuses {
   text-align: center;
   background-color: #0071bc;
   color: #ffffff;
   font-weight: bolder;
   border-right: none;
   border-bottom: 1px solid #ffffff; }
-  .product.expanded .reuses .text {
+  .product.expanded .reuses .text,
+  .agency.expanded .reuses .text,
+  .assessor.expanded .reuses .text {
     font-size: 1.3rem;
-    font-weight: 400; }
-  .product.expanded .reuses .number {
+    font-weight: 400;
+    display: inline-block;
+    width: 9rem; }
+  .product.expanded .reuses .number,
+  .agency.expanded .reuses .number,
+  .assessor.expanded .reuses .number {
     font-size: 2.6rem;
     margin-bottom: -0.8rem; }
 
 .agency.card .col {
   width: 100%; }
 
-.agency.card .header {
-  height: 6em; }
-  .agency.card .header .reuses {
-    float: right;
-    text-align: center;
-    width: 6em;
-    height: 6em;
-    padding-top: 1.5em;
-    background-color: #0071bc;
-    color: #ffffff;
-    font-weight: bolder;
-    border-right: none;
-    border-bottom: 1px solid #ffffff; }
-    .agency.card .header .reuses .text {
-      font-size: 1.3rem;
-      font-weight: 400; }
-    .agency.card .header .reuses .number {
-      font-size: 2.6rem;
-      margin-bottom: -0.8rem; }
+.agency.card .header .reuses {
+  float: right;
+  text-align: center;
+  width: 6em;
+  height: 6em;
+  padding-top: 1.5em;
+  background-color: #0071bc;
+  color: #ffffff;
+  font-weight: bolder;
+  border-right: none;
+  border-bottom: 1px solid #ffffff; }
+  .agency.card .header .reuses .text {
+    font-size: 1.3rem;
+    font-weight: 400; }
+  .agency.card .header .reuses .number {
+    font-size: 2.6rem;
+    margin-bottom: -0.8rem; }
 
 .agency.card .content .col {
   width: 100%; }
@@ -3511,29 +3623,6 @@ tile:nth-child(2n) .card {
   .agency.card .content dl dd {
     float: left;
     margin-left: 1em; }
-
-.agency.expanded .col {
-  width: 40%;
-  vertical-align: top;
-  padding-top: 0.34em; }
-
-.agency.expanded .reuses {
-  float: right;
-  text-align: center;
-  width: 6em;
-  height: 6em;
-  padding-top: 1.5em;
-  background-color: #0071bc;
-  color: #ffffff;
-  font-weight: bolder;
-  border-right: none;
-  border-bottom: 1px solid #ffffff; }
-  .agency.expanded .reuses .text {
-    font-size: 1.3rem;
-    font-weight: 400; }
-  .agency.expanded .reuses .number {
-    font-size: 2.6rem;
-    margin-bottom: -0.8rem; }
 
 .assessor.card .col {
   width: 100%; }
@@ -3574,25 +3663,3 @@ tile:nth-child(2n) .card {
   .assessor.card .content dl dd {
     float: left;
     margin-left: 1em; }
-
-.assessor.expanded {
-  font-size: 1.6rem; }
-  .assessor.expanded .fr-grid-cell-name {
-    font-size: 1.8rem;
-    padding-left: 2rem; }
-  .assessor.expanded .name .title {
-    overflow: hidden;
-    text-overflow: ellipsis; }
-  .assessor.expanded .reuses {
-    text-align: center;
-    background-color: #0071bc;
-    color: #ffffff;
-    font-weight: bolder;
-    border-right: none;
-    border-bottom: 1px solid #ffffff; }
-    .assessor.expanded .reuses .text {
-      font-size: 1.3rem;
-      font-weight: 400; }
-    .assessor.expanded .reuses .number {
-      font-size: 2.6rem;
-      margin-bottom: -0.8rem; }
