@@ -33,9 +33,9 @@
         .module('fedramp.services')
         .factory('StorageData', StorageDataFactory);
 
-    StorageDataFactory.$inject = ['StorageManager', 'Data', 'Agency', 'Assessor', 'Product', 'Provider', 'helperService'];
+    StorageDataFactory.$inject = ['StorageManager', 'Data', 'Agency', 'Assessor', 'Product', 'Provider', 'AssessorData', 'helperService'];
 
-    function StorageDataFactory (StorageManager, Data, Agency, Assessor, Product, Provider, helperService) {
+    function StorageDataFactory (StorageManager, Data, Agency, Assessor, Product, Provider, AssessorData, helperService) {
         /**
          * Provides storage specific functionality that extends the StorageManager
          * @constructor
@@ -44,8 +44,8 @@
          */
         function StorageData (options) {
             StorageManager.call(this);
-
             var self = this;
+            var rawAssessors = (options &amp;&amp; options['Assessors'] ? options.Assessors : []);
             self.storageContainer = 'data';
 
             /**
@@ -89,7 +89,6 @@
                     item.logo = d.cspUrl;
                     items.push(item);
                 }
-
                 
                 items.forEach(item => {
                     item.products = self.products().filter(x => x.provider === item.name);
@@ -190,7 +189,7 @@
 
                 items.forEach(item => {
                     data.forEach(d => {
-                        if (d.pkg === item.name) {
+                        if (d.pkg.trim() === item.name) {
                             if (include(d.sponsoringAgency, item.agencies)) {
                                 item.agencies.push(d.sponsoringAgency.trim());
                             }
@@ -323,6 +322,7 @@
 
                     let item = new Assessor();
                     item.name = d.independentAssessor.trim();
+                    item = fillFromRawAssessor(item);
                     items.push(item);
                 }
 
@@ -340,6 +340,7 @@
                         names.push(l.independentAssessor.trim());
 
                         let item = new Assessor();
+                        item = fillFromRawAssessor(item);
                         item.name = l.independentAssessor.trim();
                         items.push(item);
                     }
@@ -403,6 +404,27 @@
                 return false;
             }
 
+            /**
+             * Finds the assessor using a name from the list of raw assessors.
+             *
+             * @returns
+             * Assessor being populated.
+             */
+            function fillFromRawAssessor(assessor){
+                for (let x = 0; x &lt; rawAssessors.length; x++) {
+                    // Empty {} seem to be returned sometimes
+                    if (Object.keys(rawAssessors[x]).length === 0) {
+                        continue;
+                    }
+                    var assessorData = new AssessorData(rawAssessors[x]);
+                    if (safeTrim(assessorData.name) === safeTrim(assessor.name)) {
+                        assessor.accreditationDate = helperService.toDate(assessorData.accreditationDate);
+                        break;
+                    }
+                }
+                return assessor;
+            }
+
             return self.init(options);
         }
 
@@ -422,13 +444,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Components.Agency.html">Agency</a></li><li><a href="Components.Assessor.html">Assessor</a></li><li><a href="Components.DownloadCsv.html">DownloadCsv</a></li><li><a href="Components.Grid.html">Grid</a></li><li><a href="Components.GridFilter.html">GridFilter</a></li><li><a href="Components.GridFilterClear.html">GridFilterClear</a></li><li><a href="Components.GridSearch.html">GridSearch</a></li><li><a href="Components.GridSort.html">GridSort</a></li><li><a href="Components.Product.html">Product</a></li><li><a href="Components.Provider.html">Provider</a></li><li><a href="Components.Search.html">Search</a></li><li><a href="Components.Tile.html">Tile</a></li><li><a href="Controllers.AgenciesController.html">AgenciesController</a></li><li><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></li><li><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></li><li><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></li><li><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></li><li><a href="Controllers.AssessorsController.html">AssessorsController</a></li><li><a href="Controllers.HomeController.html">HomeController</a></li><li><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></li><li><a href="Controllers.ProductInformationController.html">ProductInformationController</a></li><li><a href="Controllers.ProductsController.html">ProductsController</a></li><li><a href="Controllers.ProviderComparisonController.html">ProviderComparisonController</a></li><li><a href="Controllers.ProviderInformationController.html">ProviderInformationController</a></li><li><a href="Controllers.ProvidersController.html">ProvidersController</a></li><li><a href="Controllers.SearchController.html">SearchController</a></li><li><a href="Controllers.SitemapController.html">SitemapController</a></li><li><a href="Models.Agency.html">Agency</a></li><li><a href="Models.Assessor.html">Assessor</a></li><li><a href="Models.AtoLetter.html">AtoLetter</a></li><li><a href="Models.Data.html">Data</a></li><li><a href="Models.Product.html">Product</a></li><li><a href="Models.Provider.html">Provider</a></li><li><a href="Models.Settings.html">Settings</a></li><li><a href="Services.CsvService.html">CsvService</a></li><li><a href="Services.DataService.html">DataService</a></li><li><a href="Services.DatasourceService.html">DatasourceService</a></li><li><a href="Services.HelperService.html">HelperService</a></li><li><a href="Services.Searcher.html">Searcher</a></li><li><a href="Services.StorageData.html">StorageData</a></li><li><a href="Services.StorageManager.html">StorageManager</a></li><li><a href="Services.StorageSettings.html">StorageSettings</a></li></ul><h3>Namespaces</h3><ul><li><a href="Components.html">Components</a></li><li><a href="Controllers.html">Controllers</a></li><li><a href="Models.html">Models</a></li><li><a href="Services.html">Services</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Components.Agency.html">Agency</a></li><li><a href="Components.Assessor.html">Assessor</a></li><li><a href="Components.Comparison.html">Comparison</a></li><li><a href="Components.DownloadCsv.html">DownloadCsv</a></li><li><a href="Components.Grid.html">Grid</a></li><li><a href="Components.GridFilter.html">GridFilter</a></li><li><a href="Components.GridFilterClear.html">GridFilterClear</a></li><li><a href="Components.GridSearch.html">GridSearch</a></li><li><a href="Components.GridSort.html">GridSort</a></li><li><a href="Components.Panel.html">Panel</a></li><li><a href="Components.Product.html">Product</a></li><li><a href="Components.ProductList.html">ProductList</a></li><li><a href="Components.ProductStatus.html">ProductStatus</a></li><li><a href="Components.Provider.html">Provider</a></li><li><a href="Components.Search.html">Search</a></li><li><a href="Components.Tile.html">Tile</a></li><li><a href="Controllers.AgenciesController.html">AgenciesController</a></li><li><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></li><li><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></li><li><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></li><li><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></li><li><a href="Controllers.AssessorsController.html">AssessorsController</a></li><li><a href="Controllers.HomeController.html">HomeController</a></li><li><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></li><li><a href="Controllers.ProductInformationController.html">ProductInformationController</a></li><li><a href="Controllers.ProductsController.html">ProductsController</a></li><li><a href="Controllers.ProviderComparisonController.html">ProviderComparisonController</a></li><li><a href="Controllers.ProviderInformationController.html">ProviderInformationController</a></li><li><a href="Controllers.ProvidersController.html">ProvidersController</a></li><li><a href="Controllers.SearchController.html">SearchController</a></li><li><a href="Controllers.SitemapController.html">SitemapController</a></li><li><a href="Models.Agency.html">Agency</a></li><li><a href="Models.Assessor.html">Assessor</a></li><li><a href="Models.AssessorData.html">AssessorData</a></li><li><a href="Models.AtoLetter.html">AtoLetter</a></li><li><a href="Models.Data.html">Data</a></li><li><a href="Models.Product.html">Product</a></li><li><a href="Models.Provider.html">Provider</a></li><li><a href="Models.Settings.html">Settings</a></li><li><a href="Services.CacheFactory.html">CacheFactory</a></li><li><a href="Services.CsvService.html">CsvService</a></li><li><a href="Services.DataService.html">DataService</a></li><li><a href="Services.DatasourceService.html">DatasourceService</a></li><li><a href="Services.FedrampDataProvider.html">FedrampDataProvider</a></li><li><a href="Services.HelperService.html">HelperService</a></li><li><a href="Services.Searcher.html">Searcher</a></li><li><a href="Services.StorageAssessorData.html">StorageAssessorData</a></li><li><a href="Services.StorageData.html">StorageData</a></li><li><a href="Services.StorageManager.html">StorageManager</a></li><li><a href="Services.StorageSettings.html">StorageSettings</a></li></ul><h3>Namespaces</h3><ul><li><a href="Components.html">Components</a></li><li><a href="Controllers.html">Controllers</a></li><li><a href="Models.html">Models</a></li><li><a href="Services.html">Services</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jul 19 2016 15:35:07 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Jul 28 2016 12:46:57 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
