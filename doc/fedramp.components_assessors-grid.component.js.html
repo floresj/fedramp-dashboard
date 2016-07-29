@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Assessor</title>
+    <title>JSDoc: Source: fedramp.components/assessors-grid.component.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,212 +17,126 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Assessor</h1>
+    <h1 class="page-title">Source: fedramp.components/assessors-grid.component.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="Components.html">Components</a>.</span>Assessor</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-
-    <h4 class="name" id="Assessor"><span class="type-signature"></span>new Assessor<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_assessor.component.js.html">fedramp.components/assessor.component.js</a>, <a href="fedramp.components_assessor.component.js.html#line22">line 22</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id=".self.close"><span class="type-signature">(static) </span>self.close<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Close the informational panel
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_assessor.component.js.html">fedramp.components/assessor.component.js</a>, <a href="fedramp.components_assessor.component.js.html#line30">line 30</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function () {
+    'use strict';
+
+    angular
+        .module('fedramp.components')
+        .component('assessorsGrid', {
+            templateUrl: 'src/templates/components/assessors-grid.html',
+            controller: AssessorGrid,
+            controllerAs: 'controller',
+            bindings: {
+                expandTiles: '&lt;',
+                rawItems: '&lt;?',
+                onUpdate: '&amp;?'
+            }
+        });
+
+    AssessorGrid.$inject = ['$log', 'fedrampData', '$attrs'];
+
+    /**
+     * @constructor
+     * @memberof Components
+     */
+    function AssessorGrid($log, fedrampData, $attrs){
+        var self = this;
+        /**
+         * The filtered data
+         * @member {array}
+         * @memberof Components.AssessorsGrid
+         */
+        self.filteredData = [];
+
+        /**
+         * The products
+         * @member {array}
+         * @memberof Components.AssessorsGrid
+         */
+        self.assessors = self.rawItems || fedrampData.assessors();
+
+        /**
+         * Event reciever for when the grid is updated.
+         * @public
+         * @member {object}
+         * @memberof Components.AssessorsGrid
+         *
+         * @param {array} items
+         *  Array of items with filtering and sorting applied.
+         */
+        self.onUpdate = function(func){            
+            return function(items, state){
+                self.filteredData = items;
+                if(func){
+                    func({items: items});
+                }
+            };
+        }(self.onUpdate);
+
+
+        /**
+         * Flag to hide filters
+         */
+        self.hideFilters = angular.isDefined($attrs.hideFilters) ? $attrs.hideFilters : false; 
+
+        /**
+         * Determine the options available for filtering the reuse metric
+         * @public
+         * @member {object}
+         * @memberof Components.AssessorsGrid
+         *
+         * @param {array} products
+         *  Array of items available
+         *
+         * @returns
+         *  An array of option values for filtering
+         */
+        self.reuseRangeOptions = function (assessors) {
+            return [
+                {value: {min: 0, max:5}, label: '0 - 5', selected: false}, 
+                {value: {min: 6, max:10}, label: '5 - 10', selected:false},
+                {value: {min: 11, max:1000}, label: '> 10', selected:false}];
+        };
+
+        /**
+         * Filter the data set by the reuse metric
+         * @public
+         * @member {object}
+         * @memberof Controllers.AssessorsController
+         *
+         * @param {object} assessor
+         *  The assessor to compare
+         * @param {integer} index
+         *  The current index within the array of items
+         * @param {array} arr
+         *  Array of items
+         * @param {array} selectedOptions
+         *  Array of selected options
+         *
+         * @returns
+         *  The matched item or null
+         */
+        self.reuseRangeFilter = function (assessor, index, arr, selectedOptions) {
+            return selectedOptions.find(function (option) {
+                if (assessor.reuses >= option.value.min &amp;&amp; assessor.reuses &lt;= option.value.max) {
+                    return option;
+                }
+            });
+        };
+    }
+})();
+</code></pre>
+        </article>
+    </section>
 
 
 
