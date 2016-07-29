@@ -20,8 +20,9 @@
      * @constructor
      * @memberof Components
      */
-    function ProductsGrid($log, fedrampData, $attrs){
+    function ProductsGrid ($log, fedrampData, $attrs) {
         var self = this;
+
         /**
          * The filtered data
          * @member {array}
@@ -45,20 +46,19 @@
          * @param {array} items
          *  Array of items with filtering and sorting applied.
          */
-        self.onUpdate = function(func){            
-            return function(items, state){
+        self.onUpdate = function (func) {
+            return function (items, state) {
                 self.filteredData = items;
-                if(func){
+                if (func) {
                     func({items: items});
                 }
             };
         }(self.onUpdate);
 
-
         /**
          * Flag to hide filters
          */
-        self.hideFilters = angular.isDefined($attrs.hideFilters) ? $attrs.hideFilters : false; 
+        self.hideFilters = angular.isDefined($attrs.hideFilters) ? $attrs.hideFilters : false;
 
         /**
          * Determine the options available for filtering the reuse metric
@@ -74,7 +74,7 @@
          */
         self.reuseRangeOptions = function (products) {
             return [
-                {value: {min: 0, max:5}, label: '0 - 5', selected: false}, 
+                {value: {min: 0, max:5}, label: '0 - 5', selected: false},
                 {value: {min: 6, max:10}, label: '5 - 10', selected:false},
                 {value: {min: 11, max:1000}, label: '> 10', selected:false}];
         };
@@ -104,7 +104,7 @@
                 }
             });
         };
-        
+
         /**
          * Custom search function used in filtering the grid.
          * @public
@@ -138,6 +138,59 @@
             }
 
             return null;
+        };
+
+        /**
+         * Custom status filter that checks a products designation value as well as the 
+         * existence of a fedramp ready date.
+         *
+         * @member {object}
+         * @memberof Components.ProductsGrid
+         *
+         * @param {object} product
+         *  The product to be compared
+         * @param {integer} i
+         *  The current index within the array of items
+         * @param {array} arr
+         *  The array of items
+         * @param {string} searchTerm
+         *  The search context
+         *
+         * @returns
+         *  An matched item or null
+         */
+        self.statusFilter = function(product, index, arr, selectedOptions){
+            var found = null;
+            selectedOptions.forEach(function(option){
+                if(option.value === product.designation){
+                    found = product;
+                    return found;
+                }
+                // TODO Need fedramp ready column
+                //if(option.value === 'Ready' && product.fedrampReady){
+                //}
+            });
+            return found;
+        };
+
+        /**
+         * List of filters
+         *
+         * @member {object}
+         * @memberof Components.ProductsGrid
+         *
+         * @param {array} products
+         *  Array of items available
+         *
+         * @returns
+         *  An matched item or null
+         */
+        self.statusFilterOptions = function(products) {
+            return [
+                {value: 'Ready', label: 'Ready', selected: false},
+                {value: 'In Process', label: 'In Process', selected: false},
+                {value: 'Compliant', label: 'Authorized', selected: false},
+            ];
         };
     }
 })();
