@@ -20,31 +20,25 @@
         </div>
         <div class="col reuse">
             <div class="number">{{controller.model.reuses}}</div>
-            <div class="text">Reuses</div>
+            <div class="text">{{controller.model.useLabel}}</div>
         </div>
     </div>
-    <div class="row system-profile clear">
-        <div class="col contact-information">
-            <h5>Contact Information</h5>
-            <div><strong>POC:</strong></div>
-            <div><strong>E-mail:</strong></div>
-            <div><strong>Website:</strong></div>
-        </div>
-        <div class="col">
-            <h4>FedRAMP Compliant Detail</h4>
+    <div class="row">
+        <div class="contact-information">
+            <h4>Contact Information</h4>
 
-            <h5>Authorization Type</h5>
-            <p></p>
+            <h5>POC</h5>
+            <p>{{controller.model.pointOfContact}}</p>
 
-            <h5>Agency Lead</h5>
-            <p></p>
+            <h5>E-mail</h5>
+            <p>{{controller.model.email}}</p>
         </div>
     </div>
 
     <panel header="Agency Description" class="clear">
         <div class="row products">
             <div class="col">
-                <h4>Products</h4>
+                <h4>Client History</h4>
                 <product-list products="controller.model.products"></product-list>
                 <p ng-if="controller.model.products.length === 0">
                     None
