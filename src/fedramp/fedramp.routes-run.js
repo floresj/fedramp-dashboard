@@ -31,6 +31,14 @@
         });
 
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams, options) {
+            // Enable routes to pass a underlying queryParams object that we can populate
+            // since ui-router doesn't allow arbitary query params from being passed
+            // with $state.go()
+            if(routeOptions && routeOptions.queryParams){
+                $location.search(routeOptions.queryParams);
+                return;
+            }
+
             // We check if the state we're coming from is NOT a child of the fedramp.app.home. Items that
             // match would be all information and comparison pages. When we do match, we automatically load
             // the query params that were saved in the $stateChangeStart event.

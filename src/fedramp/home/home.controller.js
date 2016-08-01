@@ -5,13 +5,13 @@
         .module('fedramp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$log', 'fedrampData', 'CsvService', 'Cache'];
+    HomeController.$inject = ['$log', 'fedrampData', 'CsvService', 'Cache', '$state', 'helperService'];
 
     /**
      * @constructor
      * @memberof Controllers
      */
-    function HomeController ($log, fedrampData, CsvService, Cache) {
+    function HomeController ($log, fedrampData, CsvService, Cache, $state, helperService) {
         var self = this;
 
         /**
@@ -56,7 +56,7 @@
          *  The total authorized cloud service providers
          */
         self.totalAuthorized = Cache.wrap('totalAuthorized')(function () {
-            return fedrampData.products().filter(x => x.designation !== 'In-Process').length;
+            return fedrampData.products().filter(x => x.designation === 'Compliant').length;
         });
 
         /**
@@ -96,7 +96,7 @@
          *  The total number of in-process products
          */
         self.totalInProcess = Cache.wrap('totalInProcess')(function(){
-            return fedrampData.products().filter(x => x.designation === 'In-Process').length;
+            return fedrampData.products().filter(x => x.designation === 'In Process').length;
         });
 
         /**
@@ -112,5 +112,23 @@
         self.totalReady = Cache.wrap('totalReady')(function(){
             return 0;
         });
+
+
+        /**
+         * Takes user to products grid and applies status filter.
+         * @public
+         * @memberof Controllers.HomeController
+         */
+        self.filterProducts = function(status){
+            $state.go('fedramp.app.home.products', {}, {
+                reload: true,
+                queryParams: {
+                    status: status
+                }
+            }).then(function(){
+                helperService.scrollTo('products-grid');
+            });
+        };
+
     }
 })();
