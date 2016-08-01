@@ -4722,6 +4722,27 @@ h1, h2, h3, h4, h5, h6 {
 	@date		2016-07-12
 	@version	0.9.5	web standards version extracted from
 */
+.usa-footer .usa-footer-primary-section {
+  min-height: 35rem; }
+
+.usa-footer .usa-footer-nav .usa-footer-primary-link {
+  display: inline-block; }
+
+.usa-footer .usa-footer-nav li {
+  display: table-row; }
+  .usa-footer .usa-footer-nav li i {
+    display: table-cell;
+    width: 4rem;
+    color: #aeb0b5; }
+  .usa-footer .usa-footer-nav li p, .usa-footer .usa-footer-nav li span, .usa-footer .usa-footer-nav li a {
+    display: table-cell; }
+
+/*
+	provide condensed version of web standards variables for use
+
+	@date		2016-07-12
+	@version	0.9.5	web standards version extracted from
+*/
 .clear-filters {
   display: block;
   font-weight: 700;
