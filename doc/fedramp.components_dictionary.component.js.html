@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: fedramp.components/product-status.component.js</title>
+    <title>JSDoc: Source: fedramp.components/dictionary.component.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: fedramp.components/product-status.component.js</h1>
+    <h1 class="page-title">Source: fedramp.components/dictionary.component.js</h1>
 
     
 
@@ -31,26 +31,50 @@
 
     angular
         .module('fedramp.components')
-        .component('productStatus', {
-            templateUrl: 'src/templates/components/product-status.html',
-            controller: ProductStatus,
-            controllerAs: 'controller',
-            bindings: {
-                status: '&lt;'
-            }
+        .component('dictionary', {
+            transclude: true,
+            templateUrl: 'src/templates/components/dictionary.html',
+            controller: DictionaryController,
+            controllerAs: 'controller'
         });
 
-    ProductStatus.$inject = [];
+    DictionaryController.$inject = ['DataService'];
 
     /**
-     * Renders the appropriate fedramp status icon and text based on the inputted status text
      * @constructor
      * @memberof Components
      */
-    function ProductStatus () {
+    function DictionaryController (DataService) {
         var self = this;
+        // Original list of dictionary items
+        self.dataDictionary = [];
 
+        // Filtered dictionary items
+        self.filteredDictionary = [];
+
+        // Public functions
+        self.$onInit = $onInit;
+        self.onUpdate = onUpdate;
+
+        /**
+         * Initializes component and queries for data dictionary.
+         */
+        function $onInit() {
+            DataService
+                .pullDataDictionary()
+                .then(function(dataDictionary){
+                    self.dataDictionary = dataDictionary;
+                });
+        }
+
+        /**
+         * When grid is filtered, updates array to render updated items
+         */
+        function onUpdate(items){
+            self.filteredDictionary = items;
+        }
     }
+
 })();
 </code></pre>
         </article>
