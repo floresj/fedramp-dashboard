@@ -52,9 +52,9 @@
                 <dt ng-if="controller.model.pocName">POC:</dt>
                 <dd ng-if="controller.model.pocName">{{controller.model.pocName}}</dd>
                 <dt ng-if="controller.model.pocEmail">E-mail:</dt>
-                <dd ng-if="controller.model.pocEmail"><a ng-href="mailto:{{controller.model.pocEmail}}">{{controller.model.pocEmail}}</a></dd>
+                <dd ng-if="controller.model.pocEmail"><a ng-href="mailto:{{controller.model.pocEmail}}" title="Email the provider">{{controller.model.pocEmail}}</a></dd>
                 <dt ng-if="controller.model.website">Website:</dt>
-                <dd ng-if="controller.model.website"><a ng-href="{{controller.externalLink(controller.model.website)}}" target="_blank">{{controller.model.website}}</a></dd>
+                <dd ng-if="controller.model.website"><a ng-href="{{controller.externalLink(controller.model.website)}}" target="_blank" title="Visit the provider website">{{controller.model.website}}</a></dd>
             </dl>
         </div>
         <div class="col">
@@ -76,7 +76,7 @@
             <p>
                 {{controller.model.pkgId}}
                 <br />
-                <a href="#">Package Access Request Form</a>
+                <a href="https://www.fedramp.gov/files/2015/03/FedRAMP-Package-Request-Form_V4_06192014.pdf" title="Download a copy of the package access request form">Package Access Request Form</a>
             </p>
 
             <h4>FedRAMP Authorized Detail</h4>
@@ -90,6 +90,29 @@
                 <dt ng-if="controller.model.authorizationDate">Authorization Date:</dt>
                 <dd ng-if="controller.model.authorizationDate">{{ controller.model.authorizationDate }}</dd>
             </dl>
+        </div>
+    </div>
+
+    <div class="row timeline">
+        <div class="text-center">
+            <h4>FedRAMP Authorization Timeline</h4>
+        </div>
+        <div class="timeline-row">
+            <div class="timeline-col" ng-class="{'ready' : controller.model.fedrampReadyDate}">
+                <div>{{controller.model.fedrampReadyDate}}</div>
+                <span>Ready</span>
+            </div>
+            <div class="timeline-col" ng-class="{'inprocess' : controller.model.inProcessDate}">
+                <div>{{controller.model.inProcessDate</div>
+                <span>In-Process</span>
+            </div>
+            <div class="timeline-col" ng-class="{'authorized' : controller.model.authorizationDate}">
+                <div>{{controller.model.authorizationDate}}</div>
+                <span>Authorized</span>
+            </div>
+        </div>
+        <div class="estimated text-center" ng-if="controller.model.expectedCompliance">
+            {{controller.model.expectedCompliance}} Estimated Compliance Date
         </div>
     </div>
     <panel ng-if="controller.model.serviceDescription" header="Service Description" expand="false">

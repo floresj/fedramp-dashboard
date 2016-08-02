@@ -5278,7 +5278,10 @@ grid-total {
         display: inline-block;
         padding-right: 0.8rem; }
       .information .system-profile .contact-information dl dd {
-        margin-left: 0; }
+        margin-left: 0;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap; }
   .information .fedramp dl dt {
     float: left;
     font-weight: bolder;
@@ -5286,7 +5289,10 @@ grid-total {
     display: inline-block;
     padding-right: 0.8rem; }
   .information .fedramp dl dd {
-    margin-left: 0; }
+    margin-left: 0;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
   .information .fedramp .col {
     display: block;
     clear: both; }
@@ -5341,6 +5347,48 @@ grid-total {
     width: 90px;
     display: inline-block;
     color: #aeb0b5; }
+  .information .timeline {
+    margin-bottom: 4rem;
+    width: 100%; }
+    .information .timeline .timeline-row {
+      display: table;
+      width: 100%; }
+      .information .timeline .timeline-row .timeline-col.ready {
+        background-color: #aeb0b5; }
+      .information .timeline .timeline-row .timeline-col.inprocess {
+        background-color: #5b616b; }
+      .information .timeline .timeline-row .timeline-col.authorized {
+        background-color: #205493; }
+      .information .timeline .timeline-row .timeline-col.ready span,
+      .information .timeline .timeline-row .timeline-col.inprocess span,
+      .information .timeline .timeline-row .timeline-col.authorized span {
+        font-size: 1.3rem;
+        font-weight: 600;
+        visibility: visible; }
+      .information .timeline .timeline-row .timeline-col.ready div,
+      .information .timeline .timeline-row .timeline-col.inprocess div,
+      .information .timeline .timeline-row .timeline-col.authorized div {
+        font-size: 2.2rem;
+        font-weight: 600;
+        visibility: visible; }
+      .information .timeline .timeline-row .timeline-col {
+        background-color: #d6d7d9;
+        height: 105px;
+        vertical-align: middle;
+        display: table-cell;
+        width: 33%;
+        text-align: center;
+        border-right: 1px solid #fff;
+        color: #fff; }
+        .information .timeline .timeline-row .timeline-col span, .information .timeline .timeline-row .timeline-col div {
+          visibility: hidden; }
+      .information .timeline .timeline-row .timeline-col:first-child {
+        border-left: 1px solid #fff; }
+    .information .timeline .estimated {
+      background-color: #dce4ef;
+      height: 44px;
+      border-top: 1px solid #fff;
+      padding-top: 12px; }
 
 .information.assessor .row {
   clear: both; }
@@ -5355,7 +5403,10 @@ grid-total {
       display: inline-block;
       padding-right: 0.8rem; }
     .information.assessor .row .contact-information dl dd {
-      margin-left: 0; }
+      margin-left: 0;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
   .information.assessor .row h5 {
     margin-top: 0; }
 
@@ -5382,7 +5433,10 @@ grid-total {
       display: inline-block;
       padding-right: 0.8rem; }
     .agency .row .contact-information dl dd {
-      margin-left: 0; }
+      margin-left: 0;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
 
 /*
 	provide condensed version of web standards variables for use
@@ -5739,6 +5793,7 @@ tile:nth-child(2n) .card {
   width: 100%; }
 
 .provider.card .content .title {
+  padding-top: 20px;
   /* padding-left: 0.34em; */ }
 
 .provider.card .content dl {
@@ -5750,7 +5805,9 @@ tile:nth-child(2n) .card {
     float: left; }
   .provider.card .content dl dd {
     float: left;
-    margin-left: 1em; }
+    margin-left: 1em;
+    overflow-x: hidden;
+    text-overflow: ellipsis; }
 
 .provider.expanded .col {
   vertical-align: top;
@@ -5765,6 +5822,7 @@ tile:nth-child(2n) .card {
   margin: 0 0 0.5rem; }
 
 .provider.expanded .name .title {
+  padding-top: 20px;
   text-overflow: ellipsis; }
 
 .provider.expanded .reuses {
@@ -5821,6 +5879,7 @@ tile:nth-child(2n) .card {
   .card .content .col {
     width: 100%; }
   .card .content .title {
+    padding-top: 20px;
     /* padding-left: 0.34em; */ }
   .card .content dl {
     font-size: smaller; }
@@ -5831,7 +5890,9 @@ tile:nth-child(2n) .card {
       float: left; }
     .card .content dl dd {
       float: left;
-      margin-left: 1em; }
+      margin-left: 1em;
+      overflow-x: hidden;
+      text-overflow: ellipsis; }
 
 .product.expanded .name .logo,
 .agency.expanded .name .logo,
@@ -5846,7 +5907,8 @@ tile:nth-child(2n) .card {
 .product.expanded .name .title,
 .agency.expanded .name .title,
 .assessor.expanded .name .title {
-  text-overflow: ellipsis; }
+  text-overflow: ellipsis;
+  padding-top: 20px; }
 
 .product.expanded .status,
 .agency.expanded .status,
@@ -5861,6 +5923,22 @@ tile:nth-child(2n) .card {
   .agency.expanded .status span,
   .assessor.expanded .status span {
     display: block; }
+
+.product.expanded .contact dl dt,
+.agency.expanded .contact dl dt,
+.assessor.expanded .contact dl dt {
+  float: left;
+  font-weight: bolder;
+  clear: left;
+  display: inline-block;
+  padding-right: 0.8rem; }
+
+.product.expanded .contact dl dd,
+.agency.expanded .contact dl dd,
+.assessor.expanded .contact dl dd {
+  margin-left: 0;
+  overflow-x: hidden;
+  text-overflow: ellipsis; }
 
 .product.expanded .reuses,
 .agency.expanded .reuses,
@@ -5917,7 +5995,9 @@ tile:nth-child(2n) .card {
     float: left; }
   .agency.card .content dl dd {
     float: left;
-    margin-left: 1em; }
+    margin-left: 1em;
+    overflow-x: hidden;
+    text-overflow: ellipsis; }
 
 .assessor.card .col {
   width: 100%; }
@@ -5957,4 +6037,6 @@ tile:nth-child(2n) .card {
     float: left; }
   .assessor.card .content dl dd {
     float: left;
-    margin-left: 1em; }
+    margin-left: 1em;
+    overflow-x: hidden;
+    text-overflow: ellipsis; }
