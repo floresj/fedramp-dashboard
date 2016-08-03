@@ -215,6 +215,16 @@
                     });
                 });
             }
+
+            // Ensure label is set for options
+            selected.forEach(x => {
+                self.options.forEach(o => {
+                    if(angular.equals(o.value, x.value)){
+                        x.label = o.label;
+                    }
+                });
+            });
+
             self.selectedOptionValues = selected;
             if (self.selectedOptionValues) {
                 applyFilter();
