@@ -194,9 +194,63 @@ function optionsNameFunc(data){
         }
     }
     return null;
-}</code></pre><h3>Maintain static header/footer</h3><blockquote>
-<p>Provide <code>code</code> example</p>
-</blockquote>
+}</code></pre><h3>Maintain static header/footer</h3><h4>Search</h4><p>The topmost portion of the header consists of the search form. The this area is contained in
+<a href="src/templates/fedramp.html">the main template</a> within the element</p>
+<pre class="prettyprint source lang-html"><code>&lt;div id=&quot;topnav&quot; class=&quot;hidden-print&quot;>&lt;!-- Search related elements --->&lt;/div></code></pre><p>The actual <a href="src/templates/components/search.html">search template</a> contains
+the grid along with the form elements. The contents were based on the original template found on
+the <a href="https://www.fedramp.gov">www.fedramp.gov</a> site, but then adapted to follow the
+<a href="https://standards.usa.gov/search-bar/">U.S. Web Design Standards</a>.</p>
+<p>While the <a href="src/fedramp.components/search.component.js">search component</a> is the backing to the
+form the actual search logic takes place within the
+<a href="src/fedramp/search/search.controller.js">search controller</a>. The controller handles the external
+and internal queries, the displaying of results, and any exception handling and informational
+messages.</p>
+<p>To adjust the styles applied within the search please make all changes in
+<a href="sass/search.scss">search.scss</a>.</p>
+<h4>Header</h4><p>The remaining sections of the header can be referenced in
+<a href="src/templates/fedramp.html">the main template</a> within the element</p>
+<pre class="prettyprint source lang-html"><code>&lt;div id=&quot;header&quot; class=&quot;clearfix&quot;>&lt;!-- Header related elements --->&lt;/div></code></pre><p>Two main sections of importance:</p>
+<ol>
+<li>The site title/logo</li>
+<li>The site navigation</li>
+</ol>
+<p>The logo is currently referencing <img src="https://fedramp.sites.usa.gov/files/2015/02/logo3.png" alt="FedRAMP Logo">
+and redirects the user to <a href="https://www.fedramp.gov">www.fedramp.gov</a> if clicked.</p>
+<p>The navigation is created with multiple layers of unordered lists for each subsequent
+submenu. An example of this format which would be nested</p>
+<pre class="prettyprint source lang-html"><code>&lt;ul class=&quot;catnav clearfix sf-js-enabled&quot;>
+    &lt;!-- Other menu items --->
+    &lt;li id=&quot;menu-item-8272&quot; class=&quot;menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-8272&quot;>&lt;a href=&quot;#&quot; class=&quot;sf-with-ul&quot;>Marketplace&lt;/a>
+        &lt;ul class=&quot;sub-menu&quot; style=&quot;display: none;&quot;>
+            &lt;li id=&quot;menu-item-10722&quot; class=&quot;menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-782 current_page_item menu-item-10722 first-child&quot;>&lt;a href=&quot;https://www.fedramp.gov/marketplace/compliant-systems/&quot;>FedRAMP Compliant Systems&lt;/a>&lt;/li>
+            &lt;li id=&quot;menu-item-10712&quot; class=&quot;menu-item menu-item-type-post_type menu-item-object-page menu-item-10712&quot;>&lt;a href=&quot;https://www.fedramp.gov/marketplace/in-process-systems/&quot;>FedRAMP In-Process Systems&lt;/a>&lt;/li>
+            &lt;li id=&quot;menu-item-10702&quot; class=&quot;menu-item menu-item-type-post_type menu-item-object-page menu-item-10702&quot;>&lt;a href=&quot;https://www.fedramp.gov/marketplace/fedramp-ready-systems/&quot;>FedRAMP Ready Systems&lt;/a>&lt;/li>
+            &lt;li id=&quot;menu-item-4082&quot; class=&quot;menu-item menu-item-type-post_type menu-item-object-page menu-item-4082 last-child&quot;>&lt;a href=&quot;https://www.fedramp.gov/marketplace/accredited-3paos/&quot;>Accredited 3PAOs&lt;/a>&lt;/li>
+        &lt;/ul>
+    &lt;/li>
+    &lt;!-- Other menu items --->
+&lt;/ul></code></pre><p>To adjust the styles applied within the header please make all changes in
+<a href="sass/header.scss">header.scss</a>.</p>
+<h4>Footer</h4><p>The footer section can be referenced in
+<a href="src/templates/fedramp.html">the main template</a> within the element</p>
+<pre class="prettyprint source lang-html"><code>&lt;footer class=&quot;usa-footer ...&quot; role=&quot;contentinfo&quot;>&lt;!-- Footer elements --->&lt;/footer></code></pre><p>The footer has been divided into three (3) sections:</p>
+<ol>
+<li>Contact Information</li>
+<li>Twitter</li>
+<li>Subscribe to Updates</li>
+</ol>
+<p>The contact information and subscription sections are basic HTML and can be
+modified directly. However, the Twitter section required customization
+found in the <a href="src/fedramp.components/twitter.component.js">Twitter component</a>.
+This piece was separated due to how AngularJS does not render certain
+potentially unsafe elements found within views. In order to circumvent this
+we load the necessary JavaScript dynamically</p>
+<pre class="prettyprint source lang-javascript"><code>let script = document.createElement('script');
+script.async = 'async';
+script.src = 'https://platform.twitter.com/widgets.js';
+script.charset = 'utf-8';
+document.body.appendChild(script);</code></pre><p>To adjust the styles applied within the footer please make all changes in
+<a href="sass/footer.scss">footer.scss</a>.</p>
 <h2>Getting to know the code</h2><h3>Clone all things</h3><p>First you are going to want to clone the repository</p>
 <pre class="prettyprint source"><code>git clone https://github.com/truetandem/fedramp-dashboard.git</code></pre><h3>Checking dependencies</h3><p>For quick development we use <a href="https://www.npmjs.com/">npm</a>. Once
 this has been installed we execute a single command:</p>
@@ -239,7 +293,7 @@ results may be viewed after running <code>npm start</code> at
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Aug 02 2016 16:59:33 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 03 2016 08:44:34 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
