@@ -95,7 +95,7 @@ If a property expression is not provided, a custom filterFunc and optionsFunc mu
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line107">line 107</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line104">line 104</a>
     </li></ul></dd>
     
 
@@ -148,7 +148,7 @@ Property expression examples:
 If a property expression is not provided, a filterFunc and optionsFunc must be provided.</code></pre>
 
     <pre class="prettyprint"><code>// Example HTML
-&lt;grid-filter property="name" header="Name" options="" expanded="true" opened="true">&lt;/grid-filter>
+&lt;grid-filter property="name" header="Name" options="" opened="true">&lt;/grid-filter>
 
 // Example of custom filterFunc
 
@@ -247,7 +247,7 @@ data from other filters.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line282">line 282</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line276">line 276</a>
     </li></ul></dd>
     
 
@@ -329,7 +329,7 @@ data from other filters.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line388">line 388</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line380">line 380</a>
     </li></ul></dd>
     
 
@@ -367,11 +367,7 @@ data from other filters.
 
 
 <div class="description">
-    Loads a distinct list of values found in the specified property attribute.
-If the property value is a basic string, an array of strings will be set for the options.
-
-If the property is an array, each instance of the array will be iterated to extract the contents to
-generate an array containing unique values. This is done by using a set.
+    Loads an array of available options
 </div>
 
 
@@ -464,7 +460,7 @@ generate an array containing unique values. This is done by using a set.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line330">line 330</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line320">line 320</a>
     </li></ul></dd>
     
 
@@ -502,9 +498,11 @@ generate an array containing unique values. This is done by using a set.
 
 
 <div class="description">
-    Creates a set of options for a particular property to be filtered on.
+    Creates a set of options for a particular property to be filtered on. If an optionsFunc
+is NOT passed in, utilizes the property expression passed into `property` to automatically
+traverse the dataset for available options. 
 
-Override this method to add custom options.
+You can also override this method to add custom options.
 </div>
 
 
@@ -597,7 +595,7 @@ Override this method to add custom options.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line356">line 356</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line348">line 348</a>
     </li></ul></dd>
     
 
@@ -624,7 +622,7 @@ Override this method to add custom options.
 
         
 <div class="param-desc">
-    An array of options that can be selected to filter. These must be in the form
+    An array of options that can be selected to filter.
 </div>
 
 
@@ -714,7 +712,7 @@ paramName=:(<json_representation>),:(<json_representation>)
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line174">line 174</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line168">line 168</a>
     </li></ul></dd>
     
 
@@ -797,7 +795,7 @@ of strings. Non-primitive values (objects) get stored as a json string.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line259">line 259</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line253">line 253</a>
     </li></ul></dd>
     
 
@@ -879,7 +877,7 @@ of strings. Non-primitive values (objects) get stored as a json string.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line239">line 239</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line233">line 233</a>
     </li></ul></dd>
     
 
@@ -961,7 +959,7 @@ of strings. Non-primitive values (objects) get stored as a json string.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line418">line 418</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line410">line 410</a>
     </li></ul></dd>
     
 
@@ -1045,7 +1043,7 @@ parameter selectedOptionValues to the callers.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line403">line 403</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line395">line 395</a>
     </li></ul></dd>
     
 
@@ -1248,7 +1246,7 @@ a function for this component.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line302">line 302</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line296">line 296</a>
     </li></ul></dd>
     
 
@@ -1341,7 +1339,7 @@ the options are then generated.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line430">line 430</a>
+        <a href="fedramp.components_grid-filter.component.js.html">fedramp.components/grid-filter.component.js</a>, <a href="fedramp.components_grid-filter.component.js.html#line422">line 422</a>
     </li></ul></dd>
     
 
@@ -1383,13 +1381,13 @@ the options are then generated.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Components.AgenciesGrid.html">AgenciesGrid</a></li><li><a href="Components.Agency.html">Agency</a></li><li><a href="Components.Assessor.html">Assessor</a></li><li><a href="Components.AssessorGrid.html">AssessorGrid</a></li><li><a href="Components.Comparison.html">Comparison</a></li><li><a href="Components.DictionaryController.html">DictionaryController</a></li><li><a href="Components.DownloadCsv.html">DownloadCsv</a></li><li><a href="Components.Grid.html">Grid</a></li><li><a href="Components.GridFilter.html">GridFilter</a></li><li><a href="Components.GridFilterClear.html">GridFilterClear</a></li><li><a href="Components.GridSearch.html">GridSearch</a></li><li><a href="Components.GridSort.html">GridSort</a></li><li><a href="Components.Panel.html">Panel</a></li><li><a href="Components.Product.html">Product</a></li><li><a href="Components.ProductList.html">ProductList</a></li><li><a href="Components.ProductsGrid.html">ProductsGrid</a></li><li><a href="Components.ProductStatus.html">ProductStatus</a></li><li><a href="Components.Provider.html">Provider</a></li><li><a href="Components.Search.html">Search</a></li><li><a href="Components.Tile.html">Tile</a></li><li><a href="Components.Twitter.html">Twitter</a></li><li><a href="Controllers.AgenciesController.html">AgenciesController</a></li><li><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></li><li><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></li><li><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></li><li><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></li><li><a href="Controllers.AssessorsController.html">AssessorsController</a></li><li><a href="Controllers.HomeController.html">HomeController</a></li><li><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></li><li><a href="Controllers.ProductInformationController.html">ProductInformationController</a></li><li><a href="Controllers.ProductsController.html">ProductsController</a></li><li><a href="Controllers.ProviderComparisonController.html">ProviderComparisonController</a></li><li><a href="Controllers.ProviderInformationController.html">ProviderInformationController</a></li><li><a href="Controllers.ProvidersController.html">ProvidersController</a></li><li><a href="Controllers.SearchController.html">SearchController</a></li><li><a href="Controllers.SitemapController.html">SitemapController</a></li><li><a href="Models.Agency.html">Agency</a></li><li><a href="Models.Assessor.html">Assessor</a></li><li><a href="Models.AssessorData.html">AssessorData</a></li><li><a href="Models.AtoLetter.html">AtoLetter</a></li><li><a href="Models.Data.html">Data</a></li><li><a href="Models.Product.html">Product</a></li><li><a href="Models.Provider.html">Provider</a></li><li><a href="Models.Settings.html">Settings</a></li><li><a href="Services.CacheFactory.html">CacheFactory</a></li><li><a href="Services.CsvService.html">CsvService</a></li><li><a href="Services.DataService.html">DataService</a></li><li><a href="Services.DatasourceService.html">DatasourceService</a></li><li><a href="Services.FedrampDataProvider.html">FedrampDataProvider</a></li><li><a href="Services.HelperService.html">HelperService</a></li><li><a href="Services.Searcher.html">Searcher</a></li><li><a href="Services.StorageAssessorData.html">StorageAssessorData</a></li><li><a href="Services.StorageData.html">StorageData</a></li><li><a href="Services.StorageManager.html">StorageManager</a></li><li><a href="Services.StorageSettings.html">StorageSettings</a></li></ul><h3>Namespaces</h3><ul><li><a href="Components.html">Components</a></li><li><a href="Controllers.html">Controllers</a></li><li><a href="Models.html">Models</a></li><li><a href="Services.html">Services</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Components.AgenciesGrid.html">AgenciesGrid</a></li><li><a href="Components.Agency.html">Agency</a></li><li><a href="Components.Assessor.html">Assessor</a></li><li><a href="Components.AssessorGrid.html">AssessorGrid</a></li><li><a href="Components.Comparison.html">Comparison</a></li><li><a href="Components.DictionaryController.html">DictionaryController</a></li><li><a href="Components.DownloadCsv.html">DownloadCsv</a></li><li><a href="Components.Grid.html">Grid</a></li><li><a href="Components.GridFilter.html">GridFilter</a></li><li><a href="Components.GridFilterClear.html">GridFilterClear</a></li><li><a href="Components.GridSearch.html">GridSearch</a></li><li><a href="Components.GridSort.html">GridSort</a></li><li><a href="Components.Navigation.html">Navigation</a></li><li><a href="Components.Panel.html">Panel</a></li><li><a href="Components.Product.html">Product</a></li><li><a href="Components.ProductList.html">ProductList</a></li><li><a href="Components.ProductsGrid.html">ProductsGrid</a></li><li><a href="Components.ProductStatus.html">ProductStatus</a></li><li><a href="Components.Provider.html">Provider</a></li><li><a href="Components.Search.html">Search</a></li><li><a href="Components.Tile.html">Tile</a></li><li><a href="Components.Twitter.html">Twitter</a></li><li><a href="Controllers.AgenciesController.html">AgenciesController</a></li><li><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></li><li><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></li><li><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></li><li><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></li><li><a href="Controllers.AssessorsController.html">AssessorsController</a></li><li><a href="Controllers.HomeController.html">HomeController</a></li><li><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></li><li><a href="Controllers.ProductInformationController.html">ProductInformationController</a></li><li><a href="Controllers.ProductsController.html">ProductsController</a></li><li><a href="Controllers.ProviderComparisonController.html">ProviderComparisonController</a></li><li><a href="Controllers.ProviderInformationController.html">ProviderInformationController</a></li><li><a href="Controllers.ProvidersController.html">ProvidersController</a></li><li><a href="Controllers.SearchController.html">SearchController</a></li><li><a href="Controllers.SitemapController.html">SitemapController</a></li><li><a href="Models.Agency.html">Agency</a></li><li><a href="Models.Assessor.html">Assessor</a></li><li><a href="Models.AssessorData.html">AssessorData</a></li><li><a href="Models.AtoLetter.html">AtoLetter</a></li><li><a href="Models.Data.html">Data</a></li><li><a href="Models.Product.html">Product</a></li><li><a href="Models.Provider.html">Provider</a></li><li><a href="Models.Settings.html">Settings</a></li><li><a href="Services.CacheFactory.html">CacheFactory</a></li><li><a href="Services.CsvService.html">CsvService</a></li><li><a href="Services.DataService.html">DataService</a></li><li><a href="Services.DatasourceService.html">DatasourceService</a></li><li><a href="Services.FedrampDataProvider.html">FedrampDataProvider</a></li><li><a href="Services.HelperService.html">HelperService</a></li><li><a href="Services.Searcher.html">Searcher</a></li><li><a href="Services.StorageAssessorData.html">StorageAssessorData</a></li><li><a href="Services.StorageData.html">StorageData</a></li><li><a href="Services.StorageManager.html">StorageManager</a></li><li><a href="Services.StorageSettings.html">StorageSettings</a></li></ul><h3>Namespaces</h3><ul><li><a href="Components.html">Components</a></li><li><a href="Controllers.html">Controllers</a></li><li><a href="Models.html">Models</a></li><li><a href="Services.html">Services</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 03 2016 16:26:39 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Aug 04 2016 12:36:17 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

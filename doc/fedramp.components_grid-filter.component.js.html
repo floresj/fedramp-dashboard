@@ -41,7 +41,7 @@
                 gridController: '^grid'
             },
             bindings: {
-                // The property on a list to manage
+                // The property on a list to manage. Specify a property expression here.
                 property: '@',
 
                 // User friendly text to describe filter
@@ -54,9 +54,6 @@
                 // Load any initial selected values. For instance, to restore filter state. In the form
                 // {value: &lt;value>, label: &lt;label>, selected: &lt;boolean>}
                 selectedOptionValues: '&lt;',
-
-                // Whether to render expanded template vs the dropdown
-                expanded: '&lt;',
 
                 // Whether to initially render expanded mode with panels opened
                 opened: '&lt;',
@@ -72,7 +69,7 @@
             }
         });
 
-    GridFilter.$inject = ['$location', '$parse', '$element', '$httpParamSerializer', 'Searcher'];
+    GridFilter.$inject = ['$location', '$element', '$httpParamSerializer', 'Searcher'];
 
     /**
      * A generic filtering component that utilizes a property expression to extract all available options for a given
@@ -108,7 +105,7 @@
      *
      * @example 
      * // Example HTML
-     * &lt;grid-filter property="name" header="Name" options="" expanded="true" opened="true">&lt;/grid-filter>
+     * &lt;grid-filter property="name" header="Name" options="" opened="true">&lt;/grid-filter>
      *
      * // Example of custom filterFunc
      *
@@ -132,10 +129,11 @@
      * @constructor
      * @memberof Components
      */
-    function GridFilter ($location, $parse, $element, $httpParamSerializer, Searcher) {
+    function GridFilter ($location, $element, $httpParamSerializer, Searcher) {
         var self = this;
         var selectedCss = 'grid-filter-selected';
         var OBJECT_PARAM_REGEX = /\:\((.+?)\),{0,}/;
+        var PARAM_DELIMITER = ';';
 
         // Options available to filter based on property
         self.options = [];
@@ -183,10 +181,6 @@
             }
 
             restoreState();
-
-            if (self.expanded) {
-                $element.addClass('grid-filter-expanded');
-            }
         }
 
         /**
@@ -231,7 +225,7 @@
                     });
             } else {
                 // Handle basic primitive options
-                values.split(',').forEach(function (val) {
+                values.split(PARAM_DELIMITER).forEach(function (val) {
                     selected.push({
                         value: (val),
                         selected: true
@@ -293,7 +287,7 @@
                     }
                     // Handle basic primitive value
                     return option.value;
-                }).join(',');
+                }).join(PARAM_DELIMITER);
                 self.gridController.state[self.id] = options;
             } else {
                 delete self.gridController.state[self.id];
@@ -343,11 +337,7 @@
         }
 
         /**
-         * Loads a distinct list of values found in the specified property attribute.
-         * If the property value is a basic string, an array of strings will be set for the options.
-         *
-         * If the property is an array, each instance of the array will be iterated to extract the contents to
-         * generate an array containing unique values. This is done by using a set.
+         * Loads an array of available options
          *
          * @public
          * @memberof Components.GridFilter
@@ -360,9 +350,11 @@
         }
 
         /**
-         * Creates a set of options for a particular property to be filtered on.
+         * Creates a set of options for a particular property to be filtered on. If an optionsFunc
+         * is NOT passed in, utilizes the property expression passed into `property` to automatically
+         * traverse the dataset for available options. 
          *
-         * Override this method to add custom options.
+         * You can also override this method to add custom options.
          *
          * @example
          * //Sample dataset to return if overriding
@@ -379,7 +371,7 @@
          * The dataset to generate options from.
          *
          * @returns {array}  
-         * An array of options that can be selected to filter. These must be in the form 
+         * An array of options that can be selected to filter. 
          */
         function optionsFunc (source) {
             var options = [];
@@ -473,13 +465,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Components.AgenciesGrid.html">AgenciesGrid</a></li><li><a href="Components.Agency.html">Agency</a></li><li><a href="Components.Assessor.html">Assessor</a></li><li><a href="Components.AssessorGrid.html">AssessorGrid</a></li><li><a href="Components.Comparison.html">Comparison</a></li><li><a href="Components.DictionaryController.html">DictionaryController</a></li><li><a href="Components.DownloadCsv.html">DownloadCsv</a></li><li><a href="Components.Grid.html">Grid</a></li><li><a href="Components.GridFilter.html">GridFilter</a></li><li><a href="Components.GridFilterClear.html">GridFilterClear</a></li><li><a href="Components.GridSearch.html">GridSearch</a></li><li><a href="Components.GridSort.html">GridSort</a></li><li><a href="Components.Panel.html">Panel</a></li><li><a href="Components.Product.html">Product</a></li><li><a href="Components.ProductList.html">ProductList</a></li><li><a href="Components.ProductsGrid.html">ProductsGrid</a></li><li><a href="Components.ProductStatus.html">ProductStatus</a></li><li><a href="Components.Provider.html">Provider</a></li><li><a href="Components.Search.html">Search</a></li><li><a href="Components.Tile.html">Tile</a></li><li><a href="Components.Twitter.html">Twitter</a></li><li><a href="Controllers.AgenciesController.html">AgenciesController</a></li><li><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></li><li><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></li><li><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></li><li><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></li><li><a href="Controllers.AssessorsController.html">AssessorsController</a></li><li><a href="Controllers.HomeController.html">HomeController</a></li><li><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></li><li><a href="Controllers.ProductInformationController.html">ProductInformationController</a></li><li><a href="Controllers.ProductsController.html">ProductsController</a></li><li><a href="Controllers.ProviderComparisonController.html">ProviderComparisonController</a></li><li><a href="Controllers.ProviderInformationController.html">ProviderInformationController</a></li><li><a href="Controllers.ProvidersController.html">ProvidersController</a></li><li><a href="Controllers.SearchController.html">SearchController</a></li><li><a href="Controllers.SitemapController.html">SitemapController</a></li><li><a href="Models.Agency.html">Agency</a></li><li><a href="Models.Assessor.html">Assessor</a></li><li><a href="Models.AssessorData.html">AssessorData</a></li><li><a href="Models.AtoLetter.html">AtoLetter</a></li><li><a href="Models.Data.html">Data</a></li><li><a href="Models.Product.html">Product</a></li><li><a href="Models.Provider.html">Provider</a></li><li><a href="Models.Settings.html">Settings</a></li><li><a href="Services.CacheFactory.html">CacheFactory</a></li><li><a href="Services.CsvService.html">CsvService</a></li><li><a href="Services.DataService.html">DataService</a></li><li><a href="Services.DatasourceService.html">DatasourceService</a></li><li><a href="Services.FedrampDataProvider.html">FedrampDataProvider</a></li><li><a href="Services.HelperService.html">HelperService</a></li><li><a href="Services.Searcher.html">Searcher</a></li><li><a href="Services.StorageAssessorData.html">StorageAssessorData</a></li><li><a href="Services.StorageData.html">StorageData</a></li><li><a href="Services.StorageManager.html">StorageManager</a></li><li><a href="Services.StorageSettings.html">StorageSettings</a></li></ul><h3>Namespaces</h3><ul><li><a href="Components.html">Components</a></li><li><a href="Controllers.html">Controllers</a></li><li><a href="Models.html">Models</a></li><li><a href="Services.html">Services</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Components.AgenciesGrid.html">AgenciesGrid</a></li><li><a href="Components.Agency.html">Agency</a></li><li><a href="Components.Assessor.html">Assessor</a></li><li><a href="Components.AssessorGrid.html">AssessorGrid</a></li><li><a href="Components.Comparison.html">Comparison</a></li><li><a href="Components.DictionaryController.html">DictionaryController</a></li><li><a href="Components.DownloadCsv.html">DownloadCsv</a></li><li><a href="Components.Grid.html">Grid</a></li><li><a href="Components.GridFilter.html">GridFilter</a></li><li><a href="Components.GridFilterClear.html">GridFilterClear</a></li><li><a href="Components.GridSearch.html">GridSearch</a></li><li><a href="Components.GridSort.html">GridSort</a></li><li><a href="Components.Navigation.html">Navigation</a></li><li><a href="Components.Panel.html">Panel</a></li><li><a href="Components.Product.html">Product</a></li><li><a href="Components.ProductList.html">ProductList</a></li><li><a href="Components.ProductsGrid.html">ProductsGrid</a></li><li><a href="Components.ProductStatus.html">ProductStatus</a></li><li><a href="Components.Provider.html">Provider</a></li><li><a href="Components.Search.html">Search</a></li><li><a href="Components.Tile.html">Tile</a></li><li><a href="Components.Twitter.html">Twitter</a></li><li><a href="Controllers.AgenciesController.html">AgenciesController</a></li><li><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></li><li><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></li><li><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></li><li><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></li><li><a href="Controllers.AssessorsController.html">AssessorsController</a></li><li><a href="Controllers.HomeController.html">HomeController</a></li><li><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></li><li><a href="Controllers.ProductInformationController.html">ProductInformationController</a></li><li><a href="Controllers.ProductsController.html">ProductsController</a></li><li><a href="Controllers.ProviderComparisonController.html">ProviderComparisonController</a></li><li><a href="Controllers.ProviderInformationController.html">ProviderInformationController</a></li><li><a href="Controllers.ProvidersController.html">ProvidersController</a></li><li><a href="Controllers.SearchController.html">SearchController</a></li><li><a href="Controllers.SitemapController.html">SitemapController</a></li><li><a href="Models.Agency.html">Agency</a></li><li><a href="Models.Assessor.html">Assessor</a></li><li><a href="Models.AssessorData.html">AssessorData</a></li><li><a href="Models.AtoLetter.html">AtoLetter</a></li><li><a href="Models.Data.html">Data</a></li><li><a href="Models.Product.html">Product</a></li><li><a href="Models.Provider.html">Provider</a></li><li><a href="Models.Settings.html">Settings</a></li><li><a href="Services.CacheFactory.html">CacheFactory</a></li><li><a href="Services.CsvService.html">CsvService</a></li><li><a href="Services.DataService.html">DataService</a></li><li><a href="Services.DatasourceService.html">DatasourceService</a></li><li><a href="Services.FedrampDataProvider.html">FedrampDataProvider</a></li><li><a href="Services.HelperService.html">HelperService</a></li><li><a href="Services.Searcher.html">Searcher</a></li><li><a href="Services.StorageAssessorData.html">StorageAssessorData</a></li><li><a href="Services.StorageData.html">StorageData</a></li><li><a href="Services.StorageManager.html">StorageManager</a></li><li><a href="Services.StorageSettings.html">StorageSettings</a></li></ul><h3>Namespaces</h3><ul><li><a href="Components.html">Components</a></li><li><a href="Controllers.html">Controllers</a></li><li><a href="Models.html">Models</a></li><li><a href="Services.html">Services</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 03 2016 16:26:39 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Aug 04 2016 12:36:17 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
