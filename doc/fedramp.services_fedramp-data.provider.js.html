@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: fedramp.services/fedramp-data.provider.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: fedramp.services/fedramp-data.provider.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function () {
+    'use strict';
+
+    angular
+        .module('fedramp.services')
+        .provider('fedrampData', FedrampDataProvider);
+
+    /**
+     * Singleton used to store the contents of a storagedata object after it's been pulled.
+     *
+     * The idea is to store the initial data load into this service so that
+     * any other angular service/factory/directive/component can inject without having to re-query. Currently,
+     * ui-router resolves are only limited to controllers bound to a state. With this service, we do away with that
+     * limitation.
+     *
+     * This provider allows for a cache property to be configured that enables/disables automatic caching.
+     * Since this is defined as a provider (angular.module.provider), you append the word Provider to the name 
+     * defined above. So fedrampData => fedrampDataProvider;
+     *
+     *
+     * @example
+     *  // To configure, you inject the provider into config().
+     *
+     *  angular
+     *  .module('fedramp')
+     *  .config(['fedrampDataProvider', function (fedrampDataProvider) {
+     *       fedrampDataProvider.defaults.cache = false;
+     *   }])
+     *
+     *
+     * // Then to use it, you just inject it,
+     * someService.$inject = ['fedrampData'];
+     * @constructor
+     * @memberof Services
+     */
+    function FedrampDataProvider () {
+        var provider = this;
+        provider.defaults = {
+            cache: true
+        };
+
+        /**
+         * $get is executed once when the application is bootstrapped and uses the defaults to construct
+         * the object. These defaults must be configured inside a config function by injecting fedrampDataProvider.
+         */
+        provider.$get = ['$log', 'Cache', function ($log, Cache) {
+            return new FedrampDataService();
+
+            /**
+             * Fedramp Data Service is a service used to store queried information to be used by any component, service or 
+             * factory. The intent is to have an object that can be passed around containing a cache of previously obtained data.
+             *
+             * This should be cached up front.
+             */
+            function FedrampDataService () {
+                var self = this;
+
+                /**
+                 * Stores cache storage data.
+                 */
+                self.load = load;
+
+                /**
+                 * Used for testing so there is something there initially. This will be
+                 * overidden every time in production.
+                 */
+                self.all = function () {
+                    return [];
+                };
+
+                /**
+                 * Takes the contents of a storage factory object and adds its properties and methods
+                 * to this current object.
+                 */
+                function load (storage) {
+                    angular.extend(self, storage);
+
+                    // If we enable caching globally when configuring fedrampDataProvider,
+                    // we wrap all data returning functions with a cache wrapper.
+                    if (provider.defaults.cache) {
+                        self.products = Cache.wrap('products')(storage.products);
+                        self.providers = Cache.wrap('providers')(storage.providers);
+                        self.assessors = Cache.wrap('assessors')(storage.assessors);
+                        self.agencies = Cache.wrap('agencies')(storage.agencies);
+                    }
+                }
+            }
+        }];
+    }
+})();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Components.AgenciesGrid.html">AgenciesGrid</a></li><li><a href="Components.Agency.html">Agency</a></li><li><a href="Components.Assessor.html">Assessor</a></li><li><a href="Components.AssessorGrid.html">AssessorGrid</a></li><li><a href="Components.Comparison.html">Comparison</a></li><li><a href="Components.DictionaryController.html">DictionaryController</a></li><li><a href="Components.DownloadCsv.html">DownloadCsv</a></li><li><a href="Components.Grid.html">Grid</a></li><li><a href="Components.GridFilter.html">GridFilter</a></li><li><a href="Components.GridFilterClear.html">GridFilterClear</a></li><li><a href="Components.GridFilterPrint.html">GridFilterPrint</a></li><li><a href="Components.GridSearch.html">GridSearch</a></li><li><a href="Components.GridSort.html">GridSort</a></li><li><a href="Components.Navigation.html">Navigation</a></li><li><a href="Components.Panel.html">Panel</a></li><li><a href="Components.Product.html">Product</a></li><li><a href="Components.ProductList.html">ProductList</a></li><li><a href="Components.ProductsGrid.html">ProductsGrid</a></li><li><a href="Components.ProductStatus.html">ProductStatus</a></li><li><a href="Components.Search.html">Search</a></li><li><a href="Components.Tile.html">Tile</a></li><li><a href="Components.Twitter.html">Twitter</a></li><li><a href="Controllers.AgencyComparisonController.html">AgencyComparisonController</a></li><li><a href="Controllers.AgencyInformationController.html">AgencyInformationController</a></li><li><a href="Controllers.AssessorComparisonController.html">AssessorComparisonController</a></li><li><a href="Controllers.AssessorInformationController.html">AssessorInformationController</a></li><li><a href="Controllers.HomeController.html">HomeController</a></li><li><a href="Controllers.ProductComparisonController.html">ProductComparisonController</a></li><li><a href="Controllers.ProductInformationController.html">ProductInformationController</a></li><li><a href="Controllers.SearchController.html">SearchController</a></li><li><a href="Controllers.SitemapController.html">SitemapController</a></li><li><a href="Models.Agency.html">Agency</a></li><li><a href="Models.Assessor.html">Assessor</a></li><li><a href="Models.AssessorData.html">AssessorData</a></li><li><a href="Models.AtoLetter.html">AtoLetter</a></li><li><a href="Models.Data.html">Data</a></li><li><a href="Models.Product.html">Product</a></li><li><a href="Models.Provider.html">Provider</a></li><li><a href="Models.Settings.html">Settings</a></li><li><a href="Services.CacheFactory.html">CacheFactory</a></li><li><a href="Services.CsvService.html">CsvService</a></li><li><a href="Services.DataService.html">DataService</a></li><li><a href="Services.DatasourceService.html">DatasourceService</a></li><li><a href="Services.FedrampDataProvider.html">FedrampDataProvider</a></li><li><a href="Services.HelperService.html">HelperService</a></li><li><a href="Services.PropertyExpression.html">PropertyExpression</a></li><li><a href="Services.Searcher.html">Searcher</a></li><li><a href="Services.StorageAssessorData.html">StorageAssessorData</a></li><li><a href="Services.StorageData.html">StorageData</a></li><li><a href="Services.StorageManager.html">StorageManager</a></li><li><a href="Services.StorageSettings.html">StorageSettings</a></li><li><a href="Services.Walker.html">Walker</a></li></ul><h3>Namespaces</h3><ul><li><a href="Components.html">Components</a></li><li><a href="Controllers.html">Controllers</a></li><li><a href="Models.html">Models</a></li><li><a href="Services.html">Services</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Aug 08 2016 09:34:36 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
