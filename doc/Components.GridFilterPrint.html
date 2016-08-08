@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: fedramp.services/cache.factory.js</title>
+    <title>JSDoc: Class: GridFilterPrint</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,60 +17,133 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: fedramp.services/cache.factory.js</h1>
+    <h1 class="page-title">Class: GridFilterPrint</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>(function () {
-    'use strict';
+        <h2>
+            <span class="ancestors"><a href="Components.html">Components</a>.</span>GridFilterPrint</h2>
+        
+    
+</header>
 
-    angular
-        .module('fedramp.services')
-        .factory('Cache', CacheFactory);
+<article>
+    <div class="container-overview">
+    
+        
 
-    CacheFactory.$inject = ['$cacheFactory'];
+    
 
-    /**
-     * @constructor
-     * @memberof Services
-     */
-    function CacheFactory ($cacheFactory) {
-        var cache = $cacheFactory('fedramp');
-        cache.wrap = wrap;
+    <h4 class="name" id="GridFilterPrint"><span class="type-signature"></span>new GridFilterPrint<span class="signature">()</span><span class="type-signature"></span></h4>
 
-        return cache;
+    
 
-        /*
-         * Wraps a function with additional behavior that does the following:
-         * 
-         * 1. Checks if the result of the function call is in cache using the key
-         * 2. If result is in cache, returns that cached object.
-         * 3. If not in cache, execute apply on function with arguments and then store
-         * result in cache using the passed in key.
-         */
-        function wrap (key) {
-            return function (func) {                        
-                return function () {
-                    var data = cache.get(key);
-                    if (angular.isDefined(data)) {
-                        return data;
-                    }
-                    var result = func.apply(this, arguments);
-                    cache.put(key, result);
-                    return result;
-                };
-            };
-        }
-    }
-})();
-</code></pre>
-        </article>
-    </section>
+
+
+<div class="description">
+    Displays a human-friendly textual representation of the currently applied filters. This
+is used when rendering the grid in print mode.
+
+Requires to be nested within a <a href="Components.Grid.html">Grid</a> component.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fedramp.components_grid-filter-printed.component.js.html">fedramp.components/grid-filter-printed.component.js</a>, <a href="fedramp.components_grid-filter-printed.component.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

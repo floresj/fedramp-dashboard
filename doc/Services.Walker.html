@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: StorageManager</title>
+    <title>JSDoc: Class: Walker</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: StorageManager</h1>
+    <h1 class="page-title">Class: Walker</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="Services.html">Services</a>.</span>StorageManager</h2>
+            <span class="ancestors"><a href="Services.html">Services</a>.</span>Walker</h2>
         
     
 </header>
@@ -41,14 +41,15 @@
 
     
 
-    <h4 class="name" id="StorageManager"><span class="type-signature"></span>new StorageManager<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Walker"><span class="type-signature"></span>new Walker<span class="signature">(data, propExpression)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Storage manager handles the storage and retrieval of items.
+    Traverses an object based on the property expression. Given a property expression, this will
+recursively evaluate each property within the expression until all properties have been evaluated.
 </div>
 
 
@@ -57,6 +58,78 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Object being traversed</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>propExpression</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A string containing a property expression to evaluate</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -92,7 +165,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_storage-manager.factory.js.html">fedramp.services/storage-manager.factory.js</a>, <a href="fedramp.services_storage-manager.factory.js.html#line17">line 17</a>
+        <a href="fedramp.services_searcher.factory.js.html">fedramp.services/searcher.factory.js</a>, <a href="fedramp.services_searcher.factory.js.html#line221">line 221</a>
     </li></ul></dd>
     
 
@@ -132,6 +205,259 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="~isPrimitive"><span class="type-signature">(inner) </span>isPrimitive<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Determines which object is a primitive type
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fedramp.services_searcher.factory.js.html">fedramp.services/searcher.factory.js</a>, <a href="fedramp.services_searcher.factory.js.html#line236">line 236</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~targetKey"><span class="type-signature">(inner) </span>targetKey<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The current key in an expression to evaluate
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fedramp.services_searcher.factory.js.html">fedramp.services/searcher.factory.js</a>, <a href="fedramp.services_searcher.factory.js.html#line226">line 226</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~targetProps"><span class="type-signature">(inner) </span>targetProps<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The keys in a property expression that must be processed
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fedramp.services_searcher.factory.js.html">fedramp.services/searcher.factory.js</a>, <a href="fedramp.services_searcher.factory.js.html#line231">line 231</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~useIndex"><span class="type-signature">(inner) </span>useIndex<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Flag to indicate whether to retrieve a value from an array using its number
+based index or an objects key within an array
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fedramp.services_searcher.factory.js.html">fedramp.services/searcher.factory.js</a>, <a href="fedramp.services_searcher.factory.js.html#line242">line 242</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -141,106 +467,31 @@
 
     
 
-    <h4 class="name" id=".self.all"><span class="type-signature">(static) </span>self.all<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".find"><span class="type-signature">(static) </span>find<span class="signature">(obj, props)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Queries all items in the storage container.
-</div>
+    Recursively walks an object to reach the property expression.
 
+Continuing from our example in the parseKeys() method below, assume we start with the following 
+expression:
 
+<code> 
+'d.name in pets.dogs'</br>
+targetKey => 'name'</br>
+targetProps => ['pets', 'dogs']</br>
+</br>
 
+This method will evaluate each property in the targetProps array against the current obj (on first iteration)
+or against the preceding expression evaluation until all have been processed. 
 
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_storage-manager.factory.js.html">fedramp.services/storage-manager.factory.js</a>, <a href="fedramp.services_storage-manager.factory.js.html#line94">line 94</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    An array of items
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".self.byId"><span class="type-signature">(static) </span>self.byId<span class="signature">(id)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Queries for an item by identifier.
+Once at the end, 
+we evalute the targetKey against the last targetProp. So in this case, we would end up evaluation the 
+`name` property in an object within a dogs array.
+</code>
 </div>
 
 
@@ -276,230 +527,7 @@
 
         <tr>
             
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The identifier of the item</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_storage-manager.factory.js.html">fedramp.services/storage-manager.factory.js</a>, <a href="fedramp.services_storage-manager.factory.js.html#line73">line 73</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    The item
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".self.clear"><span class="type-signature">(static) </span>self.clear<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Clear the item queue.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_storage-manager.factory.js.html">fedramp.services/storage-manager.factory.js</a>, <a href="fedramp.services_storage-manager.factory.js.html#line82">line 82</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".self.init"><span class="type-signature">(static) </span>self.init<span class="signature">(options)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Initialize the storage manager.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
+                <td class="name"><code>obj</code></td>
             
 
             <td class="type">
@@ -515,7 +543,30 @@
 
             
 
-            <td class="description last">A dictionary of options to configure the storage manager</td>
+            <td class="description last">Object to traverse</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">props</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of split property expressions.</td>
         </tr>
 
     
@@ -556,313 +607,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_storage-manager.factory.js.html">fedramp.services/storage-manager.factory.js</a>, <a href="fedramp.services_storage-manager.factory.js.html#line35">line 35</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    The storage manager
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".self.transform"><span class="type-signature">(static) </span>self.transform<span class="signature">(raw)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Transforms the raw object to a specifec model. Subclasses should override
-this method.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>raw</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The JSON object</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_storage-manager.factory.js.html">fedramp.services/storage-manager.factory.js</a>, <a href="fedramp.services_storage-manager.factory.js.html#line110">line 110</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    The item
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".self.update"><span class="type-signature">(static) </span>self.update<span class="signature">(id, properties)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Update the status of an item.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The identifier of the item</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>properties</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The item properties</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fedramp.services_storage-manager.factory.js.html">fedramp.services/storage-manager.factory.js</a>, <a href="fedramp.services_storage-manager.factory.js.html#line58">line 58</a>
+        <a href="fedramp.services_searcher.factory.js.html">fedramp.services/searcher.factory.js</a>, <a href="fedramp.services_searcher.factory.js.html#line276">line 276</a>
     </li></ul></dd>
     
 

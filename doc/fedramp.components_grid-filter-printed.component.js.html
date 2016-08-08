@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: fedramp.services/cache.factory.js</title>
+    <title>JSDoc: Source: fedramp.components/grid-filter-printed.component.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: fedramp.services/cache.factory.js</h1>
+    <h1 class="page-title">Source: fedramp.components/grid-filter-printed.component.js</h1>
 
     
 
@@ -30,42 +30,29 @@
     'use strict';
 
     angular
-        .module('fedramp.services')
-        .factory('Cache', CacheFactory);
+        .module('fedramp.components')
+        .component('gridFilterPrint', {
+            controller: GridFilterPrint,
+            controllerAs: 'controller',
+            templateUrl: 'src/templates/components/grid-filter-print.html',
+            require: {
+                gridController: '^grid'
+            }
+        });
 
-    CacheFactory.$inject = ['$cacheFactory'];
+    GridFilterPrint.$inject = [];
 
     /**
+     * Displays a human-friendly textual representation of the currently applied filters. This
+     * is used when rendering the grid in print mode.
+     *
+     * Requires to be nested within a [Grid]{@link Components.Grid} component.
+     *
      * @constructor
-     * @memberof Services
+     * @memberof Components
      */
-    function CacheFactory ($cacheFactory) {
-        var cache = $cacheFactory('fedramp');
-        cache.wrap = wrap;
-
-        return cache;
-
-        /*
-         * Wraps a function with additional behavior that does the following:
-         * 
-         * 1. Checks if the result of the function call is in cache using the key
-         * 2. If result is in cache, returns that cached object.
-         * 3. If not in cache, execute apply on function with arguments and then store
-         * result in cache using the passed in key.
-         */
-        function wrap (key) {
-            return function (func) {                        
-                return function () {
-                    var data = cache.get(key);
-                    if (angular.isDefined(data)) {
-                        return data;
-                    }
-                    var result = func.apply(this, arguments);
-                    cache.put(key, result);
-                    return result;
-                };
-            };
-        }
+    function GridFilterPrint () {
+        var self = this;
     }
 })();
 </code></pre>
