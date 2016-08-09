@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]
-# then
-#     npm run-script docgen && git add doc
-# fi

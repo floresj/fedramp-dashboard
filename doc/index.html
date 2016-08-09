@@ -78,6 +78,7 @@
 <li><a href="#orientation-and-crop">Orientation and Crop</a></li>
 </ul>
 </li>
+<li><a href="#local-storage-services">Local Storage Services</a></li>
 <li><a href="#adding-a-new-filter-to-the-dashboard">Adding a new filter to the dashboard</a></li>
 <li><a href="#maintain-static-headerfooter">Maintain static header/footer</a><ul>
 <li><a href="#search">Search</a></li>
@@ -93,6 +94,8 @@
 <li><a href="#running-a-local-server">Running a local server</a></li>
 <li><a href="#executing-tests-and-coverage-reports">Executing tests and coverage reports</a></li>
 <li><a href="#packaging-application">Packaging Application</a></li>
+<li><a href="#generating-documentation">Generating Documentation</a></li>
+<li><a href="#tooling">Tooling</a></li>
 </ul>
 </li>
 </ul>
@@ -158,6 +161,17 @@
 <h4>Pixel Dimension if PNG</h4><p>150px max width x 150 px max height</p>
 <h4>Orientation and Crop</h4><p>Limit open space around logo and align edges of logo to bottom left corner.</p>
 <p><img src="https://cloud.githubusercontent.com/assets/12962390/17411346/22a43d28-5a46-11e6-9f85-c284d96249df.png" alt="logo guidelines graphic"></p>
+<h3>Local Storage Services</h3><p>This application uses HTML5 Local Storage to store the daily <code>data.json</code> pulls from the <a href="https://github.com/18F/fedramp-data">fedramp-data</a> github repository. There are four primary data services
+that manage this information. These include:</p>
+<ul>
+<li><a href="http://truetandem.github.io/fedramp-dashboard/doc/Services.StorageManager.html">storage-manager.factory.js</a></li>
+<li><a href="http://truetandem.github.io/fedramp-dashboard/doc/Services.StorageData.html">storage-data.factory.js</a></li>
+<li><a href="http://truetandem.github.io/fedramp-dashboard/doc/Services.StorageAssessorData.html">storage-assessor-data.factory.js</a></li>
+<li><a href="http://truetandem.github.io/fedramp-dashboard/doc/Services.StorageSettings.html">storage-settings.factory.js</a></li>
+</ul>
+<p><code>storage-manager.factory.js</code> is an object that abstracts access to the underlying local storage datastore by providing a consistent interface to read and write information. Conceptually, data is stored into <code>containers</code> or <code>buckets</code> with an associated
+<code>storageContainer</code> name that uniquely identifies that particular container. The <code>storageContainer</code> is the key and the associated array of information is the value. <code>storage-data.factory</code>, <code>storage-assessor-data.factory</code> and <code>storage-settings.factory</code> all extend the <code>storage-manager.factory</code> factory to separately store information specific to providers, assessors and system settings.</p>
+<p>When information is stored in local storage, it is not cleared until the following day when the next <code>data.json</code> file is updated. As a result, access to the site after the initial pull will not require additional <code>http</code> requests. The <code>storage-settings.factory</code> object is responsible for determining when to clear out the cache and request for updated information.</p>
 <h3>Adding a new filter to the dashboard</h3><p>A grid consists of the following components:</p>
 <ul>
 <li>grid<ul>
@@ -315,12 +329,16 @@ document.body.appendChild(script);</code></pre><p>To adjust the styles applied w
 <h2>Getting to know the code</h2><h3>Clone all things</h3><p>First you are going to want to clone the repository</p>
 <pre class="prettyprint source"><code>git clone https://github.com/truetandem/fedramp-dashboard.git</code></pre><h3>Checking dependencies</h3><p>For quick development we use <a href="https://www.npmjs.com/">npm</a>. Once
 this has been installed we execute a single command:</p>
-<pre class="prettyprint source"><code>npm install</code></pre><h3>Running a local server</h3><p>To run a local server we issue the command:</p>
+<pre class="prettyprint source"><code>npm install</code></pre><h3>Building the application</h3><p>Compiling all of the assets can be done simply using the command:</p>
+<pre class="prettyprint source"><code>npm run build</code></pre><p>This will compile JavaScript, SASS, and place all files where they need to be. Both versions of JavaScript files (minified and not) are preserved.</p>
+<h3>Running a local server</h3><p>To run a local server we issue the command:</p>
 <pre class="prettyprint source"><code>npm start</code></pre><p>Then direct your browser at <a href="http://localhost:8080">http://localhost:8080</a></p>
 <h3>Executing tests and coverage reports</h3><p>To make a single pass through the test suite use the command:</p>
 <pre class="prettyprint source"><code>npm test</code></pre><p>The individual test results will be seen in the output, and the coverage
 results may be viewed after running <code>npm start</code> at
 <a href="http://localhost:8080/coverage">http://localhost:8080/coverage</a></p>
+<p>In-browser test results and coverage can be accessed at
+<a href="https://truetandem.github.io/fedramp-dashboard/test">https://truetandem.github.io/fedramp-dashboard/test</a></p>
 <h3>Packaging Application</h3><p>To package up the application, use the command:</p>
 <pre class="prettyprint source"><code>npm run package</code></pre><p>This will generate the following file structure:</p>
 <pre class="prettyprint source"><code>build/
@@ -337,6 +355,26 @@ results may be viewed after running <code>npm start</code> at
 <li><code>img/</code> contains the images used in the application</li>
 <li><code>lib/</code>  contains third-party libraries</li>
 <li><code>src/</code>  contains the original source files</li>
+</ul>
+<h3>Generating Documentation</h3><p>This project utilizes JSDoc 3 to generate and render Javascript documentation artifacts. An npm script <code>docgen</code> is included that triggers the generation of these artifacts and then stores them in the <code>doc/</code> directory. </p>
+<p>To generate the JSDoc, execute the following:</p>
+<pre class="prettyprint source"><code>npm run docgen</code></pre><p>The script specifically executes the following:</p>
+<pre class="prettyprint source"><code>./node_modules/.bin/jsdoc ./src/ -r -d ./doc --readme README.md</code></pre><h3>Tooling</h3><h4>Linters</h4><p>For Ninjas (Vim) just install <code>syntastic</code> and everything should be handled.
+For Pirates (Emacs) just install <code>flycheck</code> and everything should be handled.</p>
+<p>For command-line alternatives there are the following:</p>
+<ul>
+<li>For JavaScript, <a href="http://jshint.com">JSHint</a> which may be installed with <code>npm install -g jshint</code></li>
+<li>For HTML, <a href="https://github.com/curtisj44/HTML-Lint">html-lint</a> which may be installed with <code>npm install -g html-lint</code></li>
+</ul>
+<h4>Testing</h4><p>The testing framework will be written in <a href="http://jasmine.github.io">Jasmine</a>. Various runners may be used:</p>
+<ul>
+<li>The in-browser runner</li>
+<li><a href="https://karma-runner.github.io">Karma</a> is a command-line test runner</li>
+</ul>
+<p>For code coverage we can leverage the following:</p>
+<ul>
+<li>For in-browser coverage analysis we use <a href="http://blanketjs.org">BlanketJS</a></li>
+<li><a href="https://github.com/karma-runner/karma-coverage">Karma Coverage</a> is a plug-in which may be used in tandem with the Karma test runner</li>
 </ul></article>
     </section>
 
@@ -354,7 +392,7 @@ results may be viewed after running <code>npm start</code> at
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Aug 09 2016 08:50:42 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Aug 09 2016 16:02:37 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
