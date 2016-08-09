@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
-    "start": "./node_modules/.bin/http-server",
-    "docgen": "./node_modules/.bin/jsdoc ./src/ -r -d ./doc --readme README.md",
+    "start": "./node_modules/.bin/http-server dist",
+    "docgen": "./node_modules/.bin/jsdoc ./src/ -r -d ./dist/doc --readme README.md",
+    "build": "./node_modules/.bin/gulp",
     "package": "./node_modules/.bin/gulp package",
     "watch": "./node_modules/.bin/gulp watch",
     "runner": "./node_modules/.bin/karma start ./karma.conf.js"
@@ -24,6 +25,7 @@
   "devDependencies": {
     "angular": "^1.5.7",
     "angular-aria": "^1.5.8",
+    "angular-mocks": "^1.5.8",
     "angular-sticky-top": "^1.1.1",
     "angular-ui-router": "^0.3.1",
     "babel-polyfill": "^6.9.1",
@@ -34,6 +36,7 @@
     "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-babel": "^6.1.2",
+    "gulp-clean-css": "^2.0.12",
     "gulp-concat": "^2.6.0",
     "gulp-gzip": "^1.4.0",
     "gulp-jshint": "^2.0.1",
@@ -45,6 +48,7 @@
     "gulp-zip": "^3.2.0",
     "http-server": "^0.9.0",
     "jasmine": "^2.4.1",
+    "jasmine-core": "^2.4.1",
     "jsdoc": "^3.4.0",
     "jshint": "^2.9.2",
     "jshint-stylish": "^2.2.0",

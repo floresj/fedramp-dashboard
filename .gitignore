@@ -36,8 +36,12 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-# build/ containing build artifacts
-build/
-
+# Build artifacts
 .projectile
-doc/
+/build/
+/doc/
+/dist/
+/lib/
+/css/
+/fonts/
+/img/

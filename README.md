@@ -37,6 +37,7 @@ Read more about the FedRAMP program [here](https://www.fedramp.gov/about-us/abou
         - [Target File Size](#target-file-size)
         - [Pixel Dimension if PNG](#pixel-dimension-if-png)
         - [Orientation and Crop](#orientation-and-crop)
+    - [Local Storage Services](#local-storage-services)
     - [Adding a new filter to the dashboard](#adding-a-new-filter-to-the-dashboard)
     - [Maintain static header/footer](#maintain-static-headerfooter)
         - [Search](#search)
@@ -48,6 +49,8 @@ Read more about the FedRAMP program [here](https://www.fedramp.gov/about-us/abou
     - [Running a local server](#running-a-local-server)
     - [Executing tests and coverage reports](#executing-tests-and-coverage-reports)
     - [Packaging Application](#packaging-application)
+    - [Generating Documentation](#generating-documentation)
+    - [Tooling](#tooling)
 
 ## Project Management
 The project team utilized Taiga, a free online open source project management tool, to administer User Stories, Tasks, and Sprints.  All public projects in Taiga are free and openly accessible, providing full public visibility into the FedRAMP Dashboard Product Backlog and sprint activities.
@@ -153,6 +156,21 @@ To ensure consistency with logo images for Providers, Agencies, and Assessors ap
 Limit open space around logo and align edges of logo to bottom left corner.
 
 ![logo guidelines graphic](https://cloud.githubusercontent.com/assets/12962390/17411346/22a43d28-5a46-11e6-9f85-c284d96249df.png)
+
+### Local Storage Services
+This application uses HTML5 Local Storage to store the daily `data.json` pulls from the [fedramp-data](https://github.com/18F/fedramp-data) github repository. There are four primary data services
+that manage this information. These include:
+
+- [storage-manager.factory.js](http://truetandem.github.io/fedramp-dashboard/doc/Services.StorageManager.html)
+- [storage-data.factory.js](http://truetandem.github.io/fedramp-dashboard/doc/Services.StorageData.html)
+- [storage-assessor-data.factory.js](http://truetandem.github.io/fedramp-dashboard/doc/Services.StorageAssessorData.html)
+- [storage-settings.factory.js](http://truetandem.github.io/fedramp-dashboard/doc/Services.StorageSettings.html)
+
+`storage-manager.factory.js` is an object that abstracts access to the underlying local storage datastore by providing a consistent interface to read and write information. Conceptually, data is stored into `containers` or `buckets` with an associated
+`storageContainer` name that uniquely identifies that particular container. The `storageContainer` is the key and the associated array of information is the value. `storage-data.factory`, `storage-assessor-data.factory` and `storage-settings.factory` all extend the `storage-manager.factory` factory to separately store information specific to providers, assessors and system settings.
+
+When information is stored in local storage, it is not cleared until the following day when the next `data.json` file is updated. As a result, access to the site after the initial pull will not require additional `http` requests. The `storage-settings.factory` object is responsible for determining when to clear out the cache and request for updated information.
+
 
 ### Adding a new filter to the dashboard
 A grid consists of the following components:
@@ -401,6 +419,16 @@ this has been installed we execute a single command:
 npm install
 ```
 
+### Building the application
+
+Compiling all of the assets can be done simply using the command:
+
+```
+npm run build
+```
+
+This will compile JavaScript, SASS, and place all files where they need to be. Both versions of JavaScript files (minified and not) are preserved.
+
 ### Running a local server
 
 To run a local server we issue the command:
@@ -422,6 +450,9 @@ npm test
 The individual test results will be seen in the output, and the coverage
 results may be viewed after running ```npm start``` at
 [http://localhost:8080/coverage](http://localhost:8080/coverage)
+
+In-browser test results and coverage can be accessed at
+[https://truetandem.github.io/fedramp-dashboard/test](https://truetandem.github.io/fedramp-dashboard/test)
 
 ### Packaging Application
 
@@ -450,3 +481,43 @@ where
  - `img/` contains the images used in the application
  - `lib/`  contains third-party libraries
  - `src/`  contains the original source files
+
+### Generating Documentation
+This project utilizes JSDoc 3 to generate and render Javascript documentation artifacts. An npm script `docgen` is included that triggers the generation of these artifacts and then stores them in the `doc/` directory. 
+
+To generate the JSDoc, execute the following:
+
+```
+npm run docgen
+```
+
+The script specifically executes the following:
+
+```
+./node_modules/.bin/jsdoc ./src/ -r -d ./doc --readme README.md
+```
+
+### Tooling
+
+#### Linters
+
+For Ninjas (Vim) just install ```syntastic``` and everything should be handled.
+For Pirates (Emacs) just install ```flycheck``` and everything should be handled.
+
+For command-line alternatives there are the following:
+
+ - For JavaScript, [JSHint](http://jshint.com) which may be installed with ```npm install -g jshint```
+ - For HTML, [html-lint](https://github.com/curtisj44/HTML-Lint) which may be installed with ```npm install -g html-lint```
+
+#### Testing
+
+The testing framework will be written in [Jasmine](http://jasmine.github.io). Various runners may be used:
+
+ - The in-browser runner
+ - [Karma](https://karma-runner.github.io) is a command-line test runner
+
+For code coverage we can leverage the following:
+
+ - For in-browser coverage analysis we use [BlanketJS](http://blanketjs.org)
+ - [Karma Coverage](https://github.com/karma-runner/karma-coverage) is a plug-in which may be used in tandem with the Karma test runner
+
